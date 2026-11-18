@@ -42,7 +42,7 @@
   body.dark .row-label { color: var(--magenta) !important; }
   body.dark .row-val { color: #444 !important; }
   body.dark .tag-cat { background: #f0f0f0 !important; color: #666 !important; }
-  body.dark .tag-otc { background: #fce4f0 !important; color: var(--magenta) !important; }
+  body.dark .tag-tcp { background: #fce4f0 !important; color: var(--magenta) !important; }
   body.dark .mig-wrap { background: #f8f5f0 !important; border-color: #ddd !important; }
   body.dark .mig-title { color: var(--magenta) !important; }
   body.dark .mig-text { color: #333 !important; }

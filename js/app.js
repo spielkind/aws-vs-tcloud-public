@@ -25,7 +25,7 @@ function toggleMigration(event, migId) {
 // Language switcher
 function setLang(l) {
   state.lang = l;
-  localStorage.setItem('otc-lang', l);
+  localStorage.setItem('tcp-lang', l);
   document.querySelectorAll('.lang-btn').forEach(b =>
     b.classList.toggle('active', b.textContent === l.toUpperCase())
   );
@@ -51,7 +51,7 @@ function toggleAll() {
 }
 
 // Dark mode
-const storedDark = localStorage.getItem('otc-dark');
+const storedDark = migratedStorage('dark');
 let isDark = storedDark !== null
   ? storedDark === '1'
   : window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -60,7 +60,7 @@ if (isDark) document.body.classList.add('dark');
 function toggleDark() {
   isDark = !isDark;
   document.body.classList.toggle('dark', isDark);
-  localStorage.setItem('otc-dark', isDark ? '1' : '0');
+  localStorage.setItem('tcp-dark', isDark ? '1' : '0');
   document.getElementById('btnDark').textContent = isDark ? '☀️' : '🌙';
 }
 
@@ -68,7 +68,7 @@ if (isDark) document.getElementById('btnDark').textContent = '☀️';
 
 // System theme change listener (only if no manual override)
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-  if (localStorage.getItem('otc-dark') === null) {
+  if (localStorage.getItem('tcp-dark') === null) {
     isDark = e.matches;
     document.body.classList.toggle('dark', isDark);
     document.getElementById('btnDark').textContent = isDark ? '☀️' : '🌙';
@@ -115,8 +115,6 @@ document.querySelectorAll('.toolbar .pill-eff').forEach(p => {
   });
 });
 
-// Date display
-document.getElementById('genDate').textContent = new Date().toLocaleDateString();
 
 // Back to top
 window.addEventListener('scroll', () => {
@@ -228,6 +226,7 @@ window.addEventListener('resize', fixToolbar);
     const idx = await fetch('services/index.json' + cb).then(r => r.json());
     const all = await Promise.all(idx.map(f => fetch('services/' + f + cb).then(r => r.json())));
     state.services = all.flat();
+    state.updated = await fetch('services/meta.json' + cb).then(r => r.json()).then(m => m.updated).catch(() => null);
   } catch (e) {
     console.error('Failed to load services:', e);
     grid.innerHTML = '<div style="text-align:center;padding:2rem;color:#dc3545">❌ Fehler beim Laden der Services</div>';

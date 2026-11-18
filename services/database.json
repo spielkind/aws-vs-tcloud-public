@@ -2,105 +2,101 @@
   {
     "name": "Amazon DynamoDB",
     "category": "Database",
-    "effort": "hard",
+    "effort": "medium",
     "equiv": "partial",
-    "scope": [
-      "K1",
-      "K2"
-    ],
-    "otc": "GeminiDB (Cassandra-kompatibel)",
+    "tcp": "GeminiDB (DynamoDB-kompatible API)",
     "tfAws": "aws_dynamodb_table",
-    "tfOtc": "opentelekomcloud_gemini_instance_v3",
+    "tfTcp": "opentelekomcloud_gemini_instance_v3",
     "tfStatus": "partial",
     "docsAws": "https://docs.aws.amazon.com/dynamodb/",
-    "docsOtc": "https://docs.otc.t-systems.com/geminidb/index.html",
+    "docsTcp": "https://docs.otc.t-systems.com/geminidb/index.html",
     "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table",
-    "tfDocsOtc": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/gemini_instance_v3",
+    "tfDocsTcp": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/gemini_instance_v3",
     "desc": {
       "de": "Serverlose NoSQL-DB (Key-Value + Wide-Column). Single-Digit-ms-Latenz, Global Tables, DynamoDB Streams, On-Demand + Provisioned Capacity, DAX In-Memory Cache, PartiQL-Support.",
       "en": "Serverless NoSQL DB (key-value + wide-column). Single-digit ms latency, Global Tables, DynamoDB Streams, on-demand + provisioned capacity, DAX in-memory cache, PartiQL support."
     },
-    "otcDesc": {
-      "de": "OTC-eigene verteilte NoSQL-DB mit Cassandra-API (CQL 3.x). Shared-Nothing-Architektur, automatisches Sharding, Multi-AZ, 3 Replikas. Instanztypen: 4–64 vCPUs, bis 512 GB RAM. Kein echtes Cassandra — proprietäre Storage Engine mit Cassandra Wire Protocol. Kein Serverless-Modus, kein On-Demand Pricing.",
-      "en": "OTC-native distributed NoSQL DB with Cassandra API (CQL 3.x). Shared-nothing architecture, automatic sharding, multi-AZ, 3 replicas. Instance types: 4–64 vCPUs, up to 512 GB RAM. Not real Cassandra — proprietary storage engine with Cassandra wire protocol. No serverless mode, no on-demand pricing."
+    "tcpDesc": {
+      "de": "Verteilte NoSQL-DB mit mehreren APIs: seit 17.11.2026 GA mit DynamoDB-kompatibler API (EU-DE), dazu Cassandra- (CQL 3.x) und Influx-API. Shared-Nothing-Architektur, automatisches Sharding, Multi-AZ, 3 Replikas, Compute und Storage getrennt skalierbar. Instanzbasiert (kein Serverless-/On-Demand-Modus). EU-NL laut Roadmap ab 2028.",
+      "en": "Distributed NoSQL DB with multiple APIs: GA with a DynamoDB-compatible API since 17.11.2026 (EU-DE), plus Cassandra (CQL 3.x) and Influx APIs. Shared-nothing architecture, automatic sharding, multi-AZ, 3 replicas, compute and storage scale independently. Instance-based (no serverless/on-demand mode). EU-NL on the roadmap from 2028."
     },
     "alt": {
       "de": "DDS (MongoDB-kompatibel), Cassandra auf CCE, ScyllaDB auf CCE",
       "en": "DDS (MongoDB-compatible), Cassandra on CCE, ScyllaDB on CCE"
     },
     "migration": {
-      "de": "**Komplett andere API.** GeminiDB nutzt CQL (Cassandra Query Language), nicht die DynamoDB-API — Datenmodell und Abfragen müssen vollständig neu entworfen werden. **Datenmodell-Mapping.** DynamoDB Key-Value wird zu Cassandra-Tabellen mit Partition Key + Clustering Key (ähnliches Konzept, andere Syntax). GSI/LSI werden zu Cassandra Secondary Indexes (weniger flexibel, kein Projection). **Kein Change Data Capture.** DynamoDB Streams haben kein Pendant — Änderungen nur per TTL oder Polling abfangbar. **Kein Serverless-Modus.** Auto Scaling und On-Demand Capacity existieren nicht — feste Instanzgrößen erfordern vorausschauende Kapazitätsplanung. **Cache-Ersatz.** DAX hat kein Pendant, DCS Redis als externer Cache-Layer nutzbar. **Fehlende Features.** Global Tables (kein Cross-Region), Conditional Writes nur eingeschränkt (CQL IF NOT EXISTS, nur INSERT), Batch Operations via CQL BATCH (max 5 MB). DynamoDB TTL wird zu Cassandra TTL (pro Zelle statt pro Item).",
-      "en": "**Completely different API.** GeminiDB uses CQL (Cassandra Query Language), not the DynamoDB API — data model and queries must be fully redesigned. **Data model mapping.** DynamoDB key-value becomes Cassandra tables with partition key + clustering key (similar concept, different syntax). GSI/LSI become Cassandra secondary indexes (less flexible, no projection). **No change data capture.** DynamoDB Streams have no equivalent — changes only catchable via TTL or polling. **No serverless mode.** Auto scaling and on-demand capacity don't exist — fixed instance sizes require proactive capacity planning. **Cache replacement.** DAX has no equivalent, DCS Redis usable as external cache layer. **Missing features.** Global Tables (no cross-region), conditional writes limited (CQL IF NOT EXISTS, INSERT only), batch operations via CQL BATCH (max 5 MB). DynamoDB TTL becomes Cassandra TTL (per cell instead of per item)."
+      "de": "**DynamoDB-kompatible API.** Seit 17.11.2026 ist GeminiDB mit DynamoDB-API in EU-DE GA — Anwendungen können mit angepasstem Endpoint und Credentials weiter das AWS SDK nutzen. Neu eingeführter Modus: Feature-Abdeckung (Streams, TransactWriteItems, PartiQL, TTL, LSI/GSI) im Proof of Concept validieren. **Kapazitätsmodell.** Kein On-Demand/Serverless — Instanzgröße und Knotenanzahl vorab planen; Auto Scaling nur über Knoten-Erweiterung. **Datenmigration.** Export nach S3 (DynamoDB Export) → OBS → Import, oder DRS (laut Roadmap DynamoDB→GeminiDB). **Nicht verfügbar.** DAX (→ DCS Redis als Cache), Global Tables (Multi-Region), PITR-Granularität prüfen. **Alternative.** GeminiDB Cassandra-API, falls das Datenmodell ohnehin neu entworfen wird.",
+      "en": "**DynamoDB-compatible API.** Since 17.11.2026 GeminiDB with DynamoDB API is GA in EU-DE — applications can keep using the AWS SDK with an adjusted endpoint and credentials. Newly introduced mode: validate feature coverage (streams, TransactWriteItems, PartiQL, TTL, LSI/GSI) in a proof of concept. **Capacity model.** No on-demand/serverless — plan instance size and node count upfront; scaling only by adding nodes. **Data migration.** Export to S3 (DynamoDB export) → OBS → import, or DRS (DynamoDB→GeminiDB on the roadmap). **Not available.** DAX (→ DCS Redis as cache), global tables (multi-region); check PITR granularity. **Alternative.** GeminiDB Cassandra API if the data model is redesigned anyway."
     },
     "equivNote": {
-      "de": "GeminiDB Cassandra-API ist näher an DynamoDB als DDS (MongoDB): Key-Value/Wide-Column, distributed, auto-sharding. Aber CQL statt DynamoDB API — Query-Patterns müssen komplett umgebaut werden (kein PartiQL, kein GetItem/PutItem). Kein Serverless, kein DynamoDB Streams (kein CDC), kein DAX, keine Global Tables, kein On-Demand Capacity.",
-      "en": "GeminiDB Cassandra API is closer to DynamoDB than DDS (MongoDB): key-value/wide-column, distributed, auto-sharding. But CQL instead of DynamoDB API — query patterns must be completely reworked (no PartiQL, no GetItem/PutItem). No serverless, no DynamoDB Streams (no CDC), no DAX, no Global Tables, no on-demand capacity."
+      "de": "GeminiDB bietet seit 11/2026 eine DynamoDB-kompatible API — bestehende SDK-Aufrufe (GetItem/PutItem/Query) sind grundsätzlich weiterverwendbar; Kompatibilitätsumfang (Streams, Transaktionen, PartiQL, GSI-Details) vor Migration prüfen. Instanzbasiert statt Serverless/On-Demand, kein DAX, keine Global Tables.",
+      "en": "Since 11/2026 GeminiDB offers a DynamoDB-compatible API — existing SDK calls (GetItem/PutItem/Query) can generally be reused; verify compatibility scope (streams, transactions, PartiQL, GSI details) before migrating. Instance-based instead of serverless/on-demand, no DAX, no global tables."
     },
     "tfNote": {
-      "de": "Instanz-Provisionierung per TF, aber Keyspaces/Tables nur per CQL verwaltbar.",
-      "en": "Instance provisioning via TF, but keyspaces/tables only manageable via CQL."
-    }
+      "de": "Instanz-Provisionierung per Terraform (gemini_instance_v3); Tabellen über die DynamoDB-kompatible API bzw. CQL verwalten. Unterstützung des DynamoDB-Modus im TF-Provider vor Einsatz prüfen.",
+      "en": "Instance provisioning via Terraform (gemini_instance_v3); manage tables via the DynamoDB-compatible API or CQL. Verify DynamoDB-mode support in the TF provider before use."
+    },
+    "aliases": [
+      "GeminiDB Cassandra API"
+    ]
   },
   {
     "name": "Amazon RDS",
     "category": "Database",
     "effort": "medium",
     "equiv": "partial",
-    "scope": [
-      "K1",
-      "K2"
-    ],
-    "otc": "Relational Database Service (RDS)",
+    "tcp": "Relational Database Service (RDS)",
     "tfAws": "aws_db_instance",
-    "tfOtc": "opentelekomcloud_rds_instance_v3",
+    "tfTcp": "opentelekomcloud_rds_instance_v3",
     "tfStatus": "full",
     "docsAws": "https://docs.aws.amazon.com/rds/",
-    "docsOtc": "https://docs.otc.t-systems.com/relational-database-service/index.html",
+    "docsTcp": "https://docs.otc.t-systems.com/relational-database-service/index.html",
     "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance",
-    "tfDocsOtc": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/rds_instance_v3",
+    "tfDocsTcp": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/rds_instance_v3",
     "desc": {
-      "de": "Managed RDBMS: MySQL, PostgreSQL, MariaDB, Oracle, SQL Server. Multi-AZ, Read Replicas, RDS Proxy, Performance Insights, Blue/Green Deployments. ⚠️ Oracle + MariaDB: OTC hat KEINEN Oracle- und MariaDB-Support!",
-      "en": "Managed RDBMS: MySQL, PostgreSQL, MariaDB, Oracle, SQL Server. Multi-AZ, Read Replicas, RDS Proxy, Performance Insights, Blue/Green Deployments. ⚠️ Oracle + MariaDB: OTC has NO Oracle or MariaDB support!"
+      "de": "Managed RDBMS: MySQL, PostgreSQL, MariaDB, Oracle, SQL Server. Multi-AZ, Read Replicas, RDS Proxy, Performance Insights, Blue/Green Deployments. ⚠️ Oracle + MariaDB: T Cloud Public hat KEINEN Oracle- und MariaDB-Support!",
+      "en": "Managed RDBMS: MySQL, PostgreSQL, MariaDB, Oracle, SQL Server. Multi-AZ, Read Replicas, RDS Proxy, Performance Insights, Blue/Green Deployments. ⚠️ Oracle + MariaDB: T Cloud Public has NO Oracle or MariaDB support!"
     },
-    "otcDesc": {
-      "de": "MySQL (5.6/5.7/8.0/8.4), PostgreSQL (11–18 inkl. PostGIS), SQL Server (2017/2019 SE/EE). Automated Backups, Point-in-Time Recovery, Multi-AZ (Primary + Standby), Read Replicas (bis 5), Parameter Templates, SSL/TLS. ⚠️ Kein Oracle, kein MariaDB! PostgreSQL unterstützt PostGIS für Geodaten.",
-      "en": "MySQL (5.6/5.7/8.0/8.4), PostgreSQL (11–18 incl. PostGIS), SQL Server (2017/2019 SE/EE). Automated backups, point-in-time recovery, multi-AZ (primary + standby), read replicas (up to 5), parameter templates, SSL/TLS. ⚠️ No Oracle, no MariaDB! PostgreSQL supports PostGIS for geodata."
+    "tcpDesc": {
+      "de": "MySQL (5.6/5.7/8.0/8.4), PostgreSQL (11–18 inkl. PostGIS), SQL Server (2017/2019 SE/EE). Automated Backups, Point-in-Time Recovery, Multi-AZ (Primary + Standby), Read Replicas (bis 5), Parameter Templates, SSL/TLS. ⚠️ Kein Oracle, kein MariaDB! PostgreSQL unterstützt PostGIS für Geodaten. Data Admin Service (DAS, Beta) mit DBA Assistant für RDS als Management-Konsole; Common-I/O-Speicher für RDS endet 31.12.2026.",
+      "en": "MySQL (5.6/5.7/8.0/8.4), PostgreSQL (11–18 incl. PostGIS), SQL Server (2017/2019 SE/EE). Automated backups, point-in-time recovery, multi-AZ (primary + standby), read replicas (up to 5), parameter templates, SSL/TLS. ⚠️ No Oracle, no MariaDB! PostgreSQL supports PostGIS for geodata. Data Admin Service (DAS, beta) with DBA Assistant for RDS as management console; Common I/O storage for RDS ends 31.12.2026."
     },
     "alt": {
-      "de": "Oracle: ECS (self-managed), Ora2Pg, AWS SCT, Babelfish, EDB Postgres. MariaDB: MySQL als Alternative (hohe Kompatibilität) oder ECS (self-managed MariaDB)",
-      "en": "Oracle: ECS (self-managed), Ora2Pg, AWS SCT, Babelfish, EDB Postgres. MariaDB: MySQL as alternative (high compatibility) or ECS (self-managed MariaDB)"
+      "de": "Oracle: Oracle-optimized Instanzen (BYOL, siehe Oracle-Seite), Oracle: ECS (self-managed), Ora2Pg, AWS SCT, Babelfish, EDB Postgres. MariaDB: MySQL als Alternative (hohe Kompatibilität) oder ECS (self-managed MariaDB)",
+      "en": "Oracle: Oracle-optimized instances (BYOL, see Oracle page), Oracle: ECS (self-managed), Ora2Pg, AWS SCT, Babelfish, EDB Postgres. MariaDB: MySQL as alternative (high compatibility) or ECS (self-managed MariaDB)"
     },
     "migration": {
-      "de": "**Engine-Einschränkungen.** OTC RDS unterstützt MySQL (5.6/5.7/8.0/8.4), PostgreSQL (11–18) und SQL Server (2017/2019) — kein Oracle, kein MariaDB. MariaDB lässt sich zu MySQL migrieren (hohe Kompatibilität, wenige Syntax-Unterschiede). Oracle erfordert Ora2Pg + PostgreSQL oder ECS self-managed. **Aurora-Ersatz.** Aurora hat kein direktes Pendant — TaurusDB (MySQL 8.0 kompatibel) als Alternative. **Replikation und HA.** Multi-AZ mit Primary + Standby (automatischer Failover). Read Replicas bis 5 (AWS: 15). **Fehlende Proxy-Schicht.** RDS Proxy hat kein Pendant — PgBouncer oder ProxySQL müssen self-hosted betrieben werden. **Kein Blue/Green.** Blue/Green Deployments existieren nicht, Rolling Updates nur manuell. Performance Insights werden durch Cloud Eye RDS-Metriken ersetzt (weniger detailliert). **Versionskompatibilität.** Nicht alle Minor-Versionen verfügbar — vor Migration prüfen. PostgreSQL unterstützt PostGIS-Plugin für räumliche Daten.",
-      "en": "**Engine limitations.** OTC RDS supports MySQL (5.6/5.7/8.0/8.4), PostgreSQL (11–18) and SQL Server (2017/2019) — no Oracle, no MariaDB. MariaDB can be migrated to MySQL (high compatibility, few syntax differences). Oracle requires Ora2Pg + PostgreSQL or ECS self-managed. **Aurora replacement.** Aurora has no direct equivalent — TaurusDB (MySQL 8.0 compatible) as alternative. **Replication and HA.** Multi-AZ with primary + standby (automatic failover). Read replicas up to 5 (AWS: 15). **No proxy layer.** RDS Proxy has no equivalent — PgBouncer or ProxySQL must be self-hosted. **No Blue/Green.** Blue/Green Deployments don't exist, rolling updates manual only. Performance Insights replaced by Cloud Eye RDS metrics (less detailed). **Version compatibility.** Not all minor versions available — verify before migration. PostgreSQL supports PostGIS plugin for spatial data."
+      "de": "**Engine-Einschränkungen.** T Cloud Public RDS unterstützt MySQL (5.6/5.7/8.0/8.4), PostgreSQL (11–18) und SQL Server (2017/2019) — kein Oracle, kein MariaDB. MariaDB lässt sich zu MySQL migrieren (hohe Kompatibilität, wenige Syntax-Unterschiede). Oracle erfordert Ora2Pg + PostgreSQL oder ECS self-managed. **Aurora-Ersatz.** Aurora hat kein direktes Pendant — TaurusDB (MySQL 8.0 kompatibel) als Alternative. **Replikation und HA.** Multi-AZ mit Primary + Standby (automatischer Failover). Read Replicas bis 5 (AWS: 15). **Fehlende Proxy-Schicht.** RDS Proxy hat kein Pendant — PgBouncer oder ProxySQL müssen self-hosted betrieben werden. **Kein Blue/Green.** Blue/Green Deployments existieren nicht, Rolling Updates nur manuell. Performance Insights werden durch Cloud Eye RDS-Metriken ersetzt (weniger detailliert). **Versionskompatibilität.** Nicht alle Minor-Versionen verfügbar — vor Migration prüfen. PostgreSQL unterstützt PostGIS-Plugin für räumliche Daten.",
+      "en": "**Engine limitations.** T Cloud Public RDS supports MySQL (5.6/5.7/8.0/8.4), PostgreSQL (11–18) and SQL Server (2017/2019) — no Oracle, no MariaDB. MariaDB can be migrated to MySQL (high compatibility, few syntax differences). Oracle requires Ora2Pg + PostgreSQL or ECS self-managed. **Aurora replacement.** Aurora has no direct equivalent — TaurusDB (MySQL 8.0 compatible) as alternative. **Replication and HA.** Multi-AZ with primary + standby (automatic failover). Read replicas up to 5 (AWS: 15). **No proxy layer.** RDS Proxy has no equivalent — PgBouncer or ProxySQL must be self-hosted. **No Blue/Green.** Blue/Green Deployments don't exist, rolling updates manual only. Performance Insights replaced by Cloud Eye RDS metrics (less detailed). **Version compatibility.** Not all minor versions available — verify before migration. PostgreSQL supports PostGIS plugin for spatial data."
     },
     "equivNote": {
-      "de": "OTC RDS: MySQL 5.6/5.7/8.0/8.4, PostgreSQL 11–18 (mit PostGIS!), SQL Server 2017/2019. Kein Oracle, kein MariaDB. Aurora → TaurusDB (nur MySQL). Read Replicas bis 5 (AWS: 15). Kein RDS Proxy (PgBouncer self-hosted). Kein Performance Insights (Cloud Eye Metriken). Kein Blue/Green Deployment. Multi-AZ mit Primary+Standby.",
-      "en": "OTC RDS: MySQL 5.6/5.7/8.0/8.4, PostgreSQL 11–18 (with PostGIS!), SQL Server 2017/2019. No Oracle, no MariaDB. Aurora → TaurusDB (MySQL only). Read replicas up to 5 (AWS: 15). No RDS Proxy (PgBouncer self-hosted). No Performance Insights (Cloud Eye metrics). No Blue/Green Deployment. Multi-AZ with primary+standby."
+      "de": "T Cloud Public RDS: MySQL 5.6/5.7/8.0/8.4, PostgreSQL 11–18 (mit PostGIS!), SQL Server 2017/2019. Kein Oracle, kein MariaDB. Aurora → TaurusDB (nur MySQL). Read Replicas bis 5 (AWS: 15). Kein RDS Proxy (PgBouncer self-hosted). Kein Performance Insights (Cloud Eye Metriken). Kein Blue/Green Deployment. Multi-AZ mit Primary+Standby.",
+      "en": "T Cloud Public RDS: MySQL 5.6/5.7/8.0/8.4, PostgreSQL 11–18 (with PostGIS!), SQL Server 2017/2019. No Oracle, no MariaDB. Aurora → TaurusDB (MySQL only). Read replicas up to 5 (AWS: 15). No RDS Proxy (PgBouncer self-hosted). No Performance Insights (Cloud Eye metrics). No Blue/Green Deployment. Multi-AZ with primary+standby."
     },
-    "tfNote": null
+    "tfNote": null,
+    "aliases": [
+      "Data Admin Service (DAS)",
+      "DBA Assistant"
+    ]
   },
   {
     "name": "Amazon ElastiCache",
     "category": "Database",
     "effort": "easy",
     "equiv": "partial",
-    "scope": [
-      "K2"
-    ],
-    "otc": "Distributed Cache Service (DCS)",
+    "tcp": "Distributed Cache Service (DCS)",
     "tfAws": "aws_elasticache_cluster, aws_elasticache_replication_group",
-    "tfOtc": "opentelekomcloud_dcs_instance_v2",
+    "tfTcp": "opentelekomcloud_dcs_instance_v2",
     "tfStatus": "full",
     "docsAws": "https://docs.aws.amazon.com/elasticache/",
-    "docsOtc": "https://docs.otc.t-systems.com/distributed-cache-service/index.html",
+    "docsTcp": "https://docs.otc.t-systems.com/distributed-cache-service/index.html",
     "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticache_cluster",
-    "tfDocsOtc": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/dcs_instance_v2",
+    "tfDocsTcp": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/dcs_instance_v2",
     "desc": {
       "de": "Managed In-Memory Cache. Redis und Memcached. Cluster Mode, Multi-AZ, Automatic Failover.",
       "en": "Managed in-memory cache. Redis and Memcached. Cluster mode, multi-AZ, automatic failover."
     },
-    "otcDesc": {
+    "tcpDesc": {
       "de": "Managed Redis (Single, Master/Standby, Cluster). Backup, Monitoring, Parameter-Konfiguration. Kein Memcached.",
       "en": "Managed Redis (single, master/standby, cluster). Backup, monitoring, parameter configuration. No Memcached."
     },
@@ -123,20 +119,19 @@
     "category": "Database",
     "effort": "medium",
     "equiv": "partial",
-    "scope": [],
-    "otc": "Document Database Service (DDS)",
+    "tcp": "Document Database Service (DDS)",
     "tfAws": "aws_docdb_cluster, aws_docdb_cluster_instance",
-    "tfOtc": "opentelekomcloud_dds_instance_v3, opentelekomcloud_dds_backup_v3",
+    "tfTcp": "opentelekomcloud_dds_instance_v3, opentelekomcloud_dds_backup_v3",
     "tfStatus": "partial",
     "docsAws": "https://docs.aws.amazon.com/documentdb/",
-    "docsOtc": "https://docs.otc.t-systems.com/document-database-service/index.html",
+    "docsTcp": "https://docs.otc.t-systems.com/document-database-service/index.html",
     "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/docdb_cluster",
-    "tfDocsOtc": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/dds_instance_v3",
+    "tfDocsTcp": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/dds_instance_v3",
     "desc": {
       "de": "Managed MongoDB-kompatible Dokumentendatenbank. Bis MongoDB 5.0 API-kompatibel, automatische Skalierung, Multi-AZ.",
       "en": "Managed MongoDB-compatible document database. Up to MongoDB 5.0 API-compatible, automatic scaling, multi-AZ."
     },
-    "otcDesc": {
+    "tcpDesc": {
       "de": "Managed MongoDB (3.4/4.0/4.2/4.4). Replica Set oder Sharded Cluster. Automatische Backups, Point-in-Time Recovery, SSL/TLS. Volle MongoDB Wire Protocol Kompatibilität.",
       "en": "Managed MongoDB (3.4/4.0/4.2/4.4). Replica set or sharded cluster. Automatic backups, point-in-time recovery, SSL/TLS. Full MongoDB wire protocol compatibility."
     },
@@ -162,35 +157,177 @@
     "category": "Database",
     "effort": "medium",
     "equiv": "partial",
-    "scope": [],
-    "otc": "TaurusDB",
+    "tcp": "TaurusDB",
     "tfAws": "aws_rds_cluster, aws_rds_cluster_instance",
-    "tfOtc": "opentelekomcloud_taurusdb_mysql_instance_v3, opentelekomcloud_taurusdb_mysql_proxy_v3, opentelekomcloud_taurusdb_mysql_backup_v3",
+    "tfTcp": "opentelekomcloud_taurusdb_mysql_instance_v3, opentelekomcloud_taurusdb_mysql_proxy_v3, opentelekomcloud_taurusdb_mysql_backup_v3",
     "tfStatus": "full",
     "docsAws": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/",
-    "docsOtc": "https://docs.otc.t-systems.com/taurusdb/index.html",
+    "docsTcp": "https://docs.otc.t-systems.com/taurusdb/index.html",
     "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/rds_cluster",
-    "tfDocsOtc": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/taurusdb_mysql_instance_v3",
+    "tfDocsTcp": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/taurusdb_mysql_instance_v3",
     "desc": {
       "de": "MySQL/PostgreSQL-kompatible relationale DB. Bis 5x schneller als MySQL, bis 3x schneller als PostgreSQL. Serverless, Global Database, Multi-Master.",
       "en": "MySQL/PostgreSQL-compatible relational DB. Up to 5x faster than MySQL, up to 3x faster than PostgreSQL. Serverless, Global Database, multi-master."
     },
-    "otcDesc": {
-      "de": "Managed MySQL-kompatible Hochleistungs-DB (ehem. GaussDB for MySQL). Compute-Storage-Separation, bis 128TB, Multi-AZ, Read Replicas. Kein Serverless-Modus verfügbar; die aktuelle Portfolio-Roadmap nennt dafür keinen Veröffentlichungstermin. HTAP für Echtzeit-Analysen angekündigt.",
-      "en": "Managed MySQL-compatible high-performance DB (formerly GaussDB for MySQL). Compute-storage separation, up to 128TB, multi-AZ, read replicas. No serverless mode is available; the current portfolio roadmap provides no release window for it. HTAP for real-time analytics announced."
+    "tcpDesc": {
+      "de": "Managed MySQL-kompatible Hochleistungs-DB (ehem. GaussDB for MySQL). Compute-Storage-Separation, bis 128TB, Multi-AZ, Read Replicas. Kein Serverless-Modus verfügbar; die aktuelle Portfolio-Roadmap nennt dafür keinen Veröffentlichungstermin. HTAP für Echtzeit-Analysen angekündigt. Nur EU-DE; EU-NL laut Roadmap ab Juli 2027.",
+      "en": "Managed MySQL-compatible high-performance DB (formerly GaussDB for MySQL). Compute-storage separation, up to 128TB, multi-AZ, read replicas. No serverless mode is available; the current portfolio roadmap provides no release window for it. HTAP for real-time analytics announced. EU-DE only; EU-NL on the roadmap from July 2027."
     },
     "alt": {
       "de": "RDS MySQL/PostgreSQL",
       "en": "RDS MySQL/PostgreSQL"
     },
     "migration": {
-      "de": "**Nur MySQL-kompatibel.** TaurusDB unterstützt MySQL 8.0 — Aurora PostgreSQL hat kein Pendant auf OTC (nur RDS PostgreSQL als Fallback). **Kein Serverless.** Für Aurora Serverless v2 gibt es derzeit keinen TaurusDB-Ersatz; die aktuelle Portfolio-Roadmap nennt keinen TaurusDB-Serverless-Termin. Feste Instanzgrößen einplanen. **Kein Cross-Region.** Aurora Global Database hat kein Pendant. Multi-Master ist ebenfalls nicht verfügbar. **Flashback statt Backtrack.** Aurora Backtrack wird durch TaurusDB Flashback Query ersetzt (ähnliche Funktionalität). **Integrierter Proxy.** RDS Proxy wird durch den TaurusDB-eigenen Proxy ersetzt (Terraform: opentelekomcloud_taurusdb_mysql_proxy_v3) — kein ProxySQL nötig. **Kein Performance Insights.** Monitoring über Cloud Eye, aber weniger granular. Read Replicas funktionieren auf beiden Seiten. Connection Strings und SSL-Zertifikate müssen angepasst werden.",
-      "en": "**MySQL only.** TaurusDB supports MySQL 8.0 — Aurora PostgreSQL has no equivalent on OTC (only RDS PostgreSQL as fallback). **No serverless.** There is currently no TaurusDB replacement for Aurora Serverless v2; the current portfolio roadmap provides no TaurusDB Serverless date. Plan for fixed instance sizes. **No cross-region.** Aurora Global Database has no equivalent. Multi-master is also not available. **Flashback instead of Backtrack.** Aurora Backtrack is replaced by TaurusDB Flashback Query (similar functionality). **Integrated proxy.** RDS Proxy is replaced by TaurusDB's built-in proxy (Terraform: opentelekomcloud_taurusdb_mysql_proxy_v3) — no ProxySQL needed. **No Performance Insights.** Monitoring via Cloud Eye, but less granular. Read replicas work on both sides. Connection strings and SSL certificates must be adjusted."
+      "de": "**Nur MySQL-kompatibel.** TaurusDB unterstützt MySQL 8.0 — Aurora PostgreSQL hat kein Pendant auf T Cloud Public (nur RDS PostgreSQL als Fallback). **Kein Serverless.** Für Aurora Serverless v2 gibt es derzeit keinen TaurusDB-Ersatz; die aktuelle Portfolio-Roadmap nennt keinen TaurusDB-Serverless-Termin. Feste Instanzgrößen einplanen. **Kein Cross-Region.** Aurora Global Database hat kein Pendant. Multi-Master ist ebenfalls nicht verfügbar. **Flashback statt Backtrack.** Aurora Backtrack wird durch TaurusDB Flashback Query ersetzt (ähnliche Funktionalität). **Integrierter Proxy.** RDS Proxy wird durch den TaurusDB-eigenen Proxy ersetzt (Terraform: opentelekomcloud_taurusdb_mysql_proxy_v3) — kein ProxySQL nötig. **Kein Performance Insights.** Monitoring über Cloud Eye, aber weniger granular. Read Replicas funktionieren auf beiden Seiten. Connection Strings und SSL-Zertifikate müssen angepasst werden.",
+      "en": "**MySQL only.** TaurusDB supports MySQL 8.0 — Aurora PostgreSQL has no equivalent on T Cloud Public (only RDS PostgreSQL as fallback). **No serverless.** There is currently no TaurusDB replacement for Aurora Serverless v2; the current portfolio roadmap provides no TaurusDB Serverless date. Plan for fixed instance sizes. **No cross-region.** Aurora Global Database has no equivalent. Multi-master is also not available. **Flashback instead of Backtrack.** Aurora Backtrack is replaced by TaurusDB Flashback Query (similar functionality). **Integrated proxy.** RDS Proxy is replaced by TaurusDB's built-in proxy (Terraform: opentelekomcloud_taurusdb_mysql_proxy_v3) — no ProxySQL needed. **No Performance Insights.** Monitoring via Cloud Eye, but less granular. Read replicas work on both sides. Connection strings and SSL certificates must be adjusted."
     },
     "equivNote": {
       "de": "TaurusDB ist MySQL-kompatibel mit Compute-Storage-Separation (wie Aurora). Kein PostgreSQL-Support (nur RDS). Kein Aurora Serverless v2 und aktuell kein dafür angekündigter Roadmap-Termin, kein Global Database, kein Multi-Master. Flashback Query verfügbar (ähnlich Backtrack). Eigener DB-Proxy integriert.",
       "en": "TaurusDB is MySQL-compatible with compute-storage separation (like Aurora). No PostgreSQL support (RDS only). No Aurora Serverless v2 or currently announced roadmap date, no Global Database, no multi-master. Flashback Query available (similar to Backtrack). Integrated DB proxy."
     },
+    "tfNote": null
+  },
+  {
+    "name": "Amazon RDS for Oracle",
+    "category": "Database",
+    "effort": "hard",
+    "equiv": "partial",
+    "tcp": "Oracle-optimized (BYOL)",
+    "tfAws": "aws_db_instance",
+    "tfTcp": null,
+    "tfStatus": "none",
+    "docsAws": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Oracle.html",
+    "docsTcp": "oracle-managed/",
+    "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance",
+    "tfDocsTcp": null,
+    "desc": {
+      "de": "Managed Oracle Database (SE2/EE), License Included oder BYOL, Multi-AZ, automatische Backups und Patches, Read Replicas (Data Guard), RDS Custom für OS-Zugriff.",
+      "en": "Managed Oracle Database (SE2/EE), license included or BYOL, multi-AZ, automated backups and patching, read replicas (Data Guard), RDS Custom for OS access."
+    },
+    "tcpDesc": {
+      "de": "Oracle-optimierte Instanzen (oo.*-Flavors, KVM) mit ZFS-Storage in EU-DE (2 AZs). Nur Oracle Enterprise Edition im BYOL-Modell. Direct Connect ist Pflicht, Setup-Gebühr für Netzwerkintegration. Optional Betrieb als Managed Service durch T-Systems (ab Paket „Standard“). Details und Preise: Oracle-Seite.",
+      "en": "Oracle-optimized instances (oo.* flavors, KVM) with ZFS storage in EU-DE (2 AZs). Oracle Enterprise Edition in BYOL model only. Direct Connect mandatory, setup fee for network integration. Optional operation as managed service by T-Systems (from package \"Standard\"). Details and prices: Oracle page."
+    },
+    "alt": {
+      "de": "Ora2Pg + RDS PostgreSQL, Oracle self-managed auf ECS",
+      "en": "Ora2Pg + RDS PostgreSQL, Oracle self-managed on ECS"
+    },
+    "migration": {
+      "de": "**Kein Managed RDS for Oracle.** Oracle läuft auf dedizierten Oracle-optimized Instanzen; Datenbank-Betrieb (Patching, Backup, HA) liegt beim Kunden oder beim optionalen T-Systems Managed Service. **Lizenzen.** Nur BYOL und nur Enterprise Edition — License-Included- und SE2-Szenarien neu bewerten. **Netzwerk.** Direct Connect ist Voraussetzung; Setup-Gebühr einplanen. **HA.** Multi-AZ → zwei Instanzen in verschiedenen AZs, Data Guard selbst einrichten. **Migration.** Data Pump, RMAN oder GoldenGate; alternativ Umstieg auf PostgreSQL mit Ora2Pg.",
+      "en": "**No managed RDS for Oracle.** Oracle runs on dedicated Oracle-optimized instances; database operations (patching, backup, HA) are done by the customer or the optional T-Systems managed service. **Licenses.** BYOL and Enterprise Edition only — re-evaluate license-included and SE2 scenarios. **Network.** Direct Connect is required; plan for the setup fee. **HA.** Multi-AZ → two instances in different AZs, set up Data Guard yourself. **Migration.** Data Pump, RMAN or GoldenGate; alternatively move to PostgreSQL with Ora2Pg."
+    },
+    "equivNote": {
+      "de": "Infrastruktur statt Managed DB: kein automatisches Patching/Backup/Failover ohne Managed Service, nur EE/BYOL.",
+      "en": "Infrastructure instead of managed DB: no automated patching/backup/failover without managed service, EE/BYOL only."
+    },
+    "tfNote": {
+      "de": "Oracle-optimized Instanzen sind nicht per Terraform provisionierbar (Bestellung über Support).",
+      "en": "Oracle-optimized instances are not provisionable via Terraform (ordered via support)."
+    },
+    "aliases": [
+      "Oracle Managed Service"
+    ]
+  },
+  {
+    "name": "Amazon Keyspaces",
+    "category": "Database",
+    "effort": "medium",
+    "equiv": "partial",
+    "tcp": "GeminiDB (Cassandra API)",
+    "tfAws": "aws_keyspaces_keyspace, aws_keyspaces_table",
+    "tfTcp": "opentelekomcloud_gemini_instance_v3",
+    "tfStatus": "partial",
+    "docsAws": "https://docs.aws.amazon.com/keyspaces/",
+    "docsTcp": "https://docs.otc.t-systems.com/geminidb/index.html",
+    "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/keyspaces_table",
+    "tfDocsTcp": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/gemini_instance_v3",
+    "desc": {
+      "de": "Serverless, Cassandra-kompatible Datenbank (CQL 3.11 API). On-Demand- oder Provisioned-Kapazität, PITR, Multi-Region-Replikation, IAM-Authentifizierung.",
+      "en": "Serverless, Cassandra-compatible database (CQL 3.11 API). On-demand or provisioned capacity, PITR, multi-region replication, IAM authentication."
+    },
+    "tcpDesc": {
+      "de": "Cassandra-kompatible verteilte NoSQL-DB (CQL 3.x) mit proprietärer Storage-Engine, Compute/Storage getrennt skalierbar, 3 Replikas, Multi-AZ, Backups. Instanzbasiert (4–64 vCPUs). Nur EU-DE.",
+      "en": "Cassandra-compatible distributed NoSQL DB (CQL 3.x) with proprietary storage engine, compute/storage scale independently, 3 replicas, multi-AZ, backups. Instance-based (4–64 vCPUs). EU-DE only."
+    },
+    "alt": {
+      "de": "Apache Cassandra/ScyllaDB self-managed auf CCE",
+      "en": "Apache Cassandra/ScyllaDB self-managed on CCE"
+    },
+    "migration": {
+      "de": "**CQL bleibt.** Schemas und Queries sind weitgehend übertragbar; Treiber auf GeminiDB-Endpoint umstellen. **Kapazität.** Kein Serverless/On-Demand — Knotenanzahl und Instanzgröße dimensionieren. **Datenmigration.** cqlsh COPY, DSBulk oder Spark-Cassandra-Connector. **Nicht verfügbar.** Multi-Region-Replikation und IAM-basierte Authentifizierung (Benutzer/Rollen in CQL verwalten).",
+      "en": "**CQL stays.** Schemas and queries are largely transferable; switch drivers to the GeminiDB endpoint. **Capacity.** No serverless/on-demand — size node count and instance size. **Data migration.** cqlsh COPY, DSBulk or Spark Cassandra connector. **Not available.** Multi-region replication and IAM-based authentication (manage users/roles in CQL)."
+    },
+    "equivNote": {
+      "de": "Instanzbasiert statt Serverless, keine Multi-Region-Replikation.",
+      "en": "Instance-based instead of serverless, no multi-region replication."
+    },
+    "tfNote": {
+      "de": "Instanzen per Terraform; Keyspaces/Tabellen nur per CQL.",
+      "en": "Instances via Terraform; keyspaces/tables via CQL only."
+    }
+  },
+  {
+    "name": "Amazon Timestream for InfluxDB",
+    "category": "Database",
+    "effort": "medium",
+    "equiv": "partial",
+    "tcp": "GeminiDB (Influx API)",
+    "tfAws": "aws_timestreaminfluxdb_db_instance",
+    "tfTcp": "opentelekomcloud_gemini_instance_v3",
+    "tfStatus": "partial",
+    "docsAws": "https://docs.aws.amazon.com/timestream/latest/developerguide/timestream-for-influxdb.html",
+    "docsTcp": "https://docs.otc.t-systems.com/geminidb/index.html",
+    "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/timestreaminfluxdb_db_instance",
+    "tfDocsTcp": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/gemini_instance_v3",
+    "desc": {
+      "de": "Managed InfluxDB (Open Source) für Zeitreihen: Single-AZ oder Multi-AZ, InfluxQL/Flux, Telegraf-Kompatibilität. Zusätzlich Timestream for LiveAnalytics (serverless).",
+      "en": "Managed InfluxDB (open source) for time series: single-AZ or multi-AZ, InfluxQL/Flux, Telegraf compatibility. Additionally Timestream for LiveAnalytics (serverless)."
+    },
+    "tcpDesc": {
+      "de": "GeminiDB mit InfluxDB-kompatibler API (EU-DE seit 04.09.2026): Zeitreihen-DB auf der GeminiDB-Architektur mit Cluster-Modus, hoher Schreibrate und Kompression. InfluxQL- und Line-Protocol-kompatibel.",
+      "en": "GeminiDB with InfluxDB-compatible API (EU-DE since 04.09.2026): time-series DB on the GeminiDB architecture with cluster mode, high write throughput and compression. InfluxQL and line protocol compatible."
+    },
+    "alt": {
+      "de": "InfluxDB/VictoriaMetrics self-managed auf CCE",
+      "en": "InfluxDB/VictoriaMetrics self-managed on CCE"
+    },
+    "migration": {
+      "de": "**Protokolle.** Line Protocol und InfluxQL funktionieren weiter — Telegraf/Clients auf den neuen Endpoint umstellen. **Flux/InfluxDB 2.x/3.x-APIs.** Kompatibilität (Buckets, Tasks, Flux) vorab prüfen. **LiveAnalytics.** Timestream for LiveAnalytics (serverless, SQL) hat kein Pendant. **Datenmigration.** Export per influx_inspect/CSV und Re-Import, oder Dual-Write während der Übergangsphase.",
+      "en": "**Protocols.** Line protocol and InfluxQL keep working — switch Telegraf/clients to the new endpoint. **Flux/InfluxDB 2.x/3.x APIs.** Check compatibility (buckets, tasks, Flux) upfront. **LiveAnalytics.** Timestream for LiveAnalytics (serverless, SQL) has no equivalent. **Data migration.** Export via influx_inspect/CSV and re-import, or dual-write during transition."
+    },
+    "equivNote": {
+      "de": "Kompatibilität primär InfluxDB 1.x (InfluxQL); kein Serverless-Pendant zu LiveAnalytics.",
+      "en": "Compatibility primarily InfluxDB 1.x (InfluxQL); no serverless equivalent to LiveAnalytics."
+    },
+    "tfNote": {
+      "de": "Instanzen per Terraform (gemini_instance_v3), Datenbanken über die Influx-API.",
+      "en": "Instances via Terraform (gemini_instance_v3), databases via the Influx API."
+    }
+  },
+  {
+    "name": "Distributed Database Middleware (DDM)",
+    "category": "Database",
+    "effort": null,
+    "equiv": "tcpOnly",
+    "tcp": "Distributed Database Middleware (DDM)",
+    "tfAws": null,
+    "tfTcp": "opentelekomcloud_ddm_instance_v1, opentelekomcloud_ddm_schema_v1",
+    "tfStatus": "full",
+    "docsAws": null,
+    "docsTcp": "https://docs.otc.t-systems.com/distributed-database-middleware/index.html",
+    "tfDocsAws": null,
+    "tfDocsTcp": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/ddm_instance_v1",
+    "desc": {
+      "de": "Kein direktes AWS-Pendant für transparentes MySQL-Sharding als Middleware (am nächsten: Aurora PostgreSQL Limitless Database — jedoch PostgreSQL und integrierter Dienst).",
+      "en": "No direct AWS equivalent for transparent MySQL sharding as middleware (closest: Aurora PostgreSQL Limitless Database — but PostgreSQL and an integrated service)."
+    },
+    "tcpDesc": {
+      "de": "Middleware für horizontales Sharding von MySQL/RDS-Datenbanken: transparente Verteilung von Tabellen auf mehrere RDS-Instanzen, Read/Write-Splitting, elastische Skalierung, MySQL-Protokoll-kompatibel. Nur EU-DE.",
+      "en": "Middleware for horizontal sharding of MySQL/RDS databases: transparent distribution of tables across multiple RDS instances, read/write splitting, elastic scaling, MySQL protocol compatible. EU-DE only."
+    },
+    "alt": null,
+    "migration": null,
+    "equivNote": null,
     "tfNote": null
   }
 ]

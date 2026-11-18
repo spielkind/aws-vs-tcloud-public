@@ -12,6 +12,7 @@
 .card.easy { border-left-color: var(--easy); }
 .card.medium { border-left-color: var(--medium); }
 .card.hard { border-left-color: var(--hard); }
+.card.tcp-only { border-left-color: var(--magenta); }
 
 /* No-equivalent special styling */
 .card.no-equiv { border-left-color: #ff6b6b; background: linear-gradient(135deg, #fff 0%, #fff5f5 100%); }
@@ -28,7 +29,7 @@
 .card-meta { display: flex; gap: .3rem; flex-wrap: wrap; margin-top: .3rem; align-items: center; }
 .tag { padding: .15rem .5rem; border-radius: 3px; font-size: .72rem; font-weight: 600; white-space: nowrap; }
 .tag-cat { background: #f0f0f0; color: #666; }
-.tag-otc { background: #fce4f0; color: var(--magenta); }
+.tag-tcp { background: #fce4f0; color: var(--magenta); }
 .tag-easy { background: var(--easy-bg); color: var(--easy-dark); }
 .tag-med { background: var(--medium-bg); color: var(--medium-dark); }
 .tag-hard { background: var(--hard-bg); color: var(--hard-dark); }
@@ -39,6 +40,7 @@
 .tag-eq-full { background: var(--easy-bg); color: var(--easy-dark); font-weight: 600; }
 .tag-eq-partial { background: var(--medium-bg); color: var(--medium-dark); font-weight: 600; }
 .tag-eq-none { background: var(--hard-bg); color: var(--hard-dark); font-weight: 600; }
+.tag-eq-tcp-only { background: #fce4f0; color: var(--magenta); font-weight: 600; }
 
 /* Card body (expandable) */
 .card-body { max-height: 0; overflow: hidden; transition: var(--expand-transition); }
@@ -61,7 +63,7 @@
 .links-row { display: flex; gap: .3rem; flex-wrap: wrap; }
 .link-chip { padding: .2rem .5rem; border-radius: 3px; font-size: .72rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: .2rem; }
 .link-chip.l-aws { background: #fff5e6; color: #c77600; border: 1px solid #ffd699; }
-.link-chip.l-otc { background: #fce4f0; color: #c0005e; border: 1px solid #f0b3d1; }
+.link-chip.l-tcp { background: #fce4f0; color: #c0005e; border: 1px solid #f0b3d1; }
 .link-chip.l-tf { background: #ede8fd; color: #5C4EE5; border: 1px solid #c7bff5; }
 
 /* Share button */

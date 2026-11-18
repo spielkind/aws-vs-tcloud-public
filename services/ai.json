@@ -1,0 +1,75 @@
+[
+  {
+    "name": "Amazon SageMaker AI",
+    "category": "AI/ML",
+    "effort": "hard",
+    "equiv": "partial",
+    "tcp": "ModelArts",
+    "tfAws": "aws_sagemaker_domain, aws_sagemaker_endpoint",
+    "tfTcp": null,
+    "tfStatus": "none",
+    "docsAws": "https://docs.aws.amazon.com/sagemaker/",
+    "docsTcp": "https://docs.otc.t-systems.com/modelarts/index.html",
+    "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sagemaker_endpoint",
+    "tfDocsTcp": null,
+    "desc": {
+      "de": "End-to-End-ML-Plattform: Notebooks/Studio, Training (verteilte Jobs, Spot), Hyperparameter-Tuning, Feature Store, Model Registry, Pipelines (MLOps), Real-Time/Serverless/Batch-Inferenz, JumpStart-Foundation-Models.",
+      "en": "End-to-end ML platform: notebooks/Studio, training (distributed jobs, spot), hyperparameter tuning, feature store, model registry, pipelines (MLOps), real-time/serverless/batch inference, JumpStart foundation models."
+    },
+    "tcpDesc": {
+      "de": "KI-Entwicklungsplattform: Notebooks (JupyterLab), Datenverwaltung/-labeling, Training-Jobs auf GPU-Flavors, Modellverwaltung, Inferenz als Real-Time-Service oder Batch. Nur EU-DE; neue Ressourcen (L4-GPU, c9/m9) laut Roadmap.",
+      "en": "AI development platform: notebooks (JupyterLab), data management/labeling, training jobs on GPU flavors, model management, inference as real-time service or batch. EU-DE only; new resources (L4 GPU, c9/m9) on the roadmap."
+    },
+    "alt": {
+      "de": "Kubeflow/MLflow auf CCE, GPU-ECS (H100/A100) self-managed",
+      "en": "Kubeflow/MLflow on CCE, GPU ECS (H100/A100) self-managed"
+    },
+    "migration": {
+      "de": "**Container-basiert.** Trainings- und Inferenz-Code in eigenen Images (SWR) paketieren; SageMaker-SDK-Aufrufe durch ModelArts-SDK/API ersetzen. **Fehlend.** Feature Store, Autopilot, JumpStart/Bedrock-ähnliche Foundation-Model-Kataloge, Clarify und SageMaker Pipelines haben kein 1:1-Pendant. **Daten.** S3 → OBS als Trainingsdatenquelle. **Alternative.** Für volle Kontrolle Kubeflow/MLflow auf CCE mit GPU-Node-Pools.",
+      "en": "**Container-based.** Package training and inference code in own images (SWR); replace SageMaker SDK calls with ModelArts SDK/API. **Missing.** Feature Store, Autopilot, JumpStart/Bedrock-like foundation model catalogs, Clarify and SageMaker Pipelines have no 1:1 equivalent. **Data.** S3 → OBS as training data source. **Alternative.** For full control Kubeflow/MLflow on CCE with GPU node pools."
+    },
+    "equivNote": {
+      "de": "Kernfunktionen (Notebook, Training, Inferenz) vorhanden; MLOps-Bausteine und Foundation-Model-Katalog fehlen.",
+      "en": "Core features (notebook, training, inference) available; MLOps building blocks and foundation model catalog missing."
+    },
+    "tfNote": {
+      "de": "Keine Terraform-Ressourcen für ModelArts.",
+      "en": "No Terraform resources for ModelArts."
+    }
+  },
+  {
+    "name": "Amazon Textract",
+    "category": "AI/ML",
+    "effort": "medium",
+    "equiv": "partial",
+    "tcp": "Optical Character Recognition (OCR)",
+    "tfAws": null,
+    "tfTcp": null,
+    "tfStatus": "none",
+    "docsAws": "https://docs.aws.amazon.com/textract/",
+    "docsTcp": "https://docs.otc.t-systems.com/optical-character-recognition/index.html",
+    "tfDocsAws": null,
+    "tfDocsTcp": null,
+    "desc": {
+      "de": "ML-basierte Extraktion von Text, Formularen (Key-Value), Tabellen, Unterschriften und Ausweisdaten aus Dokumenten; Queries, Analyze Expense/ID/Lending, asynchrone Verarbeitung großer PDFs.",
+      "en": "ML-based extraction of text, forms (key-value), tables, signatures and ID data from documents; queries, Analyze Expense/ID/Lending, asynchronous processing of large PDFs."
+    },
+    "tcpDesc": {
+      "de": "API-basierte Texterkennung: allgemeiner Text, Tabellen, Webbilder, Ausweise/Pässe, Fahrzeugscheine u.a. — Ergebnis als strukturiertes JSON. Nur EU-DE (Teilumfang).",
+      "en": "API-based text recognition: general text, tables, web images, ID cards/passports, vehicle documents etc. — results as structured JSON. EU-DE only (partial scope)."
+    },
+    "alt": {
+      "de": "Tesseract/PaddleOCR auf ECS/CCE",
+      "en": "Tesseract/PaddleOCR on ECS/CCE"
+    },
+    "migration": {
+      "de": "**API-Wechsel.** Textract-Aufrufe (DetectDocumentText/AnalyzeDocument) auf OCR-REST-APIs umstellen; Antwortformat (Blocks vs. JSON-Felder) unterscheidet sich. **Fehlend.** Queries, Analyze Expense/Lending, Signatur-Erkennung und asynchrone Multi-Page-PDF-Jobs prüfen — ggf. Seiten selbst splitten. **Sprachen.** Unterstützte Sprachen und Dokumenttypen vorab mit Testdaten validieren.",
+      "en": "**API change.** Switch Textract calls (DetectDocumentText/AnalyzeDocument) to OCR REST APIs; response format (blocks vs. JSON fields) differs. **Missing.** Check queries, Analyze Expense/Lending, signature detection and asynchronous multi-page PDF jobs — split pages yourself if needed. **Languages.** Validate supported languages and document types with test data upfront."
+    },
+    "equivNote": {
+      "de": "Grundlegende Text-/Tabellen-/Ausweiserkennung; keine Queries, kein Expense/Lending.",
+      "en": "Basic text/table/ID recognition; no queries, no expense/lending."
+    },
+    "tfNote": null
+  }
+]

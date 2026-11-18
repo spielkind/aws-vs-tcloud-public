@@ -1,6 +1,6 @@
 /* ===================================================
    Oracle Managed Service — Standalone Styles
-   Uses vars.css tokens from parent OTC-vs-AWS
+   Uses vars.css tokens from parent AWS-vs-T-Cloud-Public
    =================================================== */
 
 /* Base Reset & Typography */
@@ -15,7 +15,7 @@ body {
 }
 
 /* ===================================================
-   Header (matches OTC-vs-AWS)
+   Header (matches AWS-vs-T-Cloud-Public)
    =================================================== */
 .header {
   background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-bg-alt) 50%, #0f3460 100%);

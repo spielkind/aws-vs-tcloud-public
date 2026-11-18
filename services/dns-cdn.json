@@ -4,32 +4,29 @@
     "category": "DNS/CDN",
     "effort": "easy",
     "equiv": "partial",
-    "scope": [
-      "K1"
-    ],
-    "otc": "Domain Name Service (DNS)",
+    "tcp": "Domain Name Service (DNS)",
     "tfAws": "aws_route53_zone, aws_route53_record",
-    "tfOtc": "opentelekomcloud_dns_zone_v2, opentelekomcloud_dns_recordset_v2",
+    "tfTcp": "opentelekomcloud_dns_zone_v2, opentelekomcloud_dns_recordset_v2",
     "tfStatus": "full",
     "docsAws": "https://docs.aws.amazon.com/route53/",
-    "docsOtc": "https://docs.otc.t-systems.com/domain-name-service/index.html",
+    "docsTcp": "https://docs.otc.t-systems.com/domain-name-service/index.html",
     "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_zone",
-    "tfDocsOtc": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/dns_zone_v2",
+    "tfDocsTcp": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/dns_zone_v2",
     "desc": {
       "de": "Skalierbarer DNS. Routing-Policies (Simple, Weighted, Latency, Geolocation, Failover, Multivalue), Health Checks, Alias Records, DNSSEC, Domain Registration, Route 53 Resolver (DNS Firewall).",
       "en": "Scalable DNS. Routing policies (simple, weighted, latency, geolocation, failover, multivalue), health checks, alias records, DNSSEC, domain registration, Route 53 Resolver (DNS Firewall)."
     },
-    "otcDesc": {
-      "de": "Public/Private Zones, Reverse Resolution (PTR). Record-Typen: A, AAAA, CNAME, MX, TXT, SRV, NS, SOA, PTR, CAA. Wildcard-DNS, Batch Import/Export. Weighted Routing (Gewichtung pro Record Set). Hochperformant: Millionen Queries pro Node. Keine Health Checks, kein DNSSEC, keine Domain-Registration.",
-      "en": "Public/private zones, reverse resolution (PTR). Record types: A, AAAA, CNAME, MX, TXT, SRV, NS, SOA, PTR, CAA. Wildcard DNS, batch import/export. Weighted routing (weighting per record set). High-performance: millions of queries per node. No health checks, no DNSSEC, no domain registration."
+    "tcpDesc": {
+      "de": "Public/Private Zones, Reverse Resolution (PTR). Record-Typen: A, AAAA, CNAME, MX, TXT, SRV, NS, SOA, PTR, CAA. Wildcard-DNS, Batch Import/Export. Weighted Routing (Gewichtung pro Record Set). Hochperformant: Millionen Queries pro Node. Keine Health Checks, kein DNSSEC, keine Domain-Registration. Neue DNS-Architektur in EU-DE seit 14.10.2026; ein DNS Resolver ist laut Roadmap für Q4 2026 geplant.",
+      "en": "Public/private zones, reverse resolution (PTR). Record types: A, AAAA, CNAME, MX, TXT, SRV, NS, SOA, PTR, CAA. Wildcard DNS, batch import/export. Weighted routing (weighting per record set). High-performance: millions of queries per node. No health checks, no DNSSEC, no domain registration. New DNS architecture in EU-DE since 14.10.2026; a DNS resolver is planned on the roadmap for Q4 2026."
     },
     "alt": {
       "de": "Cloudflare DNS",
       "en": "Cloudflare DNS"
     },
     "migration": {
-      "de": "**Zonen-Support.** OTC DNS unterstützt Public und Private Zones sowie Reverse Resolution (PTR Records). **Kein DNS-Failover.** Health Checks mit automatischem DNS-Failover fehlen — muss mit Cloud Eye + SMN selbst gebaut werden. **Routing-Einschränkungen.** Weighted Routing ist verfügbar (Gewichtung pro Record Set), aber Latency-based und Geolocation Routing fehlen komplett. **Kein DNSSEC.** DNS-Antworten können nicht kryptografisch signiert werden. **Keine Domain-Registration.** Domains müssen über einen externen Registrar verwaltet werden. **Alias-Records.** Route 53 Alias Records haben kein Pendant — stattdessen CNAME oder A-Record direkt auf die ELB-IP setzen. **Kein DNS Resolver.** Route 53 Resolver und DNS Firewall haben kein Pendant. Wildcard-DNS und Batch-Import/-Export von Record Sets werden unterstützt.",
-      "en": "**Zone support.** OTC DNS supports public and private zones as well as reverse resolution (PTR records). **No DNS failover.** Health checks with automatic DNS failover are missing — must be self-built with Cloud Eye + SMN. **Routing limitations.** Weighted routing is available (weighting per record set), but latency-based and geolocation routing are completely missing. **No DNSSEC.** DNS responses cannot be cryptographically signed. **No domain registration.** Domains must be managed through an external registrar. **Alias records.** Route 53 Alias Records have no equivalent — use CNAME or A-record pointing directly to the ELB IP instead. **No DNS Resolver.** Route 53 Resolver and DNS Firewall have no equivalent. Wildcard DNS and batch import/export of record sets are supported."
+      "de": "**Zonen-Support.** T Cloud Public DNS unterstützt Public und Private Zones sowie Reverse Resolution (PTR Records). **Kein DNS-Failover.** Health Checks mit automatischem DNS-Failover fehlen — muss mit Cloud Eye + SMN selbst gebaut werden. **Routing-Einschränkungen.** Weighted Routing ist verfügbar (Gewichtung pro Record Set), aber Latency-based und Geolocation Routing fehlen komplett. **Kein DNSSEC.** DNS-Antworten können nicht kryptografisch signiert werden. **Keine Domain-Registration.** Domains müssen über einen externen Registrar verwaltet werden. **Alias-Records.** Route 53 Alias Records haben kein Pendant — stattdessen CNAME oder A-Record direkt auf die ELB-IP setzen. **Kein DNS Resolver.** Route 53 Resolver und DNS Firewall haben kein Pendant. Wildcard-DNS und Batch-Import/-Export von Record Sets werden unterstützt.",
+      "en": "**Zone support.** T Cloud Public DNS supports public and private zones as well as reverse resolution (PTR records). **No DNS failover.** Health checks with automatic DNS failover are missing — must be self-built with Cloud Eye + SMN. **Routing limitations.** Weighted routing is available (weighting per record set), but latency-based and geolocation routing are completely missing. **No DNSSEC.** DNS responses cannot be cryptographically signed. **No domain registration.** Domains must be managed through an external registrar. **Alias records.** Route 53 Alias Records have no equivalent — use CNAME or A-record pointing directly to the ELB IP instead. **No DNS Resolver.** Route 53 Resolver and DNS Firewall have no equivalent. Wildcard DNS and batch import/export of record sets are supported."
     },
     "equivNote": {
       "de": "Weighted Routing vorhanden. Aber: kein Latency-based, Geolocation oder Failover Routing. Keine Alias Records (nur CNAME). Keine DNS Health Checks (mit Cloud Eye + SMN nachbauen). Kein DNSSEC. Kein Route 53 Resolver / DNS Firewall. Private Zones für VPC-interne Auflösung verfügbar. CAA Records werden unterstützt.",
@@ -42,32 +39,29 @@
     "category": "DNS/CDN",
     "effort": "hard",
     "equiv": "none",
-    "scope": [
-      "K1"
-    ],
-    "otc": "Kein Equivalent",
+    "tcp": "Kein Equivalent",
     "tfAws": "aws_cloudfront_distribution",
-    "tfOtc": null,
+    "tfTcp": null,
     "tfStatus": "none",
     "docsAws": "https://docs.aws.amazon.com/cloudfront/",
-    "docsOtc": null,
+    "docsTcp": null,
     "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution",
-    "tfDocsOtc": null,
+    "tfDocsTcp": null,
     "desc": {
       "de": "Globales CDN für statische/dynamische Inhalte. 600+ PoPs weltweit, Lambda@Edge, CloudFront Functions, Origin Shield, Signed URLs/Cookies, Field-Level Encryption, Real-time Logs.",
       "en": "Global CDN for static/dynamic content. 600+ PoPs worldwide, Lambda@Edge, CloudFront Functions, Origin Shield, signed URLs/cookies, field-level encryption, real-time logs."
     },
-    "otcDesc": {
-      "de": "OTC bietet aktuell keinen CDN-Dienst in EU-DE/EU-NL. Die Portfolio-Roadmap führt ein Content Delivery Network, nennt aber noch keinen konkreten Veröffentlichungstermin. OBS Static Website Hosting kann als einfache Alternative für statische Inhalte dienen.",
-      "en": "OTC currently offers no CDN service in EU-DE/EU-NL. The portfolio roadmap lists a Content Delivery Network but does not yet give a concrete release date. OBS Static Website Hosting can serve as a simple alternative for static content."
+    "tcpDesc": {
+      "de": "T Cloud Public bietet aktuell keinen CDN-Dienst in EU-DE/EU-NL. Die Portfolio-Roadmap führt ein Content Delivery Network, nennt aber noch keinen konkreten Veröffentlichungstermin. OBS Static Website Hosting kann als einfache Alternative für statische Inhalte dienen.",
+      "en": "T Cloud Public currently offers no CDN service in EU-DE/EU-NL. The portfolio roadmap lists a Content Delivery Network but does not yet give a concrete release date. OBS Static Website Hosting can serve as a simple alternative for static content."
     },
     "alt": {
-      "de": "Cloudflare, Fastly, Akamai, AWS CloudFront cross-cloud (Origin auf OTC)",
-      "en": "Cloudflare, Fastly, Akamai, AWS CloudFront cross-cloud (origin on OTC)"
+      "de": "Cloudflare, Fastly, Akamai, AWS CloudFront cross-cloud (Origin auf T Cloud Public)",
+      "en": "Cloudflare, Fastly, Akamai, AWS CloudFront cross-cloud (origin on T Cloud Public)"
     },
     "migration": {
-      "de": "**Kein CDN verfügbar.** OTC bietet aktuell keinen CDN-Dienst in EU-DE/EU-NL. Die Portfolio-Roadmap führt ein CDN, jedoch ohne konkreten Veröffentlichungstermin. **Externe CDN-Anbieter.** Cloudflare (empfohlen, kostenloser Tier), Akamai oder AWS CloudFront cross-cloud mit Origin auf OTC OBS/ELB als Übergangslösung. **Statische Assets.** OBS Static Website Hosting mit Cloudflare davor als einfachste Variante. **Edge-Computing.** Lambda@Edge und Origin Shield haben kein Pendant auf OTC. **Signed URLs.** Signed URLs/Cookies müssen applikationsseitig implementiert werden.",
-      "en": "**No CDN available.** OTC currently offers no CDN service in EU-DE/EU-NL. The portfolio roadmap lists a CDN, but without a concrete release date. **External CDN providers.** Cloudflare (recommended, free tier), Akamai, or AWS CloudFront cross-cloud with origin on OTC OBS/ELB as interim solution. **Static assets.** OBS Static Website Hosting with Cloudflare in front as simplest approach. **Edge computing.** Lambda@Edge and Origin Shield have no equivalent on OTC. **Signed URLs.** Signed URLs/cookies must be implemented application-side."
+      "de": "**Kein CDN verfügbar.** T Cloud Public bietet aktuell keinen CDN-Dienst in EU-DE/EU-NL. Die Portfolio-Roadmap führt ein CDN, jedoch ohne konkreten Veröffentlichungstermin. **Externe CDN-Anbieter.** Cloudflare (empfohlen, kostenloser Tier), Akamai oder AWS CloudFront cross-cloud mit Origin auf T Cloud Public OBS/ELB als Übergangslösung. **Statische Assets.** OBS Static Website Hosting mit Cloudflare davor als einfachste Variante. **Edge-Computing.** Lambda@Edge und Origin Shield haben kein Pendant auf T Cloud Public. **Signed URLs.** Signed URLs/Cookies müssen applikationsseitig implementiert werden.",
+      "en": "**No CDN available.** T Cloud Public currently offers no CDN service in EU-DE/EU-NL. The portfolio roadmap lists a CDN, but without a concrete release date. **External CDN providers.** Cloudflare (recommended, free tier), Akamai, or AWS CloudFront cross-cloud with origin on T Cloud Public OBS/ELB as interim solution. **Static assets.** OBS Static Website Hosting with Cloudflare in front as simplest approach. **Edge computing.** Lambda@Edge and Origin Shield have no equivalent on T Cloud Public. **Signed URLs.** Signed URLs/cookies must be implemented application-side."
     },
     "equivNote": null,
     "tfNote": null

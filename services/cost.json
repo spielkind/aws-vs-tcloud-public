@@ -1,0 +1,101 @@
+[
+  {
+    "name": "AWS Cost Explorer",
+    "category": "Cost Management",
+    "effort": "easy",
+    "equiv": "partial",
+    "tcp": "Financial Dashboard",
+    "tfAws": "aws_ce_cost_category",
+    "tfTcp": null,
+    "tfStatus": "none",
+    "docsAws": "https://docs.aws.amazon.com/cost-management/latest/userguide/ce-what-is.html",
+    "docsTcp": "https://docs.otc.t-systems.com/financial-dashboard/index.html",
+    "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ce_cost_category",
+    "tfDocsTcp": null,
+    "desc": {
+      "de": "Analyse von Kosten und Nutzung mit Filtern, Gruppierungen, Prognosen, Cost Categories, Rightsizing- und Savings-Plans-Empfehlungen; Cost and Usage Reports (CUR).",
+      "en": "Analysis of costs and usage with filters, groupings, forecasts, cost categories, rightsizing and Savings Plans recommendations; Cost and Usage Reports (CUR)."
+    },
+    "tcpDesc": {
+      "de": "Kosten-, Nutzungs- und Nachhaltigkeits-Dashboard (ehemals Enterprise Dashboard): Auswertung nach Services, Projekten/Enterprise Projects und Tags, Export der Rechnungsdaten.",
+      "en": "Cost, usage and sustainability dashboard (formerly Enterprise Dashboard): analysis by services, projects/enterprise projects and tags, export of invoice data."
+    },
+    "alt": null,
+    "migration": {
+      "de": "**Tagging.** Cost-Allocation-Tags in TMS-Tags übernehmen, damit Auswertungen weiter funktionieren. **Reports.** CUR-basierte BI-Auswertungen auf den Rechnungsdaten-Export umstellen. **Fehlend.** Prognosen, Rightsizing-Empfehlungen und Anomalie-Erkennung prüfen.",
+      "en": "**Tagging.** Carry over cost allocation tags as TMS tags so analyses keep working. **Reports.** Switch CUR-based BI analyses to the invoice data export. **Missing.** Check forecasts, rightsizing recommendations and anomaly detection."
+    },
+    "equivNote": {
+      "de": "Dashboard und Export vorhanden; weniger Analyse-, Prognose- und Empfehlungsfunktionen.",
+      "en": "Dashboard and export available; fewer analysis, forecast and recommendation features."
+    },
+    "tfNote": null,
+    "aliases": [
+      "Enterprise Dashboard"
+    ]
+  },
+  {
+    "name": "AWS Budgets",
+    "category": "Cost Management",
+    "effort": "easy",
+    "equiv": "partial",
+    "tcp": "Alert Service (Beta)",
+    "tfAws": "aws_budgets_budget",
+    "tfTcp": null,
+    "tfStatus": "none",
+    "docsAws": "https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html",
+    "docsTcp": "https://www.t-cloud-public.com/en/support/release-notes",
+    "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/budgets_budget",
+    "tfDocsTcp": null,
+    "desc": {
+      "de": "Kosten- und Nutzungsbudgets mit Schwellwert-Benachrichtigungen (E-Mail/SNS), Budget Actions (z.B. IAM-Policies anwenden), Reservierungs-/Savings-Plans-Budgets.",
+      "en": "Cost and usage budgets with threshold notifications (e-mail/SNS), budget actions (e.g. apply IAM policies), reservation/Savings Plans budgets."
+    },
+    "tcpDesc": {
+      "de": "Benachrichtigungen bei Überschreiten definierter Ausgabeschwellen über MyWorkplace (veröffentlicht 10.02.2026, laut Leistungsbeschreibung Beta).",
+      "en": "Notifications when defined spending thresholds are exceeded via MyWorkplace (released 10.02.2026, beta per service description)."
+    },
+    "alt": null,
+    "migration": {
+      "de": "**Schwellwerte übertragen.** Budgets als Alarme im Alert Service anlegen. **Budget Actions.** Automatische Gegenmaßnahmen haben kein Pendant — ggf. über Cloud Eye/SMN + FunctionGraph nachbauen.",
+      "en": "**Transfer thresholds.** Create budgets as alerts in the Alert Service. **Budget actions.** Automatic countermeasures have no equivalent — rebuild via Cloud Eye/SMN + FunctionGraph if needed."
+    },
+    "equivNote": {
+      "de": "Beta; nur Benachrichtigungen, keine Budget Actions.",
+      "en": "Beta; notifications only, no budget actions."
+    },
+    "tfNote": null
+  },
+  {
+    "name": "Savings Plans",
+    "category": "Cost Management",
+    "effort": "easy",
+    "equiv": "partial",
+    "tcp": "Savings Plans (Beta) / Reserved Instances",
+    "tfAws": null,
+    "tfTcp": null,
+    "tfStatus": "none",
+    "docsAws": "https://docs.aws.amazon.com/savingsplans/",
+    "docsTcp": "https://www.t-cloud-public.com/de/preise/preismodelle",
+    "tfDocsAws": null,
+    "tfDocsTcp": null,
+    "desc": {
+      "de": "Flexible Rabatte gegen 1- oder 3-jährige Ausgabenverpflichtung ($/h) für EC2, Fargate, Lambda und SageMaker; Reserved Instances für einzelne Instanztypen.",
+      "en": "Flexible discounts in exchange for a 1- or 3-year spend commitment ($/h) for EC2, Fargate, Lambda and SageMaker; reserved instances for specific instance types."
+    },
+    "tcpDesc": {
+      "de": "Reserved-Modelle mit 12/24 Monaten Laufzeit pro Ressource (ECS, EVS u.a.). Savings Plans (Commitment für c4/m4/c9/m9) ab 01.12.2026 als Beta, Erweiterung laut Roadmap 2027.",
+      "en": "Reserved models with 12/24-month terms per resource (ECS, EVS etc.). Savings Plans (commitment for c4/m4/c9/m9) as beta from 01.12.2026, extension on the roadmap for 2027."
+    },
+    "alt": null,
+    "migration": {
+      "de": "**Laufzeiten.** 12/24 Monate statt 1/3 Jahre — Commitments neu kalkulieren. **Flexibilität.** Reserved-Modelle sind ressourcengebunden; Savings Plans decken zunächst nur ausgewählte Flavor-Familien ab.",
+      "en": "**Terms.** 12/24 months instead of 1/3 years — recalculate commitments. **Flexibility.** Reserved models are bound to resources; Savings Plans initially only cover selected flavor families."
+    },
+    "equivNote": {
+      "de": "Savings Plans in Beta und auf wenige Flavor-Familien beschränkt.",
+      "en": "Savings Plans in beta and limited to few flavor families."
+    },
+    "tfNote": null
+  }
+]

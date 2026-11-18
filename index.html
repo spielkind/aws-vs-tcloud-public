@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AWS → OTC Migration Guide</title>
+<title>AWS vs. T Cloud Public – Service-Vergleich</title>
+<meta name="description" content="Vergleich von AWS-Services mit T Cloud Public (ehemals Open Telekom Cloud) inkl. Terraform-Abdeckung und Migrationshinweisen.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="stylesheet" href="css/vars.css">
 <link rel="stylesheet" href="css/layout.css">
@@ -17,7 +18,7 @@
 <body>
 <div class="sticky-top">
 <div class="header"><div class="container"><div class="header-row">
-<div class="header-left"><h1>AWS → <span>Open Telekom Cloud</span></h1><div class="sub" id="subtitle"></div></div>
+<div class="header-left"><h1>AWS vs. <span>T Cloud Public</span></h1><div class="sub" id="subtitle"></div></div>
 <div class="header-center"><span class="ai-hint" id="aiHint">🤖 KI-generiert · ohne Gewähr</span></div>
 <div class="header-right">
 <div class="lang-toggle"><button class="lang-btn active" onclick="setLang('de')">DE</button><button class="lang-btn" onclick="setLang('en')">EN</button></div>
@@ -25,6 +26,7 @@
 <a class="h-btn" id="linkRoadmap" href="#" target="_blank">🗺️ <span class="h-btn-label">Roadmap</span></a>
 <a class="h-btn" id="linkRelease" href="#" target="_blank">📰 <span class="h-btn-label">Release Notes</span></a>
 <a class="h-btn" id="linkLeistung" href="#" target="_blank">📋 <span class="h-btn-label">Leistungsbeschreibung</span></a>
+<a class="h-btn h-btn-oracle" id="linkOracle" href="oracle-managed/" title="Oracle Managed Service"><svg class="oracle-icon" viewBox="0 0 24 16" aria-hidden="true"><rect x="2" y="2" width="20" height="12" rx="6" fill="none" stroke="#C74634" stroke-width="3"/></svg> <span class="h-btn-label">Oracle</span></a>
 <button class="h-btn" onclick="toggleAll()" id="btnToggle">⊞ <span class="h-btn-label">Alle öffnen</span></button>
 <button class="h-btn" onclick="toggleDark()" id="btnDark">🌙</button>
 <button class="h-btn" onclick="exportCSV()">📊 <span class="h-btn-label">CSV</span></button>
@@ -51,8 +53,6 @@
 <button class="sort-btn" data-sort="category">Kategorie</button>
 <button class="sort-btn" data-sort="effort">Aufwand</button>
 </div>
-<span class="pill-sep">|</span>
-<div class="scope-group" id="scopePills"></div>
 </div></div></div>
 </div><!-- /sticky-top -->
 
@@ -61,7 +61,7 @@
 <div class="grid" id="grid"></div>
 </div>
 
-<div class="footer">AWS → OTC Migration Guide | <a href="https://open-telekom-cloud.com" target="_blank">T-Systems Open Telekom Cloud</a> | <span id="genDate"></span></div>
+<div class="footer">AWS vs. T Cloud Public | <a href="https://www.t-cloud-public.com" target="_blank">T Cloud Public</a> <span id="formerly">(ehemals Open Telekom Cloud)</span> | <span id="genDate"></span></div>
 
 <button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 <button class="filter-fab" id="filterFab" onclick="toggleSheet()">🔍 <span id="filterBadge"></span></button>
@@ -71,7 +71,6 @@
 <button class="sheet-close" onclick="toggleSheet()">✕</button>
 <div class="sheet-body">
 <div class="sheet-row"><input type="text" class="search-box sheet-search" id="sheetSearch" placeholder="Service suchen..."></div>
-<div class="sheet-section"><div class="sheet-label">Scope</div><div class="sheet-pills" id="sheetScope"></div></div>
 <div class="sheet-section"><div class="sheet-label" id="sheetCatLabel">Kategorie</div><div class="sheet-pills" id="sheetCats"></div></div>
 <div class="sheet-section"><div class="sheet-label">Equiv</div><div class="sheet-pills" id="sheetEquiv"></div></div>
 <div class="sheet-section"><div class="sheet-label">Terraform</div><div class="sheet-pills" id="sheetTf"></div></div>

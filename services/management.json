@@ -4,24 +4,21 @@
     "category": "Management",
     "effort": "easy",
     "equiv": "partial",
-    "scope": [
-      "K1"
-    ],
-    "otc": "Cloud Trace Service (CTS)",
+    "tcp": "Cloud Trace Service (CTS)",
     "tfAws": "aws_cloudtrail",
-    "tfOtc": "opentelekomcloud_cts_tracker_v3, opentelekomcloud_cts_event_notification_v3",
+    "tfTcp": "opentelekomcloud_cts_tracker_v3, opentelekomcloud_cts_event_notification_v3",
     "tfStatus": "full",
     "docsAws": "https://docs.aws.amazon.com/cloudtrail/",
-    "docsOtc": "https://docs.otc.t-systems.com/cloud-trace-service/index.html",
+    "docsTcp": "https://docs.otc.t-systems.com/cloud-trace-service/index.html",
     "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudtrail",
-    "tfDocsOtc": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/cts_tracker_v3",
+    "tfDocsTcp": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/cts_tracker_v3",
     "desc": {
       "de": "Audit-Service für alle AWS API-Aufrufe. Management Events, Data Events (S3/Lambda/DynamoDB), Insights Events (Anomalie-Erkennung), CloudTrail Lake (SQL-Queries), Organization Trails, Multi-Region.",
       "en": "Audit service for all AWS API calls. Management events, data events (S3/Lambda/DynamoDB), Insights Events (anomaly detection), CloudTrail Lake (SQL queries), Organization Trails, multi-region."
     },
-    "otcDesc": {
-      "de": "Audit-Trail für OTC API-Operationen (Management Events). Traces werden 7 Tage in der Konsole vorgehalten. Transfer nach OBS (Langzeitarchivierung) und LTS (Suche/Analyse) möglich. Key Event Notifications über SMN (bis 200 Regeln, Filter auf Service/User/Resource). Kein Data Event Logging (kein OBS Object-Level/FGS Invocation Logging). Ein Tracker pro Region.",
-      "en": "Audit trail for OTC API operations (management events). Traces retained 7 days in console. Transfer to OBS (long-term archival) and LTS (search/analysis) possible. Key event notifications via SMN (up to 200 rules, filter on service/user/resource). No data event logging (no OBS object-level/FGS invocation logging). One tracker per region."
+    "tcpDesc": {
+      "de": "Audit-Trail für T Cloud Public API-Operationen (Management Events). Traces werden 7 Tage in der Konsole vorgehalten. Transfer nach OBS (Langzeitarchivierung) und LTS (Suche/Analyse) möglich. Key Event Notifications über SMN (bis 200 Regeln, Filter auf Service/User/Resource). Kein Data Event Logging (kein OBS Object-Level/FGS Invocation Logging). Ein Tracker pro Region.",
+      "en": "Audit trail for T Cloud Public API operations (management events). Traces retained 7 days in console. Transfer to OBS (long-term archival) and LTS (search/analysis) possible. Key event notifications via SMN (up to 200 rules, filter on service/user/resource). No data event logging (no OBS object-level/FGS invocation logging). One tracker per region."
     },
     "alt": null,
     "migration": {
@@ -39,32 +36,29 @@
     "category": "Management",
     "effort": "hard",
     "equiv": "none",
-    "scope": [
-      "K1"
-    ],
-    "otc": "Kein Equivalent",
+    "tcp": "Kein Equivalent",
     "tfAws": "aws_devopsguru_resource_collection",
-    "tfOtc": null,
+    "tfTcp": null,
     "tfStatus": "none",
     "docsAws": "https://docs.aws.amazon.com/devops-guru/",
-    "docsOtc": null,
+    "docsTcp": null,
     "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/devopsguru_resource_collection",
-    "tfDocsOtc": null,
+    "tfDocsTcp": null,
     "desc": {
       "de": "ML-basierte Anomalie-Erkennung für Operations. Analysiert CloudWatch Metriken, CloudTrail Events und Config Changes. Proactive/Reactive Insights, automatische Empfehlungen, SNS-Notifications.",
       "en": "ML-based anomaly detection for operations. Analyzes CloudWatch metrics, CloudTrail events, and Config changes. Proactive/reactive insights, automatic recommendations, SNS notifications."
     },
-    "otcDesc": {
-      "de": "Kein ML-basierter DevOps Insights Service auf OTC. AOM bietet Basis-Monitoring und Alarm-Korrelation, aber keine ML-gestützte Anomalie-Erkennung oder automatische Root-Cause-Analyse.",
-      "en": "No ML-based DevOps insights service on OTC. AOM provides basic monitoring and alarm correlation, but no ML-powered anomaly detection or automatic root-cause analysis."
+    "tcpDesc": {
+      "de": "Kein ML-basierter DevOps Insights Service auf T Cloud Public. AOM bietet Basis-Monitoring und Alarm-Korrelation, aber keine ML-gestützte Anomalie-Erkennung oder automatische Root-Cause-Analyse.",
+      "en": "No ML-based DevOps insights service on T Cloud Public. AOM provides basic monitoring and alarm correlation, but no ML-powered anomaly detection or automatic root-cause analysis."
     },
     "alt": {
       "de": "Prometheus + Grafana, Datadog",
       "en": "Prometheus + Grafana, Datadog"
     },
     "migration": {
-      "de": "**Kein OTC-Pendant.** ML-basierte Operations Insights existieren auf OTC nicht. **Metriken-Monitoring.** Prometheus + Grafana auf CCE mit Alertmanager für Anomalie-Erkennung, oder Cloud Eye Alarme + AOM für Basis-Monitoring. **Log-Analyse.** ELK Stack oder Grafana Loki auf CCE für log-basierte Anomalie-Erkennung. **Full-Stack APM.** Externe Lösungen (Datadog, New Relic, Dynatrace) für End-to-End-Observability. **Proactive Insights.** Cloud Eye + FunctionGraph für threshold-basierte Vorhersagen. **Reactive Insights.** CTS + LTS Log-Analyse mit manueller Korrelation — kein automatisches Root-Cause-Mapping über Service-Grenzen.",
-      "en": "**No OTC Equivalent.** ML-based operations insights don't exist on OTC. **Metrics Monitoring.** Prometheus + Grafana on CCE with Alertmanager for anomaly detection, or Cloud Eye alarms + AOM for basic monitoring. **Log Analysis.** ELK Stack or Grafana Loki on CCE for log-based anomaly detection. **Full-Stack APM.** External solutions (Datadog, New Relic, Dynatrace) for end-to-end observability. **Proactive Insights.** Cloud Eye + FunctionGraph for threshold-based predictions. **Reactive Insights.** CTS + LTS log analysis with manual correlation — no automatic root-cause mapping across service boundaries."
+      "de": "**Kein T Cloud Public-Pendant.** ML-basierte Operations Insights existieren auf T Cloud Public nicht. **Metriken-Monitoring.** Prometheus + Grafana auf CCE mit Alertmanager für Anomalie-Erkennung, oder Cloud Eye Alarme + AOM für Basis-Monitoring. **Log-Analyse.** ELK Stack oder Grafana Loki auf CCE für log-basierte Anomalie-Erkennung. **Full-Stack APM.** Externe Lösungen (Datadog, New Relic, Dynatrace) für End-to-End-Observability. **Proactive Insights.** Cloud Eye + FunctionGraph für threshold-basierte Vorhersagen. **Reactive Insights.** CTS + LTS Log-Analyse mit manueller Korrelation — kein automatisches Root-Cause-Mapping über Service-Grenzen.",
+      "en": "**No T Cloud Public Equivalent.** ML-based operations insights don't exist on T Cloud Public. **Metrics Monitoring.** Prometheus + Grafana on CCE with Alertmanager for anomaly detection, or Cloud Eye alarms + AOM for basic monitoring. **Log Analysis.** ELK Stack or Grafana Loki on CCE for log-based anomaly detection. **Full-Stack APM.** External solutions (Datadog, New Relic, Dynatrace) for end-to-end observability. **Proactive Insights.** Cloud Eye + FunctionGraph for threshold-based predictions. **Reactive Insights.** CTS + LTS log analysis with manual correlation — no automatic root-cause mapping across service boundaries."
     },
     "equivNote": null,
     "tfNote": null
@@ -74,22 +68,19 @@
     "category": "Management",
     "effort": "hard",
     "equiv": "partial",
-    "scope": [
-      "K1"
-    ],
-    "otc": "Config (ehem. Resource Management Service)",
+    "tcp": "Config (ehem. Resource Management Service)",
     "tfAws": "aws_config_configuration_recorder",
-    "tfOtc": "opentelekomcloud_rms_policy_assignment_v1, opentelekomcloud_rms_resource_recorder_v1",
+    "tfTcp": "opentelekomcloud_rms_policy_assignment_v1, opentelekomcloud_rms_resource_recorder_v1",
     "tfStatus": "partial",
     "docsAws": "https://docs.aws.amazon.com/config/",
-    "docsOtc": "https://docs.otc.t-systems.com/config/index.html",
+    "docsTcp": "https://docs.otc.t-systems.com/config/index.html",
     "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/config_configuration_recorder",
-    "tfDocsOtc": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/rms_policy_assignment_v1",
+    "tfDocsTcp": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/rms_policy_assignment_v1",
     "desc": {
       "de": "Configuration Tracking & Compliance-Auditing. 300+ Managed Rules, Custom Rules (Lambda/Guard), Conformance Packs, Config Aggregator (Multi-Account), Remediation Actions, Advanced Queries (SQL), Resource Timeline.",
       "en": "Configuration tracking & compliance auditing. 300+ managed rules, custom rules (Lambda/Guard), conformance packs, Config Aggregator (multi-account), remediation actions, advanced queries (SQL), resource timeline."
     },
-    "otcDesc": {
+    "tcpDesc": {
       "de": "Resource Recorder (Snapshots alle 24h, Change Notifications alle 6h nach OBS/SMN). Built-in Compliance Rules (~80 vordefinierte Regeln) und Custom Policies. Advanced Queries mit ResourceQL (SQL-ähnlich, Abfrage über Resource-Inventar). Resource-Beziehungen und Change Records. SMN-Benachrichtigungen bei Änderungen. Kein Multi-Account Aggregator, keine Conformance Packs.",
       "en": "Resource Recorder (snapshots every 24h, change notifications every 6h to OBS/SMN). Built-in compliance rules (~80 predefined rules) and custom policies. Advanced queries with ResourceQL (SQL-like, query across resource inventory). Resource relationships and change records. SMN notifications on changes. No multi-account aggregator, no conformance packs."
     },
@@ -115,22 +106,19 @@
     "category": "Management",
     "effort": "hard",
     "equiv": "partial",
-    "scope": [
-      "K1"
-    ],
-    "otc": "Application Operations Mgmt (AOM)",
+    "tcp": "Application Operations Mgmt (AOM)",
     "tfAws": "aws_ssm_parameter",
-    "tfOtc": null,
+    "tfTcp": null,
     "tfStatus": "none",
     "docsAws": "https://docs.aws.amazon.com/systems-manager/",
-    "docsOtc": "https://docs.otc.t-systems.com/application-operations-management/index.html",
+    "docsTcp": "https://docs.otc.t-systems.com/application-operations-management/index.html",
     "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_parameter",
-    "tfDocsOtc": null,
+    "tfDocsTcp": null,
     "desc": {
       "de": "Zentrale Plattform für operatives Management. Session Manager (Shell ohne SSH), Parameter Store, Patch Manager, Run Command, State Manager, Inventory, Automation, Maintenance Windows, OpsCenter.",
       "en": "Central platform for operational management. Session Manager (shell without SSH), Parameter Store, Patch Manager, Run Command, State Manager, Inventory, Automation, maintenance windows, OpsCenter."
     },
-    "otcDesc": {
+    "tcpDesc": {
       "de": "AOM ist eine O&M-Plattform für Application- und Host-Monitoring: Metriken (CPU, Memory, Disk, Network), Log-Suche (LTS-Integration), Auto-Discovery (Prozesse, Container), Alarm Management, Dashboards. Kein Parameter Store, Session Manager, Patch Manager, Run Command oder Inventory. AOM fokussiert auf Monitoring, nicht auf operatives Management.",
       "en": "AOM is an O&M platform for application and host monitoring: metrics (CPU, memory, disk, network), log search (LTS integration), auto-discovery (processes, containers), alarm management, dashboards. No Parameter Store, Session Manager, Patch Manager, Run Command, or Inventory. AOM focuses on monitoring, not operational management."
     },
@@ -139,83 +127,84 @@
       "en": "Ansible, Vault, SSH Bastion, DEW (KMS)"
     },
     "migration": {
-      "de": "**Kein Gesamtpendant.** SSM ist ein Sammeldienst — auf OTC auf viele Tools verteilt. **Secrets & Config.** Parameter Store hat aktuell kein OTC-Pendant. CSMS ist laut Roadmap ab Q1 2027 geplant und bis zur dokumentierten Verfügbarkeit nicht als Migrationsabhängigkeit einzuplanen; für Secrets Vault und für Key-Value-Konfigurationen OBS, Vault oder Applikationskonfiguration nutzen. **Shell-Zugriff.** Session Manager hat kein Pendant — SSH über Bastion Host oder VNC über Console nutzen (kein agentless Shell-Zugriff). **Patch & Run Command.** Patch Manager → Ansible Playbooks oder manuell. Run Command → Ansible ad-hoc oder Salt. **Inventory & State.** Inventory → OTC Config Service (Resource Recorder). State Manager → Ansible Playbooks mit Cron. **Automation.** Runbooks → Ansible/Terraform Pipelines. Maintenance Windows → eigene Scheduling-Lösung. OpsCenter → AOM Alarme + LTS Logs mit manueller Korrelation.",
-      "en": "**No combined equivalent.** SSM is a collection service — distributed across many tools on OTC. **Secrets & configuration.** Parameter Store currently has no OTC equivalent. CSMS is planned on the roadmap from Q1 2027 and must not be a migration dependency until documented availability; use Vault for secrets and OBS, Vault, or application configuration for key-value configuration. **Shell access.** Session Manager has no equivalent — use SSH via Bastion Host or VNC via Console (no agentless shell access). **Patch & Run Command.** Patch Manager → Ansible playbooks or manual. Run Command → Ansible ad-hoc or Salt. **Inventory & State.** Inventory → OTC Config Service (Resource Recorder). State Manager → Ansible Playbooks with cron. **Automation.** Runbooks → Ansible/Terraform pipelines. Maintenance Windows → custom scheduling solution. OpsCenter → AOM alarms + LTS logs with manual correlation."
+      "de": "**Kein Gesamtpendant.** SSM ist ein Sammeldienst — auf T Cloud Public auf viele Tools verteilt. **Secrets & Config.** Parameter Store hat aktuell kein T Cloud Public-Pendant. CSMS ist laut Leistungsbeschreibung ab 01.04.2027 bzw. laut Roadmap ab Q3 2027 vorgesehen und bis zur dokumentierten Verfügbarkeit nicht als Migrationsabhängigkeit einzuplanen; für Secrets Vault und für Key-Value-Konfigurationen OBS, Vault oder Applikationskonfiguration nutzen. **Shell-Zugriff.** Session Manager hat kein Pendant — SSH über Bastion Host oder VNC über Console nutzen (kein agentless Shell-Zugriff). **Patch & Run Command.** Patch Manager → Ansible Playbooks oder manuell. Run Command → Ansible ad-hoc oder Salt. **Inventory & State.** Inventory → T Cloud Public Config Service (Resource Recorder). State Manager → Ansible Playbooks mit Cron. **Automation.** Runbooks → Ansible/Terraform Pipelines. Maintenance Windows → eigene Scheduling-Lösung. OpsCenter → AOM Alarme + LTS Logs mit manueller Korrelation.",
+      "en": "**No combined equivalent.** SSM is a collection service — distributed across many tools on T Cloud Public. **Secrets & configuration.** Parameter Store currently has no T Cloud Public equivalent. CSMS is expected from 01.04.2027 per service description and from Q3 2027 per roadmap and must not be a migration dependency until documented availability; use Vault for secrets and OBS, Vault, or application configuration for key-value configuration. **Shell access.** Session Manager has no equivalent — use SSH via Bastion Host or VNC via Console (no agentless shell access). **Patch & Run Command.** Patch Manager → Ansible playbooks or manual. Run Command → Ansible ad-hoc or Salt. **Inventory & State.** Inventory → T Cloud Public Config Service (Resource Recorder). State Manager → Ansible Playbooks with cron. **Automation.** Runbooks → Ansible/Terraform pipelines. Maintenance Windows → custom scheduling solution. OpsCenter → AOM alarms + LTS logs with manual correlation."
     },
     "equivNote": {
-      "de": "AOM fokussiert auf Monitoring/Logs/Alarme — deckt nur den CloudWatch-ähnlichen Teil von SSM ab. Kein Parameter Store (→ Vault; CSMS ist ab Q1 2027 geplant), kein Session Manager (→ SSH/VNC), kein Patch Manager (→ Ansible), kein Run Command (→ Ansible/Salt), kein Inventory (→ Config Service), kein State Manager, kein Automation, keine Maintenance Windows.",
-      "en": "AOM focuses on monitoring/logs/alarms — covers only the CloudWatch-like part of SSM. No Parameter Store (→ Vault; CSMS is planned from Q1 2027), no Session Manager (→ SSH/VNC), no Patch Manager (→ Ansible), no Run Command (→ Ansible/Salt), no Inventory (→ Config Service), no State Manager, no Automation, no maintenance windows."
+      "de": "AOM fokussiert auf Monitoring/Logs/Alarme — deckt nur den CloudWatch-ähnlichen Teil von SSM ab. Kein Parameter Store (→ Vault; CSMS ab 04/2027 erwartet), kein Session Manager (→ SSH/VNC), kein Patch Manager (→ Ansible), kein Run Command (→ Ansible/Salt), kein Inventory (→ Config Service), kein State Manager, kein Automation, keine Maintenance Windows.",
+      "en": "AOM focuses on monitoring/logs/alarms — covers only the CloudWatch-like part of SSM. No Parameter Store (→ Vault; CSMS expected from 04/2027), no Session Manager (→ SSH/VNC), no Patch Manager (→ Ansible), no Run Command (→ Ansible/Salt), no Inventory (→ Config Service), no State Manager, no Automation, no maintenance windows."
     },
     "tfNote": null
   },
   {
     "name": "AWS CloudFormation",
     "category": "Management",
-    "effort": "hard",
+    "effort": "medium",
     "equiv": "partial",
-    "scope": [],
-    "otc": "Resource Template Service (RTS)",
+    "tcp": "Resource Formation Service (RFS)",
     "tfAws": "aws_cloudformation_stack",
-    "tfOtc": "opentelekomcloud_rts_stack_v1",
-    "tfStatus": "partial",
+    "tfTcp": null,
+    "tfStatus": "none",
     "docsAws": "https://docs.aws.amazon.com/cloudformation/",
-    "docsOtc": "https://docs.otc.t-systems.com/resource-template-service/index.html",
+    "docsTcp": "https://docs.otc.t-systems.com/resource-formation-service/index.html",
     "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudformation_stack",
-    "tfDocsOtc": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/rts_stack_v1",
+    "tfDocsTcp": null,
     "desc": {
       "de": "Infrastructure as Code. Deklarative Templates (JSON/YAML) für AWS-Ressourcen. Stack-Management, Drift Detection, Change Sets.",
       "en": "Infrastructure as Code. Declarative templates (JSON/YAML) for AWS resources. Stack management, drift detection, change sets."
     },
-    "otcDesc": {
-      "de": "Heat-basierter IaC-Service. HOT-Templates (YAML) für OTC-Ressourcen. Stack Lifecycle Management. Nicht CloudFormation-kompatibel!",
-      "en": "Heat-based IaC service. HOT templates (YAML) for OTC resources. Stack lifecycle management. Not CloudFormation-compatible!"
+    "tcpDesc": {
+      "de": "Managed IaC-Service auf Basis von Terraform (HCL): Stacks aus Terraform-Templates erstellen, ändern und löschen, Execution Plans (Vorschau von Änderungen), Stack-Events und Ausgaben, Template-Upload via OBS. Ersetzt den abgekündigten Heat-basierten Resource Template Service (RTS). Nicht CloudFormation-kompatibel.",
+      "en": "Managed IaC service based on Terraform (HCL): create, update and delete stacks from Terraform templates, execution plans (change preview), stack events and outputs, template upload via OBS. Replaces the discontinued Heat-based Resource Template Service (RTS). Not CloudFormation-compatible."
     },
     "alt": {
       "de": "Terraform (empfohlen), Pulumi, Crossplane auf CCE",
       "en": "Terraform (recommended), Pulumi, Crossplane on CCE"
     },
     "migration": {
-      "de": "**Template-Format.** RTS nutzt HOT (Heat Orchestration Template) — NICHT CloudFormation-kompatibel. Templates müssen komplett umgeschrieben werden. **Terraform empfohlen.** opentelekomcloud Provider ist die bessere Wahl für OTC als RTS. **Resource-Abdeckung.** RTS hat deutlich weniger Resource Types als CloudFormation. **Change Sets & Drift.** Change Sets → RTS Preview. Stack Drift Detection eingeschränkt. **Nested Stacks.** Funktionieren anders als in CloudFormation. **Nicht verfügbar.** StackSets (Multi-Account/Region), Macros, Transforms. **Terraform-Hinweis.** Resource heißt opentelekomcloud_rts_stack_v1, NICHT rfs_stack_v1.",
-      "en": "**Template Format.** RTS uses HOT (Heat Orchestration Template) — NOT CloudFormation-compatible. Templates must be completely rewritten. **Terraform Recommended.** opentelekomcloud provider is the better choice for OTC than RTS. **Resource Coverage.** RTS has significantly fewer resource types than CloudFormation. **Change Sets & Drift.** Change Sets → RTS Preview. Stack Drift Detection limited. **Nested Stacks.** Work differently than in CloudFormation. **Not Available.** StackSets (multi-account/region), Macros, Transforms. **Terraform Note.** Resource is opentelekomcloud_rts_stack_v1, NOT rfs_stack_v1."
+      "de": "**Template-Format.** RFS nutzt Terraform (HCL) mit dem opentelekomcloud-Provider — CloudFormation-Templates müssen nach HCL übersetzt werden (z.B. mit cf2tf als Startpunkt, danach AWS-Ressourcen auf `opentelekomcloud_*` mappen). **RTS abgekündigt.** Der Heat-basierte Resource Template Service ist nicht mehr im Portfolio; bestehende HOT-Templates ebenfalls nach Terraform migrieren. **Change Sets.** CloudFormation Change Sets → RFS Execution Plans. **Nicht verfügbar.** StackSets (Multi-Account/Region), Macros, Transforms, Custom Resources (Lambda) — Custom Logic über Terraform-Provisioners oder FunctionGraph. **Alternative.** Terraform/OpenTofu direkt in der CI/CD-Pipeline mit Remote State in OBS (S3-Backend) ist für viele Teams die flexiblere Wahl.",
+      "en": "**Template format.** RFS uses Terraform (HCL) with the opentelekomcloud provider — CloudFormation templates must be translated to HCL (e.g. cf2tf as a starting point, then map AWS resources to `opentelekomcloud_*`). **RTS discontinued.** The Heat-based Resource Template Service is no longer in the portfolio; migrate existing HOT templates to Terraform as well. **Change sets.** CloudFormation change sets → RFS execution plans. **Not available.** StackSets (multi-account/region), macros, transforms, custom resources (Lambda) — custom logic via Terraform provisioners or FunctionGraph. **Alternative.** Terraform/OpenTofu directly in the CI/CD pipeline with remote state in OBS (S3 backend) is the more flexible choice for many teams."
     },
     "equivNote": {
-      "de": "RTS ist Heat-basiert, nicht CloudFormation-kompatibel. Deutlich weniger Resource-Typen, kein StackSets, kein Drift Detection, keine Macros/Transforms.",
-      "en": "RTS is Heat-based, not CloudFormation-compatible. Significantly fewer resource types, no StackSets, no drift detection, no macros/transforms."
+      "de": "RFS führt Terraform-Templates (HCL) aus — CloudFormation-JSON/YAML muss nach HCL konvertiert werden. Execution Plans entsprechen Change Sets. Kein StackSets-Pendant (Multi-Account/Region), keine Macros/Transforms, Drift Detection eingeschränkt.",
+      "en": "RFS runs Terraform templates (HCL) — CloudFormation JSON/YAML must be converted to HCL. Execution plans correspond to change sets. No StackSets equivalent (multi-account/region), no macros/transforms, limited drift detection."
     },
     "tfNote": {
-      "de": "RTS Stack-Erstellung per TF möglich, aber Templates selbst sind HOT-Format (nicht TF-nativ).",
-      "en": "RTS stack creation possible via TF, but templates themselves are HOT format (not TF-native)."
-    }
+      "de": "Kein Terraform-Resource für RFS-Stacks im Provider nötig/vorhanden — RFS führt selbst Terraform aus. Alternativ den opentelekomcloud-Provider direkt (CI/CD) verwenden.",
+      "en": "No Terraform resource for RFS stacks in the provider — RFS itself executes Terraform. Alternatively use the opentelekomcloud provider directly (CI/CD)."
+    },
+    "aliases": [
+      "Resource Template Service (RTS)"
+    ]
   },
   {
     "name": "AWS CodePipeline",
     "category": "Management",
     "effort": "hard",
     "equiv": "none",
-    "scope": [],
-    "otc": "Kein Equivalent",
+    "tcp": "Kein Equivalent",
     "tfAws": "aws_codepipeline, aws_codebuild_project",
-    "tfOtc": null,
+    "tfTcp": null,
     "tfStatus": "none",
     "docsAws": "https://docs.aws.amazon.com/codepipeline/",
-    "docsOtc": null,
+    "docsTcp": null,
     "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/codepipeline",
-    "tfDocsOtc": null,
+    "tfDocsTcp": null,
     "desc": {
       "de": "CI/CD Pipeline-Orchestrierung. Source (CodeCommit/GitHub), Build (CodeBuild), Deploy (CodeDeploy), Approval Gates.",
       "en": "CI/CD pipeline orchestration. Source (CodeCommit/GitHub), build (CodeBuild), deploy (CodeDeploy), approval gates."
     },
-    "otcDesc": {
-      "de": "OTC bietet keinen Managed CI/CD Pipeline Service. Kein Build- oder Deployment-Service.",
-      "en": "OTC offers no managed CI/CD pipeline service. No build or deployment service."
+    "tcpDesc": {
+      "de": "T Cloud Public bietet keinen Managed CI/CD Pipeline Service. Kein Build- oder Deployment-Service.",
+      "en": "T Cloud Public offers no managed CI/CD pipeline service. No build or deployment service."
     },
     "alt": {
       "de": "GitLab CI, GitHub Actions, Jenkins, Tekton auf CCE",
       "en": "GitLab CI, GitHub Actions, Jenkins, Tekton on CCE"
     },
     "migration": {
-      "de": "**Kein Managed CI/CD.** OTC bietet keinen Pipeline-Service. **Build & Deploy.** Jenkins auf CCE (Helm), GitLab CI (self-hosted auf ECS), GitHub Actions (extern) oder Tekton auf CCE als Alternativen. CodeBuild → Jenkins/GitLab Runner. CodeDeploy → ArgoCD (Kubernetes) oder Ansible. **Source Control.** CodeCommit → eigener Git-Server oder extern (GitHub/GitLab). **Artefakte & Credentials.** Pipeline-Artefakte in OBS statt S3. IAM Roles für Pipeline-Stages → Service Accounts + CSMS für Credentials.",
-      "en": "**No Managed CI/CD.** OTC offers no pipeline service. **Build & Deploy.** Jenkins on CCE (Helm), GitLab CI (self-hosted on ECS), GitHub Actions (external), or Tekton on CCE as alternatives. CodeBuild → Jenkins/GitLab Runner. CodeDeploy → ArgoCD (Kubernetes) or Ansible. **Source Control.** CodeCommit → own Git server or external (GitHub/GitLab). **Artifacts & Credentials.** Pipeline artifacts in OBS instead of S3. IAM Roles for pipeline stages → Service Accounts + CSMS for credentials."
+      "de": "**Kein Managed CI/CD.** T Cloud Public bietet keinen Pipeline-Service. **Build & Deploy.** Jenkins auf CCE (Helm), GitLab CI (self-hosted auf ECS), GitHub Actions (extern) oder Tekton auf CCE als Alternativen. CodeBuild → Jenkins/GitLab Runner. CodeDeploy → ArgoCD (Kubernetes) oder Ansible. **Source Control.** CodeCommit → eigener Git-Server oder extern (GitHub/GitLab). **Artefakte & Credentials.** Pipeline-Artefakte in OBS statt S3. IAM Roles für Pipeline-Stages → Service Accounts + CSMS für Credentials.",
+      "en": "**No Managed CI/CD.** T Cloud Public offers no pipeline service. **Build & Deploy.** Jenkins on CCE (Helm), GitLab CI (self-hosted on ECS), GitHub Actions (external), or Tekton on CCE as alternatives. CodeBuild → Jenkins/GitLab Runner. CodeDeploy → ArgoCD (Kubernetes) or Ansible. **Source Control.** CodeCommit → own Git server or external (GitHub/GitLab). **Artifacts & Credentials.** Pipeline artifacts in OBS instead of S3. IAM Roles for pipeline stages → Service Accounts + CSMS for credentials."
     },
     "equivNote": null,
     "tfNote": null
@@ -225,20 +214,19 @@
     "category": "Management",
     "effort": "hard",
     "equiv": "partial",
-    "scope": [],
-    "otc": "Data Replication Service (DRS)",
+    "tcp": "Data Replication Service (DRS)",
     "tfAws": "aws_dms_replication_instance, aws_dms_replication_task, aws_dms_endpoint",
-    "tfOtc": "opentelekomcloud_drs_task_v3",
+    "tfTcp": "opentelekomcloud_drs_task_v3",
     "tfStatus": "partial",
     "docsAws": "https://docs.aws.amazon.com/dms/",
-    "docsOtc": "https://docs.otc.t-systems.com/data-replication-service/index.html",
+    "docsTcp": "https://docs.otc.t-systems.com/data-replication-service/index.html",
     "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dms_replication_instance",
-    "tfDocsOtc": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/drs_task_v3",
+    "tfDocsTcp": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/drs_task_v3",
     "desc": {
       "de": "Database Migration Service. Homogene und heterogene DB-Migrationen. Schema Conversion, CDC (Change Data Capture), Serverless.",
       "en": "Database Migration Service. Homogeneous and heterogeneous DB migrations. Schema Conversion, CDC (Change Data Capture), serverless."
     },
-    "otcDesc": {
+    "tcpDesc": {
       "de": "DB-Migration und Replikation. Online-Migration, Offline-Migration, Synchronisation, Disaster Recovery. MySQL, PostgreSQL, MongoDB, Oracle, SQL Server. Schema-Vergleich und -Konvertierung.",
       "en": "DB migration and replication. Online migration, offline migration, synchronization, disaster recovery. MySQL, PostgreSQL, MongoDB, Oracle, SQL Server. Schema comparison and conversion."
     },
@@ -264,22 +252,21 @@
     "category": "Management",
     "effort": "easy",
     "equiv": "partial",
-    "scope": [],
-    "otc": "Tag Management Service (TMS)",
+    "tcp": "Tag Management Service (TMS)",
     "tfAws": "aws_resourcegroups_group, aws_organizations_policy (TAG_POLICY)",
-    "tfOtc": "opentelekomcloud_tms_tags_v1",
+    "tfTcp": "opentelekomcloud_tms_tags_v1",
     "tfStatus": "full",
     "docsAws": "https://docs.aws.amazon.com/resourcegroupstagging/latest/APIReference/",
-    "docsOtc": "https://docs.otc.t-systems.com/tag-management-service/index.html",
+    "docsTcp": "https://docs.otc.t-systems.com/tag-management-service/index.html",
     "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/resourcegroups_group",
-    "tfDocsOtc": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/tms_tags_v1",
+    "tfDocsTcp": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/tms_tags_v1",
     "desc": {
       "de": "Zentrales Tag-Management. Resource Groups, Tag Editor, Tag Policies (AWS Organizations). Kosten-Allokation via Tags.",
       "en": "Central tag management. Resource Groups, Tag Editor, Tag Policies (AWS Organizations). Cost allocation via tags."
     },
-    "otcDesc": {
-      "de": "Zentrales Tag-Management über alle OTC-Services. Tags erstellen, zuweisen, suchen. Predefined Tags für Standardisierung. Integration mit Cloud Eye, CTS, RMS.",
-      "en": "Central tag management across all OTC services. Create, assign, search tags. Predefined tags for standardization. Integration with Cloud Eye, CTS, RMS."
+    "tcpDesc": {
+      "de": "Zentrales Tag-Management über alle T Cloud Public-Services. Tags erstellen, zuweisen, suchen. Predefined Tags für Standardisierung. Integration mit Cloud Eye, CTS, RMS.",
+      "en": "Central tag management across all T Cloud Public services. Create, assign, search tags. Predefined tags for standardization. Integration with Cloud Eye, CTS, RMS."
     },
     "alt": {
       "de": "Manuelle Tags pro Service-API, Terraform Tags in jedem Resource-Block",
@@ -292,6 +279,141 @@
     "equivNote": {
       "de": "TMS bietet zentrales Tag-Management mit Predefined Tags und Bulk-Operationen. Kein Resource Groups Pendant (logische Gruppierung per Query). Keine Tag Policies (Enforcement). Kosten-Allokation via Tags begrenzt unterstützt.",
       "en": "TMS provides central tag management with predefined tags and bulk operations. No Resource Groups equivalent (logical grouping via query). No Tag Policies (enforcement). Cost allocation via tags limited support."
+    },
+    "tfNote": null
+  },
+  {
+    "name": "AWS Organizations",
+    "category": "Management",
+    "effort": "medium",
+    "equiv": "partial",
+    "tcp": "Enterprise Project Management Service (EPS)",
+    "tfAws": "aws_organizations_organization, aws_organizations_organizational_unit",
+    "tfTcp": "opentelekomcloud_enterprise_project_v1",
+    "tfStatus": "partial",
+    "docsAws": "https://docs.aws.amazon.com/organizations/",
+    "docsTcp": "https://docs.otc.t-systems.com/enterprise-project-service/index.html",
+    "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/organizations_organizational_unit",
+    "tfDocsTcp": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/enterprise_project_v1",
+    "desc": {
+      "de": "Zentrale Verwaltung mehrerer AWS-Accounts: Organizational Units, Service Control Policies (SCPs), Consolidated Billing, Delegated Admin, Tag Policies, Integration mit Control Tower.",
+      "en": "Central management of multiple AWS accounts: organizational units, service control policies (SCPs), consolidated billing, delegated admin, tag policies, integration with Control Tower."
+    },
+    "tcpDesc": {
+      "de": "Enterprise Projects gruppieren Ressourcen regionsübergreifend innerhalb eines Tenants für Berechtigungen (IAM) und Kostenzuordnung (seit 02.06.2026). Ergänzend: OpenStack-Projekte pro Region als Isolationsgrenze.",
+      "en": "Enterprise projects group resources across regions within a tenant for permissions (IAM) and cost allocation (since 02.06.2026). Complementary: OpenStack projects per region as isolation boundary."
+    },
+    "alt": null,
+    "migration": {
+      "de": "**Kein Multi-Account-Modell.** AWS-Accounts/OUs → Enterprise Projects bzw. Projekte innerhalb eines Tenants; mehrere Tenants werden vertraglich separat geführt. **Policies.** SCPs haben kein Pendant — Berechtigungen über IAM-Policies pro Enterprise Project steuern. **Billing.** Consolidated Billing → Kostenzuordnung pro Enterprise Project im Financial Dashboard. **Landing Zone.** Control-Tower-Strukturen mit Terraform (EPS + IAM) nachbauen.",
+      "en": "**No multi-account model.** AWS accounts/OUs → enterprise projects or projects within one tenant; multiple tenants are managed contractually separately. **Policies.** SCPs have no equivalent — control permissions via IAM policies per enterprise project. **Billing.** Consolidated billing → cost allocation per enterprise project in the Financial Dashboard. **Landing zone.** Rebuild Control Tower structures with Terraform (EPS + IAM)."
+    },
+    "equivNote": {
+      "de": "Ressourcen-Gruppierung innerhalb eines Tenants; keine OUs, keine SCPs, kein Account-Vending.",
+      "en": "Resource grouping within one tenant; no OUs, no SCPs, no account vending."
+    },
+    "tfNote": null,
+    "aliases": [
+      "EPS",
+      "Enterprise Project"
+    ]
+  },
+  {
+    "name": "AWS Infrastructure Composer",
+    "category": "Management",
+    "effort": "easy",
+    "equiv": "partial",
+    "tcp": "Cloud Create",
+    "tfAws": null,
+    "tfTcp": null,
+    "tfStatus": "none",
+    "docsAws": "https://docs.aws.amazon.com/infrastructure-composer/",
+    "docsTcp": "https://docs.otc.t-systems.com/cloud-create/index.html",
+    "tfDocsAws": null,
+    "tfDocsTcp": null,
+    "desc": {
+      "de": "Visueller Designer für Serverless-/Cloud-Architekturen, erzeugt CloudFormation/SAM-Templates; in VS Code und Konsole integriert.",
+      "en": "Visual designer for serverless/cloud architectures, generates CloudFormation/SAM templates; integrated in VS Code and console."
+    },
+    "tcpDesc": {
+      "de": "Kostenloser grafischer Infrastruktur-Designer (ehemals Cloud Topology Designer): Topologien zeichnen, Kosten schätzen und direkt in T Cloud Public bereitstellen.",
+      "en": "Free graphical infrastructure designer (formerly Cloud Topology Designer): draw topologies, estimate costs and deploy directly to T Cloud Public."
+    },
+    "alt": null,
+    "migration": {
+      "de": "**Templates.** CloudFormation/SAM-Templates sind nicht importierbar — Architektur in Cloud Create neu modellieren oder direkt in Terraform beschreiben. **Kostenschätzung.** Cloud Create zeigt Preise auf Basis der T Cloud Public-Preisliste.",
+      "en": "**Templates.** CloudFormation/SAM templates cannot be imported — remodel the architecture in Cloud Create or describe it directly in Terraform. **Cost estimate.** Cloud Create shows prices based on the T Cloud Public price list."
+    },
+    "equivNote": {
+      "de": "Designer mit Deployment, aber ohne Export von CloudFormation/SAM.",
+      "en": "Designer with deployment, but without CloudFormation/SAM export."
+    },
+    "tfNote": null,
+    "aliases": [
+      "Cloud Topology Designer"
+    ]
+  },
+  {
+    "name": "AWS Marketplace",
+    "category": "Management",
+    "effort": "easy",
+    "equiv": "partial",
+    "tcp": "Marketplace",
+    "tfAws": null,
+    "tfTcp": null,
+    "tfStatus": "none",
+    "docsAws": "https://docs.aws.amazon.com/marketplace/",
+    "docsTcp": "https://marketplace.t-cloud-public.com/",
+    "tfDocsAws": null,
+    "tfDocsTcp": null,
+    "desc": {
+      "de": "Katalog von Drittanbieter-Software (AMIs, Container, SaaS, ML-Modelle) mit Abrechnung über die AWS-Rechnung, Private Offers.",
+      "en": "Catalog of third-party software (AMIs, containers, SaaS, ML models) with billing via the AWS invoice, private offers."
+    },
+    "tcpDesc": {
+      "de": "Marktplatz für Partner-Lösungen (Images, Software, Services) mit Seller Center für Anbieter. Deutlich kleineres Angebot als AWS Marketplace.",
+      "en": "Marketplace for partner solutions (images, software, services) with seller center for vendors. Significantly smaller offering than AWS Marketplace."
+    },
+    "alt": null,
+    "migration": {
+      "de": "**Verfügbarkeit prüfen.** Für jede genutzte Marketplace-Lösung klären, ob der Anbieter auf T Cloud Public vertreten ist oder BYOL auf ECS/CCE möglich ist. **Abrechnung.** SaaS-Abos über AWS-Rechnung müssen direkt mit dem Anbieter neu verhandelt werden.",
+      "en": "**Check availability.** For each marketplace solution in use, clarify whether the vendor is present on T Cloud Public or BYOL on ECS/CCE is possible. **Billing.** SaaS subscriptions billed via AWS must be renegotiated directly with the vendor."
+    },
+    "equivNote": {
+      "de": "Kleineres Partner-Angebot, keine integrierte SaaS-Abrechnung im AWS-Umfang.",
+      "en": "Smaller partner offering, no integrated SaaS billing at AWS scale."
+    },
+    "tfNote": null
+  },
+  {
+    "name": "AWS Managed Services (AMS)",
+    "category": "Management",
+    "effort": "medium",
+    "equiv": "partial",
+    "tcp": "Managed Services (T-Systems)",
+    "tfAws": null,
+    "tfTcp": null,
+    "tfStatus": "none",
+    "docsAws": "https://docs.aws.amazon.com/managedservices/",
+    "docsTcp": "https://www.t-cloud-public.com/de/produkte-services/managed-services",
+    "tfDocsAws": null,
+    "tfDocsTcp": null,
+    "desc": {
+      "de": "Betrieb von AWS-Infrastruktur durch AWS: Monitoring, Incident-, Patch-, Backup- und Change-Management nach ITIL, Security- und Compliance-Kontrollen.",
+      "en": "Operation of AWS infrastructure by AWS: monitoring, incident, patch, backup and change management according to ITIL, security and compliance controls."
+    },
+    "tcpDesc": {
+      "de": "Optionaler Betrieb durch T-Systems in Paketen Basic/Standard/Advanced: Managed OS (Linux/Windows), Managed Datenbanken (RDS, Custom Oracle), Monitoring mit Grafana-Dashboard, Patching, Backup, 24/7-Entstörung.",
+      "en": "Optional operation by T-Systems in Basic/Standard/Advanced packages: managed OS (Linux/Windows), managed databases (RDS, custom Oracle), monitoring with Grafana dashboard, patching, backup, 24/7 incident handling."
+    },
+    "alt": null,
+    "migration": {
+      "de": "**Paketwahl.** Leistungsumfang je Paket mit bestehendem AMS-Scope abgleichen (Anzahl Services, Oracle erst ab Standard). **Übergabe.** Runbooks, Monitoring-Regeln und Change-Prozesse an T-Systems übergeben; Onboarding-Phase einplanen.",
+      "en": "**Package choice.** Compare scope per package with the existing AMS scope (number of services, Oracle only from Standard). **Handover.** Hand over runbooks, monitoring rules and change processes to T-Systems; plan for an onboarding phase."
+    },
+    "equivNote": {
+      "de": "Paketbasierter Betrieb durch T-Systems; Leistungsumfang weicht von AMS ab.",
+      "en": "Package-based operation by T-Systems; scope differs from AMS."
     },
     "tfNote": null
   }

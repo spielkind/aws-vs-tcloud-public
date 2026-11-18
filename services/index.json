@@ -12,5 +12,7 @@
   "database.json",
   "storage.json",
   "messaging.json",
-  "contact-center.json"
+  "contact-center.json",
+  "ai.json",
+  "cost.json"
 ]

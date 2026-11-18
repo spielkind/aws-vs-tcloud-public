@@ -4,30 +4,26 @@
     "category": "Storage",
     "effort": "easy",
     "equiv": "full",
-    "scope": [
-      "K1",
-      "K2"
-    ],
-    "otc": "Object Storage Service (OBS)",
+    "tcp": "Object Storage Service (OBS)",
     "tfAws": "aws_s3_bucket",
-    "tfOtc": "opentelekomcloud_obs_bucket",
+    "tfTcp": "opentelekomcloud_obs_bucket",
     "tfStatus": "full",
     "docsAws": "https://docs.aws.amazon.com/s3/",
-    "docsOtc": "https://docs.otc.t-systems.com/object-storage-service/index.html",
+    "docsTcp": "https://docs.otc.t-systems.com/object-storage-service/index.html",
     "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket",
-    "tfDocsOtc": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/obs_bucket",
+    "tfDocsTcp": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/obs_bucket",
     "desc": {
       "de": "Object Storage. 11x9 Durability, Versioning, Lifecycle, Event Notifications, S3 Select, Object Lock (WORM), Intelligent-Tiering, Transfer Acceleration, Batch Operations.",
       "en": "Object storage. 11x9 durability, versioning, lifecycle, event notifications, S3 Select, Object Lock (WORM), Intelligent-Tiering, Transfer Acceleration, Batch Operations."
     },
-    "otcDesc": {
+    "tcpDesc": {
       "de": "S3-kompatible REST-API (SDKs, CLI, Browser). Storage-Klassen: Standard, Infrequent Access, Archive. Versioning, Lifecycle Policies, Server-Side Encryption (SSE-KMS/SSE-OBS), WORM (Object Lock), Bucket Policies, Cross-Region Replication, Event Notifications (SMN/FunctionGraph). Max. Objekt: 48.8 TB (Multipart), 5 GB (Single PUT). Kein S3 Select, kein Intelligent-Tiering; Intelligent Tiering ist laut Roadmap geplant, aber noch nicht als verfügbar dokumentiert.",
       "en": "S3-compatible REST API (SDKs, CLI, browser). Storage classes: Standard, Infrequent Access, Archive. Versioning, lifecycle policies, server-side encryption (SSE-KMS/SSE-OBS), WORM (Object Lock), bucket policies, cross-region replication, event notifications (SMN/FunctionGraph). Max object: 48.8 TB (multipart), 5 GB (single PUT). No S3 Select or Intelligent-Tiering; Intelligent Tiering is planned on the roadmap but not yet documented as available."
     },
     "alt": null,
     "migration": {
-      "de": "**API-Kompatibilität.** OBS ist S3-API-kompatibel — SDKs und CLI funktionieren. WORM/Object Lock ist verfügbar. **Storage-Klassen.** Standard, IA, Archive; Intelligent Tiering und Deep Archive sind für die Migrationsplanung noch nicht verfügbar. Die Roadmap führt Intelligent Tiering sowie Deep Archive (Q1–Q2 2027) als zukünftige Funktionen, ohne bestätigte API-, Preis- oder Terraform-Details. **Bucket Policies.** Ähnlich wie AWS, aber mit anderer Condition-Syntax. **Event-Notifications.** OBS Events + SMN/FunctionGraph. Cross-Region Replication verfügbar (nur bestimmte Regionen). **Fehlend.** S3 Select, Object Lambda, Transfer Acceleration und Batch Operations nicht verfügbar. Multipart Upload funktioniert, Limits können abweichen.",
-      "en": "**API compatibility.** OBS is S3 API-compatible — SDKs and CLI work. WORM/Object Lock available. **Storage classes.** Standard, IA, Archive; Intelligent Tiering and Deep Archive are not yet available for migration design. The roadmap lists Intelligent Tiering and Deep Archive (Q1–Q2 2027) as future capabilities without confirmed API, pricing, or Terraform details. **Bucket policies.** Similar to AWS but with different condition syntax. **Event notifications.** OBS Events + SMN/FunctionGraph. Cross-region replication available (specific regions only). **Missing.** S3 Select, Object Lambda, Transfer Acceleration, and Batch Operations not available. Multipart Upload works, limits may differ."
+      "de": "**API-Kompatibilität.** OBS ist S3-API-kompatibel — SDKs und CLI funktionieren. WORM/Object Lock ist verfügbar. **Storage-Klassen.** Standard, IA, Archive; Intelligent Tiering und Deep Archive sind für die Migrationsplanung noch nicht verfügbar. Die Roadmap führt Intelligent Tiering sowie Deep Archive (Q3 2027–Q1 2028) als zukünftige Funktionen, ohne bestätigte API-, Preis- oder Terraform-Details. **Bucket Policies.** Ähnlich wie AWS, aber mit anderer Condition-Syntax. **Event-Notifications.** OBS Events + SMN/FunctionGraph. Cross-Region Replication verfügbar (nur bestimmte Regionen). **Fehlend.** S3 Select, Object Lambda, Transfer Acceleration und Batch Operations nicht verfügbar. Multipart Upload funktioniert, Limits können abweichen.",
+      "en": "**API compatibility.** OBS is S3 API-compatible — SDKs and CLI work. WORM/Object Lock available. **Storage classes.** Standard, IA, Archive; Intelligent Tiering and Deep Archive are not yet available for migration design. The roadmap lists Intelligent Tiering and Deep Archive (Q3 2027–Q1 2028) as future capabilities without confirmed API, pricing, or Terraform details. **Bucket policies.** Similar to AWS but with different condition syntax. **Event notifications.** OBS Events + SMN/FunctionGraph. Cross-region replication available (specific regions only). **Missing.** S3 Select, Object Lambda, Transfer Acceleration, and Batch Operations not available. Multipart Upload works, limits may differ."
     },
     "equivNote": null,
     "tfNote": null
@@ -37,24 +33,21 @@
     "category": "Storage",
     "effort": "easy",
     "equiv": "partial",
-    "scope": [
-      "K1"
-    ],
-    "otc": "Scalable File Service (SFS)",
+    "tcp": "Scalable File Service (SFS)",
     "tfAws": "aws_efs_file_system",
-    "tfOtc": "opentelekomcloud_sfs_file_system_v2, opentelekomcloud_sfs_turbo_share_v1",
+    "tfTcp": "opentelekomcloud_sfs_file_system_v2, opentelekomcloud_sfs_turbo_share_v1",
     "tfStatus": "full",
     "docsAws": "https://docs.aws.amazon.com/efs/",
-    "docsOtc": "https://docs.otc.t-systems.com/scalable-file-service/index.html",
+    "docsTcp": "https://docs.otc.t-systems.com/scalable-file-service/index.html",
     "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/efs_file_system",
-    "tfDocsOtc": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/sfs_file_system_v2",
+    "tfDocsTcp": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/sfs_file_system_v2",
     "desc": {
       "de": "Managed NFS (NFSv4). Elastisch, Auto-Scaling Throughput (Bursting/Elastic), Multi-AZ, Encryption, EFS Access Points, Lifecycle (IA-Klasse), EFS Replication.",
       "en": "Managed NFS (NFSv4). Elastic, auto-scaling throughput (bursting/elastic), multi-AZ, encryption, EFS Access Points, lifecycle (IA class), EFS Replication."
     },
-    "otcDesc": {
-      "de": "Managed NFS in drei Varianten: SFS Capacity-Oriented (elastisch, bis 2 PB, max 10 GB/s, 10k IOPS, Latenz 10–500 ms), SFS Turbo (High-Performance, feste Größe, Typen Standard/Performance mit SSD-Backend, bis 320 TB, sub-ms Latenz), General Purpose File System (bis 4 PB, 5 GB/s). Encryption, Snapshots (nur SFS Turbo). NFSv3 (Capacity-Oriented) bzw. NFSv3/NFSv4 (Turbo).",
-      "en": "Managed NFS in three variants: SFS Capacity-Oriented (elastic, up to 2 PB, max 10 GB/s, 10k IOPS, latency 10–500 ms), SFS Turbo (high-performance, fixed size, types Standard/Performance with SSD backend, up to 320 TB, sub-ms latency), General Purpose File System (up to 4 PB, 5 GB/s). Encryption, snapshots (SFS Turbo only). NFSv3 (Capacity-Oriented) or NFSv3/NFSv4 (Turbo)."
+    "tcpDesc": {
+      "de": "Managed NFS in drei Varianten: SFS Capacity-Oriented (elastisch, bis 2 PB, max 10 GB/s, 10k IOPS, Latenz 10–500 ms), SFS Turbo (High-Performance, feste Größe, Typen Standard/Performance mit SSD-Backend, bis 320 TB, sub-ms Latenz), General Purpose File System (bis 4 PB, 5 GB/s). Encryption, Snapshots (nur SFS Turbo). NFSv3 (Capacity-Oriented) bzw. NFSv3/NFSv4 (Turbo). SFS Turbo HPC (500/1000) seit 06/2026; ⚠️ SFS Common I/O EOL 31.12.2026.",
+      "en": "Managed NFS in three variants: SFS Capacity-Oriented (elastic, up to 2 PB, max 10 GB/s, 10k IOPS, latency 10–500 ms), SFS Turbo (high-performance, fixed size, types Standard/Performance with SSD backend, up to 320 TB, sub-ms latency), General Purpose File System (up to 4 PB, 5 GB/s). Encryption, snapshots (SFS Turbo only). NFSv3 (Capacity-Oriented) or NFSv3/NFSv4 (Turbo). SFS Turbo HPC (500/1000) since 06/2026; ⚠️ SFS Common I/O EOL 31.12.2026."
     },
     "alt": null,
     "migration": {
@@ -65,29 +58,31 @@
       "de": "SFS Turbo hat feste Größe (kein Auto-Scaling wie EFS). Keine EFS Access Points, keine Lifecycle-basierte Tiering (IA-Klasse), keine EFS Replication. SFS bietet 3 Typen: Capacity-Oriented (großes Volumen, hohe Latenz), Turbo Standard/Performance (SSD, sub-ms Latenz), General Purpose (bis 4 PB). Turbo Performance ist für anspruchsvolle Workloads (HPC, AI) geeignet.",
       "en": "SFS Turbo has fixed size (no auto-scaling like EFS). No EFS Access Points, no lifecycle-based tiering (IA class), no EFS Replication. SFS offers 3 types: Capacity-Oriented (large volume, higher latency), Turbo Standard/Performance (SSD, sub-ms latency), General Purpose (up to 4 PB). Turbo Performance is suited for demanding workloads (HPC, AI)."
     },
-    "tfNote": null
+    "tfNote": null,
+    "aliases": [
+      "SFS Turbo"
+    ]
   },
   {
     "name": "AWS Backup",
     "category": "Storage",
     "effort": "easy",
     "equiv": "partial",
-    "scope": [],
-    "otc": "Cloud Backup and Recovery (CBR)",
+    "tcp": "Cloud Backup and Recovery (CBR)",
     "tfAws": "aws_backup_vault, aws_backup_plan, aws_backup_selection",
-    "tfOtc": "opentelekomcloud_cbr_vault_v3, opentelekomcloud_cbr_policy_v3",
+    "tfTcp": "opentelekomcloud_cbr_vault_v3, opentelekomcloud_cbr_policy_v3",
     "tfStatus": "full",
     "docsAws": "https://docs.aws.amazon.com/aws-backup/",
-    "docsOtc": "https://docs.otc.t-systems.com/cloud-backup-recovery/index.html",
+    "docsTcp": "https://docs.otc.t-systems.com/cloud-backup-recovery/index.html",
     "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/backup_vault",
-    "tfDocsOtc": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/cbr_vault_v3",
+    "tfDocsTcp": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/cbr_vault_v3",
     "desc": {
       "de": "Zentraler Backup-Service. Automatisierte Backup-Pläne für EC2, RDS, EFS, DynamoDB, S3 u.v.m. Cross-Region, Cross-Account, Vault Lock.",
       "en": "Central backup service. Automated backup plans for EC2, RDS, EFS, DynamoDB, S3 and more. Cross-region, cross-account, vault lock."
     },
-    "otcDesc": {
-      "de": "Zentrales Backup für ECS, EVS, SFS Turbo. Backup-Policies, Vaults und Wiederherstellung. Cross-Region-Replication für EVS und SFS Turbo ist laut Roadmap noch in Umsetzung und nicht als Migrationsannahme zu verwenden.",
-      "en": "Central backup for ECS, EVS, SFS Turbo. Backup policies, vaults, and recovery. Cross-region replication for EVS and SFS Turbo remains in delivery on the roadmap and must not be assumed for migrations."
+    "tcpDesc": {
+      "de": "Zentrales Backup für ECS, EVS, SFS Turbo. Backup-Policies, Vaults und Wiederherstellung. Cross-Region-Replication für EVS und SFS Turbo ist laut Roadmap noch in Umsetzung und nicht als Migrationsannahme zu verwenden. Die Legacy-Dienste VBS/CSBS sind abgekündigt (EOL) — CBR ist der einzige Backup-Dienst.",
+      "en": "Central backup for ECS, EVS, SFS Turbo. Backup policies, vaults, and recovery. Cross-region replication for EVS and SFS Turbo remains in delivery on the roadmap and must not be assumed for migrations. The legacy services VBS/CSBS are discontinued (EOL) — CBR is the only backup service."
     },
     "alt": {
       "de": "Veeam auf ECS, Restic/Borg + OBS, Velero (für CCE/Kubernetes)",
@@ -101,34 +96,37 @@
       "de": "CBR unterstützt ECS/EVS/SFS Turbo. Cross-Region-Replication für EVS und SFS Turbo ist laut Roadmap in Umsetzung. Kein Cross-Account Backup, kein Vault Lock (WORM), weniger Service-Integrationen als AWS Backup (~15 Services).",
       "en": "CBR supports ECS/EVS/SFS Turbo. Cross-region replication for EVS and SFS Turbo remains in delivery on the roadmap. No cross-account backup, no vault lock (WORM), fewer service integrations than AWS Backup (~15 services)."
     },
-    "tfNote": null
+    "tfNote": null,
+    "aliases": [
+      "Volume Backup Service (VBS)",
+      "Cloud Server Backup Service (CSBS)"
+    ]
   },
   {
     "name": "Amazon EBS",
     "category": "Storage",
     "effort": "easy",
     "equiv": "full",
-    "scope": [],
-    "otc": "Elastic Volume Service (EVS)",
+    "tcp": "Elastic Volume Service (EVS)",
     "tfAws": "aws_ebs_volume, aws_ebs_snapshot",
-    "tfOtc": "opentelekomcloud_evs_volume_v3, opentelekomcloud_evs_snapshot_v2",
+    "tfTcp": "opentelekomcloud_evs_volume_v3, opentelekomcloud_evs_snapshot_v2",
     "tfStatus": "full",
     "docsAws": "https://docs.aws.amazon.com/ebs/",
-    "docsOtc": "https://docs.otc.t-systems.com/elastic-volume-service/index.html",
+    "docsTcp": "https://docs.otc.t-systems.com/elastic-volume-service/index.html",
     "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ebs_volume",
-    "tfDocsOtc": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/evs_volume_v3",
+    "tfDocsTcp": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/evs_volume_v3",
     "desc": {
       "de": "Elastic Block Store. Persistente Block-Volumes für EC2. Typen: gp3, io2, st1, sc1. Snapshots, Encryption, Multi-Attach.",
       "en": "Elastic Block Store. Persistent block volumes for EC2. Types: gp3, io2, st1, sc1. Snapshots, encryption, multi-attach."
     },
-    "otcDesc": {
-      "de": "Persistente Block-Volumes für ECS. Typen: High-IO (SSD), Ultra-High-IO (SSD), Common-IO (SATA). Snapshots, Encryption, Shared EVS (Multi-Attach).",
-      "en": "Persistent block volumes for ECS. Types: High-IO (SSD), Ultra-High-IO (SSD), Common-IO (SATA). Snapshots, encryption, Shared EVS (multi-attach)."
+    "tcpDesc": {
+      "de": "Persistente Block-Volumes für ECS. Typen: High I/O, General Purpose SSD, General Purpose SSD v2 (IOPS/Durchsatz separat konfigurierbar, seit 08/2026), Ultra-High I/O, Extreme SSD. Snapshots, KMS-Encryption, Shared EVS (Multi-Attach). ⚠️ Common I/O (SATA) EOL 31.12.2026.",
+      "en": "Persistent block volumes for ECS. Types: High I/O, General Purpose SSD, General Purpose SSD v2 (IOPS/throughput configurable separately, since 08/2026), Ultra-High I/O, Extreme SSD. Snapshots, KMS encryption, shared EVS (multi-attach). ⚠️ Common I/O (SATA) EOL 31.12.2026."
     },
     "alt": null,
     "migration": {
-      "de": "**Disk-Typen.** EVS: SSD (General Purpose), Ultra-High I/O (io1-Pendant), High I/O. Provisioned IOPS → Ultra-High I/O EVS (andere Preisstruktur). **Kein gp3-Pendant.** gp3 (Baseline + Burst) hat kein direktes Pendant — SSD-Performance-Stufen prüfen. io2 Block Express nicht verfügbar. **Multi-Attach.** io1/io2 Multi-Attach → EVS Shared Disk (nur für bestimmte Dateisysteme). **Snapshots.** Funktionieren ähnlich, aber kein Fast Snapshot Restore. EBS Direct APIs (Snapshot-Zugriff) fehlen. **Verschlüsselung.** EVS Encryption mit KMS (ähnlich wie AWS).",
-      "en": "**Disk types.** EVS: SSD (General Purpose), Ultra-High I/O (io1 equivalent), High I/O. Provisioned IOPS → Ultra-High I/O EVS (different pricing structure). **No gp3 equivalent.** gp3 (baseline + burst) has no direct equivalent — check SSD performance tiers. io2 Block Express not available. **Multi-Attach.** io1/io2 Multi-Attach → EVS Shared Disk (only for certain filesystems). **Snapshots.** Work similarly but no Fast Snapshot Restore. EBS Direct APIs (snapshot access) missing. **Encryption.** EVS Encryption with KMS (similar to AWS)."
+      "de": "**Disk-Typen.** EVS: SSD (General Purpose), Ultra-High I/O (io1-Pendant), High I/O. Provisioned IOPS → Ultra-High I/O EVS (andere Preisstruktur). **gp3-Pendant.** General Purpose SSD v2 erlaubt wie gp3 eine von der Größe unabhängige IOPS-/Durchsatz-Konfiguration (EU-NL laut Roadmap ab Dez 2026). io2 Block Express nicht verfügbar. **Multi-Attach.** io1/io2 Multi-Attach → EVS Shared Disk (nur für bestimmte Dateisysteme). **Snapshots.** Funktionieren ähnlich, aber kein Fast Snapshot Restore. EBS Direct APIs (Snapshot-Zugriff) fehlen. **Verschlüsselung.** EVS Encryption mit KMS (ähnlich wie AWS).",
+      "en": "**Disk types.** EVS: SSD (General Purpose), Ultra-High I/O (io1 equivalent), High I/O. Provisioned IOPS → Ultra-High I/O EVS (different pricing structure). **gp3 equivalent.** General Purpose SSD v2 allows IOPS/throughput configuration independent of size, like gp3 (EU-NL on the roadmap from Dec 2026). io2 Block Express not available. **Multi-Attach.** io1/io2 Multi-Attach → EVS Shared Disk (only for certain filesystems). **Snapshots.** Work similarly but no Fast Snapshot Restore. EBS Direct APIs (snapshot access) missing. **Encryption.** EVS Encryption with KMS (similar to AWS)."
     },
     "equivNote": null,
     "tfNote": null
@@ -138,35 +136,69 @@
     "category": "Storage",
     "effort": "medium",
     "equiv": "partial",
-    "scope": [],
-    "otc": "OBS (Cold/Archive Storage Class)",
+    "tcp": "OBS (Cold/Archive Storage Class)",
     "tfAws": "aws_glacier_vault, aws_s3_bucket (with lifecycle to Glacier)",
-    "tfOtc": "opentelekomcloud_obs_bucket",
+    "tfTcp": "opentelekomcloud_obs_bucket",
     "tfStatus": "partial",
     "docsAws": "https://docs.aws.amazon.com/amazonglacier/latest/dev/",
-    "docsOtc": "https://docs.otc.t-systems.com/object-storage-service/index.html",
+    "docsTcp": "https://docs.otc.t-systems.com/object-storage-service/index.html",
     "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/glacier_vault",
-    "tfDocsOtc": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/obs_bucket",
+    "tfDocsTcp": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/obs_bucket",
     "desc": {
       "de": "Langzeit-Archivierungsspeicher. Vault-basiert, Retrieval Policies (Expedited/Standard/Bulk), Vault Lock für WORM Compliance. Glacier Deep Archive für niedrigste Kosten.",
       "en": "Long-term archive storage. Vault-based, retrieval policies (expedited/standard/bulk), vault lock for WORM compliance. Glacier Deep Archive for lowest cost."
     },
-    "otcDesc": {
+    "tcpDesc": {
       "de": "OBS bietet Cold und Archive Storage Classes als Speicherklassen innerhalb von OBS-Buckets. Kein separater Service — Objekte werden über Lifecycle-Policies oder direkt in Cold/Archive-Klasse geschrieben.",
       "en": "OBS provides Cold and Archive storage classes within OBS buckets. No separate service — objects are written to Cold/Archive class via lifecycle policies or directly."
     },
     "alt": null,
     "migration": {
-      "de": "**Storage-Klassen.** OBS Cold Storage entspricht Glacier, aber es gibt aktuell kein bestätigtes Glacier-Deep-Archive-Pendant. Deep Archive ist in der Roadmap für Q1–Q2 2027 geführt und darf bis zur dokumentierten Verfügbarkeit nicht eingeplant werden. **Retrieval-Zeiten.** OBS Cold Standard Retrieval 1–5 Minuten (Glacier: 3–5 Stunden) — deutlich schneller. **Compliance.** Vault Lock → OBS WORM (Object Lock, Retention Policies). **Kein Retrieval-Tiering.** Glacier Flexible Retrieval Optionen (Expedited/Standard/Bulk) → OBS Cold hat nur einen Retrieval-Modus. **Fehlend.** Glacier Select nicht verfügbar.",
-      "en": "**Storage classes.** OBS Cold Storage corresponds to Glacier, but there is currently no confirmed Glacier Deep Archive equivalent. Deep Archive is listed on the roadmap for Q1–Q2 2027 and must not be assumed until documented availability. **Retrieval times.** OBS Cold Standard Retrieval 1–5 minutes (Glacier: 3–5 hours) — significantly faster. **Compliance.** Vault Lock → OBS WORM (Object Lock, retention policies). **No retrieval tiering.** Glacier Flexible Retrieval options (Expedited/Standard/Bulk) → OBS Cold has only one retrieval mode. **Missing.** Glacier Select not available."
+      "de": "**Storage-Klassen.** OBS Cold Storage entspricht Glacier, aber es gibt aktuell kein bestätigtes Glacier-Deep-Archive-Pendant. Deep Archive ist in der Roadmap für Q3 2027–Q1 2028 geführt und darf bis zur dokumentierten Verfügbarkeit nicht eingeplant werden. **Retrieval-Zeiten.** OBS Cold Standard Retrieval 1–5 Minuten (Glacier: 3–5 Stunden) — deutlich schneller. **Compliance.** Vault Lock → OBS WORM (Object Lock, Retention Policies). **Kein Retrieval-Tiering.** Glacier Flexible Retrieval Optionen (Expedited/Standard/Bulk) → OBS Cold hat nur einen Retrieval-Modus. **Fehlend.** Glacier Select nicht verfügbar.",
+      "en": "**Storage classes.** OBS Cold Storage corresponds to Glacier, but there is currently no confirmed Glacier Deep Archive equivalent. Deep Archive is listed on the roadmap for Q3 2027–Q1 2028 and must not be assumed until documented availability. **Retrieval times.** OBS Cold Standard Retrieval 1–5 minutes (Glacier: 3–5 hours) — significantly faster. **Compliance.** Vault Lock → OBS WORM (Object Lock, retention policies). **No retrieval tiering.** Glacier Flexible Retrieval options (Expedited/Standard/Bulk) → OBS Cold has only one retrieval mode. **Missing.** Glacier Select not available."
     },
     "equivNote": {
-      "de": "Glacier wird auf OTC über OBS Storage Classes (Cold/Archive) abgebildet — kein separater Vault-Service. OBS WORM (Object Lock, Retention Policies) ist verfügbar. Kein aktuell verfügbarer Glacier Deep Archive Tier (laut Roadmap Q1–Q2 2027 geplant), kein Glacier Select. Retrieval-Zeiten bei OBS Archive sind kürzer als bei AWS Glacier.",
-      "en": "Glacier is mapped on OTC via OBS storage classes (Cold/Archive) — no separate vault service. OBS WORM (Object Lock, retention policies) is available. No currently available Glacier Deep Archive tier (planned on the roadmap for Q1–Q2 2027), no Glacier Select. Retrieval times for OBS Archive are shorter than AWS Glacier."
+      "de": "Glacier wird auf T Cloud Public über OBS Storage Classes (Cold/Archive) abgebildet — kein separater Vault-Service. OBS WORM (Object Lock, Retention Policies) ist verfügbar. Kein aktuell verfügbarer Glacier Deep Archive Tier (laut Roadmap Q3 2027–Q1 2028 geplant), kein Glacier Select. Retrieval-Zeiten bei OBS Archive sind kürzer als bei AWS Glacier.",
+      "en": "Glacier is mapped on T Cloud Public via OBS storage classes (Cold/Archive) — no separate vault service. OBS WORM (Object Lock, retention policies) is available. No currently available Glacier Deep Archive tier (planned on the roadmap for Q3 2027–Q1 2028), no Glacier Select. Retrieval times for OBS Archive are shorter than AWS Glacier."
     },
     "tfNote": {
       "de": "OBS Lifecycle Rules (inkl. Cold/Archive Transition) per TF steuerbar, aber Retrieval Jobs nicht per TF.",
       "en": "OBS lifecycle rules (incl. cold/archive transition) manageable via TF, but retrieval jobs not via TF."
     }
+  },
+  {
+    "name": "AWS Elastic Disaster Recovery",
+    "category": "Storage",
+    "effort": "hard",
+    "equiv": "partial",
+    "tcp": "Storage Disaster Recovery Service (SDRS)",
+    "tfAws": "aws_drs_replication_configuration_template",
+    "tfTcp": "opentelekomcloud_sdrs_protectiongroup_v1, opentelekomcloud_sdrs_protected_instance_v1, opentelekomcloud_sdrs_replication_pair_v1",
+    "tfStatus": "full",
+    "docsAws": "https://docs.aws.amazon.com/drs/",
+    "docsTcp": "https://docs.otc.t-systems.com/storage-disaster-recovery-service/index.html",
+    "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/drs_replication_configuration_template",
+    "tfDocsTcp": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/sdrs_protectiongroup_v1",
+    "desc": {
+      "de": "Kontinuierliche Block-Replikation von Servern (on-prem/Cloud) in eine AWS-Region mit Recovery in Minuten (RPO Sekunden), Drills, Failback.",
+      "en": "Continuous block replication of servers (on-prem/cloud) into an AWS region with recovery within minutes (RPO seconds), drills, failback."
+    },
+    "tcpDesc": {
+      "de": "Synchrone Cross-AZ-Replikation von ECS/EVS innerhalb EU-DE mit Protection Groups, geplanter/ungeplanter Umschaltung und DR-Drills (RPO 0). ⚠️ Laut Roadmap EOL Juli 2027–Juni 2028 (Konsolidierung in eine neue DR-Architektur).",
+      "en": "Synchronous cross-AZ replication of ECS/EVS within EU-DE with protection groups, planned/unplanned failover and DR drills (RPO 0). ⚠️ EOL on the roadmap July 2027–June 2028 (consolidation into a new DR architecture)."
+    },
+    "alt": {
+      "de": "CBR-Replikation, Veeam/Zerto",
+      "en": "CBR replication, Veeam/Zerto"
+    },
+    "migration": {
+      "de": "**Scope.** SDRS repliziert nur zwischen AZs in EU-DE — kein Cross-Region-DR und keine Replikation von On-Premises-Servern. **Abkündigung.** EOL ist angekündigt; für neue DR-Konzepte Nachfolgelösung bzw. CBR-Replikation und Partner-Lösungen (Veeam, Zerto) evaluieren. **Drills.** DR-Drills sind möglich, Failback über umgekehrte Replikation.",
+      "en": "**Scope.** SDRS only replicates between AZs in EU-DE — no cross-region DR and no replication of on-premises servers. **Discontinuation.** EOL is announced; evaluate the successor or CBR replication and partner solutions (Veeam, Zerto) for new DR concepts. **Drills.** DR drills are possible, failback via reverse replication."
+    },
+    "equivNote": {
+      "de": "Nur Cross-AZ in EU-DE, keine On-Prem-Quellen; EOL angekündigt.",
+      "en": "Cross-AZ in EU-DE only, no on-prem sources; EOL announced."
+    },
+    "tfNote": null
   }
 ]

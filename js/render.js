@@ -76,6 +76,12 @@ function loc(s, field) {
 // Header & Toolbar UI
 // ===================================================
 
+/** Format the data update date for the current language */
+function fmtUpdated(opts) {
+  if (!state.updated) return '';
+  return new Date(state.updated + 'T00:00:00').toLocaleDateString(state.lang === 'de' ? 'de-DE' : 'en-US', opts);
+}
+
 /** Update header links and labels for current language */
 function updateHeaderLinks() {
   const t = T[state.lang];
@@ -95,6 +101,13 @@ function updateHeaderLinks() {
     if (span) span.textContent = t[label].replace(new RegExp('^' + emoji + '\\s*'), '');
     else el.textContent = t[label];
   });
+
+  const fm = document.getElementById('formerly');
+  if (fm) fm.textContent = t.formerly;
+
+  // Data update date
+  const gd = document.getElementById('genDate');
+  if (gd) gd.textContent = state.updated ? t.updated + ' ' + fmtUpdated() : '';
 
   // AI hint
   const ah = document.getElementById('aiHint');
@@ -144,7 +157,8 @@ function buildUI() {
   // Equiv pills
   const ep = document.getElementById('equivPills');
   ep.innerHTML = [
-    { k: 'full', cls: 'eq-full' }, { k: 'partial', cls: 'eq-partial' }, { k: 'none', cls: 'eq-none' }
+    { k: 'full', cls: 'eq-full' }, { k: 'partial', cls: 'eq-partial' }, { k: 'none', cls: 'eq-none' },
+    { k: 'tcpOnly', cls: 'eq-tcp-only' }
   ].map(e =>
     `<button class="pill pill-eq ${e.cls}${f.equivs.includes(e.k) ? ' active' : ''}" data-eq="${e.k}">${t['eq' + e.k[0].toUpperCase() + e.k.slice(1)]}</button>`
   ).join('');
@@ -170,14 +184,6 @@ function buildUI() {
     if (sp.classList.contains('eff-hard')) sp.classList.toggle('active', f.efforts.includes('hard'));
   });
 
-  // Scope pills
-  const scopeP = document.getElementById('scopePills');
-  scopeP.innerHTML = ['', 'K1', 'K2'].map(k =>
-    `<button class="pill pill-scope${f.scope === k ? ' active' : ''}" data-scope="${k}">${k || 'Alle'}</button>`
-  ).join('');
-  scopeP.querySelectorAll('.pill-scope').forEach(b => {
-    b.addEventListener('click', () => { f.scope = b.dataset.scope; buildUI(); render(); });
-  });
 }
 
 // ===================================================
@@ -225,7 +231,7 @@ function render() {
 
     // Localized fields
     const d = loc(s, 'desc') || '';
-    const od = loc(s, 'otcDesc') || '';
+    const od = loc(s, 'tcpDesc') || '';
     const alt = loc(s, 'alt');
     const mig = loc(s, 'migration');
     const eqNote = loc(s, 'equivNote') || '';
@@ -233,12 +239,15 @@ function render() {
 
     // Tags
     const isNoEquiv = s.equiv === 'none';
+    const isTcpOnly = s.equiv === 'tcpOnly';
     const eTag = s.effort === 'easy' ? `<span class="tag tag-easy">${t.easy}</span>`
       : s.effort === 'medium' ? `<span class="tag tag-med">${t.med}</span>`
-      : `<span class="tag tag-hard">${t.hard}</span>`;
-    const otcTag = isNoEquiv ? '' : `<span class="tag tag-otc">→ ${s.otc}</span>`;
+      : s.effort === 'hard' ? `<span class="tag tag-hard">${t.hard}</span>`
+      : '';
+    const tcpTag = isNoEquiv || isTcpOnly ? '' : `<span class="tag tag-tcp">→ ${s.tcp}</span>`;
     const eqTag = s.equiv === 'full' ? `<span class="tag tag-eq-full">${t.eqFull}</span>`
       : s.equiv === 'partial' ? `<span class="tag tag-eq-partial"${eqNote ? ' title="' + eqNote.replace(/"/g, '&quot;') + '"' : ''}>${t.eqPartial}</span>`
+      : isTcpOnly ? `<span class="tag tag-eq-tcp-only">${t.eqTcpOnly}</span>`
       : `<span class="tag tag-eq-none">${t.eqNone}</span>`;
     const tsTag = s.tfStatus === 'full' ? '<span class="tag tag-full">TF ✓</span>'
       : s.tfStatus === 'partial' ? '<span class="tag tag-partial">TF ~</span>'
@@ -247,9 +256,9 @@ function render() {
     // Links
     let links = '';
     if (s.docsAws) links += `<a href="${s.docsAws}" target="_blank" class="link-chip l-aws">AWS</a>`;
-    if (s.docsOtc) links += `<a href="${s.docsOtc}" target="_blank" class="link-chip l-otc">OTC</a>`;
+    if (s.docsTcp) links += `<a href="${s.docsTcp}" target="_blank" class="link-chip l-tcp">T Cloud Public</a>`;
     if (s.tfDocsAws) links += `<a href="${s.tfDocsAws}" target="_blank" class="link-chip l-tf">TF:AWS</a>`;
-    if (s.tfDocsOtc) links += `<a href="${s.tfDocsOtc}" target="_blank" class="link-chip l-tf">TF:OTC</a>`;
+    if (s.tfDocsTcp) links += `<a href="${s.tfDocsTcp}" target="_blank" class="link-chip l-tf">TF:TCP</a>`;
 
     // IDs
     const svcAnchor = s.name.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9-]/g, '');
@@ -262,29 +271,31 @@ function render() {
       : s.tfStatus === 'partial' ? (state.lang === 'en' ? 'Partial' : 'Teilweise')
       : (state.lang === 'en' ? 'Not available' : 'Nicht verfügbar');
 
-    return catH + `<div class="card ${s.effort}${isNoEquiv ? ' no-equiv' : ''}${state.allOpen ? ' expanded' : ''}" id="${svcAnchor}">` +
+    return catH + `<div class="card ${s.effort || 'no-effort'}${isNoEquiv ? ' no-equiv' : ''}${isTcpOnly ? ' tcp-only' : ''}${state.allOpen ? ' expanded' : ''}" id="${svcAnchor}">` +
       `<div class="card-head" onclick="toggleCard(this)">` +
         `<div>` +
           `<div class="card-title"><span class="card-name">${s.name}</span></div>` +
-          `<div class="card-meta">${[`<span class="tag tag-cat">${s.category}</span>`, otcTag, eqTag, eTag, tsTag].filter(Boolean).join('')}</div>` +
+          `<div class="card-meta">${[`<span class="tag tag-cat">${s.category}</span>`, tcpTag, eqTag, eTag, tsTag].filter(Boolean).join('')}</div>` +
         `</div>` +
         `<span class="card-arrow">▼</span>` +
       `</div>` +
       `<div class="card-body"><div class="card-inner">` +
-        `<div class="row"><span class="row-label">${t.desc}</span><span class="row-val">${d}</span></div>` +
+        (isTcpOnly
+          ? `<div class="row"><span class="row-label">${t.awsE}</span><span class="row-val"><b>${t.noAwsEquiv}</b>${d ? ' — ' + d : ''}</span></div>`
+          : `<div class="row"><span class="row-label">${t.desc}</span><span class="row-val">${d}</span></div>`) +
         (isNoEquiv
-          ? `<div class="row"><span class="row-label">${t.otcE}</span><span class="row-val"><b>${t.noEquiv}</b> — ${od}</span></div>`
-          : `<div class="row"><span class="row-label">${t.otcE}</span><span class="row-val"><b>${s.otc}</b> — ${od}</span></div>`) +
+          ? `<div class="row"><span class="row-label">${t.tcpE}</span><span class="row-val"><b>${t.noEquiv}</b> — ${od}</span></div>`
+          : `<div class="row"><span class="row-label">${t.tcpE}</span><span class="row-val"><b>${s.tcp}</b> — ${od}</span></div>`) +
         (eqNote ? `<div class="row row-eq-note"><span class="row-label">${t.eqPartial}</span><span class="row-val eq-note-text">⚠️ ${eqNote}</span></div>` : '') +
         (alt ? `<div class="row"><span class="row-label">${t.alt}</span><span class="row-val">${alt}</span></div>` : '') +
         `<div class="row"><span class="row-label">${tfLabel}</span><span class="row-val">` +
-          `<div class="tf-row"><span class="tf-code">AWS: ${s.tfAws}</span><span class="tf-code">OTC: ${s.tfOtc || '—'}</span>` +
+          `<div class="tf-row"><span class="tf-code">AWS: ${s.tfAws || '—'}</span><span class="tf-code">TCP: ${s.tfTcp || '—'}</span>` +
           `<span class="tag ${s.tfStatus === 'full' ? 'tag-full' : s.tfStatus === 'partial' ? 'tag-partial' : 'tag-none'}">${tsLabel}</span></div>` +
         `</span></div>` +
         (tfNote ? `<div class="row row-tf-note"><span class="row-label"></span><span class="row-val tf-note-text">⚠️ ${tfNote}</span></div>` : '') +
         `<div>` +
-          `<button class="mig-toggle" onclick="toggleMigration(event, '${migId}')"><span class="mig-arrow">▼</span> ${migLabel}</button>` +
-          `<div class="mig-content" id="${migId}"><div class="mig-box">${fmtMig(mig)}</div></div>` +
+          (mig ? `<button class="mig-toggle" onclick="toggleMigration(event, '${migId}')"><span class="mig-arrow">▼</span> ${migLabel}</button>` +
+          `<div class="mig-content" id="${migId}"><div class="mig-box">${fmtMig(mig)}</div></div>` : '') +
         `</div>` +
         `<div class="links-row">${links}</div>` +
         `<button class="svc-link" data-share="${svcAnchor}" title="${state.lang === 'en' ? 'Copy link' : 'Link kopieren'}">🔗</button>` +
@@ -327,12 +338,6 @@ function buildSheet() {
   const badge = document.getElementById('filterBadge');
   if (badge) badge.textContent = filterCount() || '';
 
-  // Scope
-  const sp = document.getElementById('sheetScope');
-  if (sp) sp.innerHTML = ['', 'K1', 'K2'].map(k =>
-    `<button class="pill pill-scope${f.scope === k ? ' active' : ''}" onclick="state.filters.scope='${k}';buildUI();buildSheet();render()">${k || 'Alle'}</button>`
-  ).join('');
-
   // Categories
   const sc = document.getElementById('sheetCats');
   if (sc) sc.innerHTML = cats.map(c =>
@@ -344,7 +349,8 @@ function buildSheet() {
   if (se) se.innerHTML = [
     { k: 'full', l: t.eqFull, c: 'eq-full' },
     { k: 'partial', l: t.eqPartial, c: 'eq-partial' },
-    { k: 'none', l: t.eqNone, c: 'eq-none' }
+    { k: 'none', l: t.eqNone, c: 'eq-none' },
+    { k: 'tcpOnly', l: t.eqTcpOnly, c: 'eq-tcp-only' }
   ].map(e =>
     `<button class="pill pill-eq ${e.c}${f.equivs.includes(e.k) ? ' active' : ''}" onclick="toggleArrayItem(state.filters.equivs,'${e.k}');buildUI();buildSheet();render()">${e.l}</button>`
   ).join('');

@@ -1,24 +1,17 @@
 // ===================================================
-// filters.js — Filtering, sorting, scope logic
+// filters.js — Filtering and sorting
 // ===================================================
-
-/** Check if a service matches the current scope filter */
-function matchScope(s) {
-  if (!state.filters.scope) return true;
-  return Array.isArray(s.scope)
-    ? s.scope.includes(state.filters.scope)
-    : s.scope === state.filters.scope;
-}
 
 /** Get search text for a service */
 function searchText(s) {
   const desc = loc(s, 'desc') || '';
-  const otcDesc = loc(s, 'otcDesc') || '';
+  const aliases = (s.aliases || []).join(' ');
+  const tcpDesc = loc(s, 'tcpDesc') || '';
   return (
-    s.name + ' ' + desc + ' ' +
-    s.category + ' ' + s.otc + ' ' +
-    otcDesc + ' ' +
-    (s.tfOtc || '') + ' ' + (s.tfAws || '')
+    s.name + ' ' + aliases + ' ' + desc + ' ' +
+    s.category + ' ' + s.tcp + ' ' +
+    tcpDesc + ' ' +
+    (s.tfTcp || '') + ' ' + (s.tfAws || '')
   ).toLowerCase();
 }
 
@@ -34,7 +27,6 @@ function getFiltered() {
       (f.efforts.length === 0 || f.efforts.includes(s.effort)) &&
       (f.equivs.length === 0 || f.equivs.includes(s.equiv)) &&
       (f.tfStatus.length === 0 || f.tfStatus.includes(s.tfStatus)) &&
-      matchScope(s) &&
       txt.includes(q)
     );
   });
@@ -51,7 +43,6 @@ function getBaseFiltered() {
       (f.categories.length === 0 || f.categories.includes(s.category)) &&
       (f.equivs.length === 0 || f.equivs.includes(s.equiv)) &&
       (f.tfStatus.length === 0 || f.tfStatus.includes(s.tfStatus)) &&
-      matchScope(s) &&
       txt.includes(q)
     );
   });
@@ -69,7 +60,8 @@ function getSorted(arr) {
   }
   if (state.sortBy === 'effort') {
     const order = { hard: 0, medium: 1, easy: 2 };
-    return [...arr].sort((a, b) => order[a.effort] - order[b.effort]);
+    const rank = s => (s.effort in order ? order[s.effort] : 3);
+    return [...arr].sort((a, b) => rank(a) - rank(b) || a.name.localeCompare(b.name));
   }
   return arr;
 }
@@ -87,7 +79,6 @@ function resetFilters() {
   state.filters.efforts = [];
   state.filters.equivs = [];
   state.filters.tfStatus = [];
-  state.filters.scope = '';
   document.getElementById('searchBox').value = '';
 }
 
@@ -96,7 +87,7 @@ function hasActiveFilters() {
   const f = state.filters;
   return f.categories.length > 0 || f.efforts.length > 0 ||
     f.equivs.length > 0 || f.tfStatus.length > 0 ||
-    f.scope || document.getElementById('searchBox').value;
+    document.getElementById('searchBox').value;
 }
 
 /** Count active filter groups for badge */
@@ -104,6 +95,6 @@ function filterCount() {
   const f = state.filters;
   return [
     f.categories.length, f.efforts.length, f.equivs.length,
-    f.tfStatus.length, f.scope ? 1 : 0
+    f.tfStatus.length
   ].reduce((a, b) => a + b, 0);
 }
