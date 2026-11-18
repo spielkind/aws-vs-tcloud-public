@@ -6,7 +6,7 @@ Static site (no build step) comparing AWS services with **T Cloud Public** (form
 - `index.html`, `js/` (`state` → `filters` → `render` → `export` → `app`), `css/` – UI, no dependencies.
 - `services/index.json` – list of data files; `services/<category>.json` – entries; `services/meta.json` – data date shown as "Stand"/"Last updated".
 - `oracle-managed/` – standalone Oracle-optimized/Managed Service page (prices from service description PDFs).
-- `tools/fetch_sources.py` – downloads roadmap + all release notes into `.sources/` (git-ignored) as greppable text (roadmap items with month ranges).
+- `tools/fetch_sources.py` – downloads roadmap + all release notes into `.sources/` (git-ignored) as greppable text: `roadmap-items.txt` (every timeline bar with month range + description, plus a section of undated tooltip-only items) and `release-notes.txt`. Fails if not all roadmap bars could be parsed.
 - `tools/validate.py`, `tools/check_links.py` – data checks (run from repo root).
 
 ## Data model (one entry)
@@ -33,3 +33,17 @@ Rules: every localized field has `de` **and** `en` with the same content · writ
 6. **Bump** `services/meta.json` → `"updated": "YYYY-MM-DD"`.
 7. **Check**: `python3 tools/validate.py && python3 tools/check_links.py` (both must print `OK`); then `python3 -m http.server` and test search, filters (incl. category dropdown, "T Cloud Public only"), DE/EN, dark mode, mobile sheet, CSV/PDF export, no console errors.
 8. **Publish**: commit and push to `main`; GitHub Pages deploys automatically (verify the latest Pages build and the live page).
+
+## Learnings / pitfalls (from the 11/2026 refresh)
+- **"Missing feature" claims age fastest.** Many were wrong after a year (DNSSEC, CBR Backup Lock/WORM, SNS filter policies, Smart Connect, CCE workload identity). Grep the release notes for every "kein/no …" statement.
+- **Docs repo ≠ offered service.** `opentelekomcloud-docs` contains skeleton/legacy repos (e.g. `distributed-message-service-rabbitmq` – RabbitMQ is *not* offered). The service description is the authority for what is sold; docs for how it works.
+- **Terraform resource ≠ full support.** Check resource arguments, not just existence (e.g. `gemini_instance_v3` only supports the Cassandra/Influx engines, not the DynamoDB mode).
+- **Roadmap parsing.** Grid columns `q<month><year>` are months (q4 2027 = Apr 2027), numeric starts mean "already running" (EOL notices often look like this). Tooltip-only items (CDN, KooSearch, …) have no date – never invent one; phrase as "announced, no date". Only write "laut Roadmap/per roadmap" if the item is actually in `roadmap-items.txt`.
+- **Service description PDF text.** "expected to be available from …" markers are extracted *before* the heading they belong to; PDF URLs are hash-based and change per revision (old `open-telekom-cloud.com/leistungsbeschreibung-tsi` and `/service-description` still redirect to the current PDFs).
+- **Link checks lie.** `docs.otc.t-systems.com` (bot wall) and `registry.terraform.io` (SPA) answer 200 for anything; `check_links.py` therefore validates slugs/resources against the GitHub repos. Occasional HTTP 5xx from docs.otc are transient (the script retries 3×) – recheck before changing data.
+- **AWS changes too.** Check AWS deprecations/renames (e.g. CloudTrail Lake, DevOps Guru, X-Ray SDKs, Glacier vaults, LiveAnalytics, "SageMaker AI", "Data Firehose") – not only the T Cloud Public side.
+- **Cross-entry consistency.** The same T Cloud Public service appears in several entries (e.g. DMS in SQS/MQ/MSK/Kinesis/Lambda, CSMS in Secrets Manager/Systems Manager/CodePipeline). After edits, grep all files for the service name and keep statements and dates identical.
+- **New roadmap/release items → AWS mapping.** Each new T Cloud Public service/feature should either extend an existing entry or create a new AWS entry (e.g. Status Dashboard → AWS Health, SFS Turbo HPC → FSx for Lustre, SMB roadmap → FSx for Windows).
+- **Parallel agents.** Split the review per `services/*.json` file (one owner per file), give them the source text files, and tell them to clone docs repos **outside** the repo. Finish with an independent review (rubber duck) of the whole diff.
+- **UI.** More categories make the toolbar wrap – categories live in a dropdown; check the toolbar at 1280/1440/1600 px after adding categories.
+- **Hosting.** The repo was renamed from `otc-vs-aws`; the old Pages URL returns 404 (GitHub only redirects repo URLs).

@@ -120,8 +120,8 @@
       "en": "Elastic Block Store. Persistent block volumes for EC2. Types: gp3, io2, st1, sc1. Snapshots, encryption, multi-attach."
     },
     "tcpDesc": {
-      "de": "Persistente Block-Volumes für ECS. Typen: High I/O, General Purpose SSD, General Purpose SSD v2 (IOPS/Durchsatz separat konfigurierbar, seit 08/2026), Ultra-High I/O, Extreme SSD. Snapshots, KMS-Encryption, Shared EVS (Multi-Attach). ⚠️ Common I/O (SATA) EOL 31.12.2026.",
-      "en": "Persistent block volumes for ECS. Types: High I/O, General Purpose SSD, General Purpose SSD v2 (IOPS/throughput configurable separately, since 08/2026), Ultra-High I/O, Extreme SSD. Snapshots, KMS encryption, shared EVS (multi-attach). ⚠️ Common I/O (SATA) EOL 31.12.2026."
+      "de": "Persistente Block-Volumes für ECS. Typen: High I/O, General Purpose SSD, General Purpose SSD v2 (IOPS/Durchsatz separat konfigurierbar, seit 08/2026), Ultra-High I/O, Extreme SSD. Snapshots, KMS-Encryption, Shared EVS (Multi-Attach). ⚠️ Common I/O (SATA) EOL 31.12.2026. Ein Papierkorb (Recycle Bin) für gelöschte Volumes ist laut Roadmap für EU-DE bis Dez 2026 geplant.",
+      "en": "Persistent block volumes for ECS. Types: High I/O, General Purpose SSD, General Purpose SSD v2 (IOPS/throughput configurable separately, since 08/2026), Ultra-High I/O, Extreme SSD. Snapshots, KMS encryption, shared EVS (multi-attach). ⚠️ Common I/O (SATA) EOL 31.12.2026. A recycle bin for deleted volumes is on the roadmap for EU-DE until Dec 2026."
     },
     "alt": null,
     "migration": {
@@ -199,6 +199,76 @@
       "de": "Nur Cross-AZ in EU-DE, keine On-Prem-Quellen; EOL angekündigt.",
       "en": "Cross-AZ in EU-DE only, no on-prem sources; EOL announced."
     },
+    "tfNote": null
+  },
+  {
+    "name": "Amazon FSx for Lustre",
+    "category": "Storage",
+    "effort": "hard",
+    "equiv": "partial",
+    "tcp": "SFS Turbo HPC",
+    "tfAws": "aws_fsx_lustre_file_system",
+    "tfTcp": "opentelekomcloud_sfs_turbo_share_v1",
+    "tfStatus": "full",
+    "docsAws": "https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html",
+    "docsTcp": "https://docs.otc.t-systems.com/scalable-file-service/index.html",
+    "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/fsx_lustre_file_system",
+    "tfDocsTcp": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/sfs_turbo_share_v1",
+    "desc": {
+      "de": "Managed Lustre-Dateisystem für HPC, ML-Training und Rendering: Sub-Millisekunden-Latenz, Durchsatz bis in den TB/s-Bereich, Scratch- und Persistent-Deployments, Data Repository Association mit S3 (Lazy Load/Export).",
+      "en": "Managed Lustre file system for HPC, ML training and rendering: sub-millisecond latency, throughput up to TB/s, scratch and persistent deployments, data repository association with S3 (lazy load/export)."
+    },
+    "tcpDesc": {
+      "de": "SFS Turbo HPC: Hochleistungs-Dateisystem für KI-Training, HPC, EDA und Rendering mit Durchsatzklassen von 20 bis 1.000 MB/s/TiB (HPC 500/1000 seit 06/2026), 1,2 TB bis 1 PB, bis zu 4 Mio. IOPS, 1–3 ms Latenz (4 KiB). Zugriff per NFS (kein Lustre-Client). EU-NL laut Roadmap Jan–Apr 2027; SMB-Support laut Roadmap bis Nov 2026.",
+      "en": "SFS Turbo HPC: high-performance file system for AI training, HPC, EDA and rendering with throughput classes from 20 to 1,000 MB/s/TiB (HPC 500/1000 since 06/2026), 1.2 TB to 1 PB, up to 4 million IOPS, 1–3 ms latency (4 KiB). Access via NFS (no Lustre client). EU-NL on the roadmap Jan–Apr 2027; SMB support on the roadmap until Nov 2026."
+    },
+    "alt": {
+      "de": "Lustre/BeeGFS self-managed auf ECS (z.B. mit Bare Metal / GPU-Flavors)",
+      "en": "Lustre/BeeGFS self-managed on ECS (e.g. with bare metal / GPU flavors)"
+    },
+    "migration": {
+      "de": "**Protokoll.** Lustre-Clients durch NFS-Mounts ersetzen; Anwendungen mit Lustre-spezifischen Features (Striping, lfs-Kommandos) anpassen. **Performance.** Latenz im Millisekundenbereich statt Sub-Millisekunden — für sehr latenzkritische Workloads mit Benchmarks validieren. Durchsatzklasse (MB/s/TiB) und Kapazität bestimmen die Bandbreite. **S3-Kopplung.** Data Repository Associations haben kein Pendant — Daten aus OBS z.B. per obsutil/rclone vorladen und Ergebnisse zurückschreiben. **Deployment-Typen.** Scratch-Dateisysteme gibt es nicht; SFS Turbo HPC ist persistent.",
+      "en": "**Protocol.** Replace Lustre clients with NFS mounts; adapt applications using Lustre-specific features (striping, lfs commands). **Performance.** Millisecond instead of sub-millisecond latency — validate very latency-critical workloads with benchmarks. Throughput class (MB/s/TiB) and capacity determine bandwidth. **S3 coupling.** Data repository associations have no equivalent — preload data from OBS e.g. via obsutil/rclone and write results back. **Deployment types.** There are no scratch file systems; SFS Turbo HPC is persistent."
+    },
+    "equivNote": {
+      "de": "Gleicher Einsatzzweck (HPC/KI), aber NFS statt Lustre, höhere Latenz und keine S3/OBS-Data-Repository-Kopplung.",
+      "en": "Same use case (HPC/AI), but NFS instead of Lustre, higher latency and no S3/OBS data repository association."
+    },
+    "tfNote": {
+      "de": "SFS Turbo HPC per Terraform (sfs_turbo_share_v1 mit expand_type = \"hpc\" und hpc_bw).",
+      "en": "SFS Turbo HPC via Terraform (sfs_turbo_share_v1 with expand_type = \"hpc\" and hpc_bw)."
+    }
+  },
+  {
+    "name": "Amazon FSx for Windows File Server",
+    "category": "Storage",
+    "effort": "hard",
+    "equiv": "none",
+    "tcp": "Kein Equivalent (SMB-Support für SFS laut Roadmap)",
+    "tfAws": "aws_fsx_windows_file_system",
+    "tfTcp": null,
+    "tfStatus": "none",
+    "docsAws": "https://docs.aws.amazon.com/fsx/latest/WindowsGuide/what-is.html",
+    "docsTcp": "https://docs.otc.t-systems.com/scalable-file-service/index.html",
+    "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/fsx_windows_file_system",
+    "tfDocsTcp": null,
+    "desc": {
+      "de": "Managed Windows-Dateiserver mit SMB-Protokoll, Active-Directory-Integration, NTFS-ACLs, DFS-Namespaces, Schattenkopien, Datendeduplizierung und Multi-AZ-Bereitstellung.",
+      "en": "Managed Windows file server with SMB protocol, Active Directory integration, NTFS ACLs, DFS namespaces, shadow copies, data deduplication and multi-AZ deployment."
+    },
+    "tcpDesc": {
+      "de": "Aktuell kein Managed-SMB-Dateidienst: alle SFS-Typen werden per NFS eingebunden. Die Roadmap führt SMB-Support für SFS Turbo HPC (SMB 2.0/2.1/3.0, bis Nov 2026) sowie für General Purpose File System (ohne Termin); bis zur Veröffentlichung in den Release Notes nicht einplanen.",
+      "en": "Currently no managed SMB file service: all SFS types are mounted via NFS. The roadmap lists SMB support for SFS Turbo HPC (SMB 2.0/2.1/3.0, until Nov 2026) and for General Purpose File System (undated); do not plan with it until it appears in the release notes."
+    },
+    "alt": {
+      "de": "Windows Server (Dateiserver-Rolle, DFS) auf ECS mit EVS, Samba auf ECS",
+      "en": "Windows Server (file server role, DFS) on ECS with EVS, Samba on ECS"
+    },
+    "migration": {
+      "de": "**Self-managed Dateiserver.** Windows Server mit Dateiserver-Rolle auf ECS betreiben; HA über zwei Instanzen in verschiedenen AZs mit DFS-Replikation. **Active Directory.** AD-Domain-Controller auf ECS oder per VPN/Direct Connect an das On-Prem-AD anbinden. **Backup.** Schattenkopien und FSx-Backups durch CBR-Backups der ECS/EVS ersetzen. **Datenmigration.** robocopy oder AWS DataSync-Export, ACLs mitmigrieren. **Roadmap beobachten.** SMB für SFS Turbo HPC / GP FS kann den Betrieb später vereinfachen.",
+      "en": "**Self-managed file server.** Run Windows Server with the file server role on ECS; HA with two instances in different AZs and DFS replication. **Active Directory.** AD domain controllers on ECS or connect to on-prem AD via VPN/Direct Connect. **Backup.** Replace shadow copies and FSx backups with CBR backups of ECS/EVS. **Data migration.** robocopy or AWS DataSync export, migrate ACLs as well. **Watch the roadmap.** SMB for SFS Turbo HPC / GP FS may simplify operations later."
+    },
+    "equivNote": null,
     "tfNote": null
   }
 ]

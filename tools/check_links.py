@@ -5,7 +5,7 @@
 - opentelekomcloud_* / aws_* resource names and tf docs URLs exist in the provider repos
 - docs.otc.t-systems.com/<slug> exists as repo in github.com/opentelekomcloud-docs
 Requires: authenticated `gh` CLI. Run from repo root: python3 tools/check_links.py"""
-import json, re, subprocess, sys, urllib.request, concurrent.futures as cf
+import json, re, subprocess, sys, time, urllib.request, concurrent.futures as cf
 
 
 def gh_lines(*args):
@@ -33,11 +33,17 @@ for f in json.load(open('services/index.json')):
             if s[k] and s[k].startswith('http'): urls.add(s[k])
 
 
-def status(u):
-    try:
-        return urllib.request.urlopen(urllib.request.Request(u, headers={'User-Agent': 'Mozilla/5.0'}), timeout=25).status, u
-    except Exception as e:
-        return getattr(e, 'code', str(e)[:60]), u
+def status(u, attempts=3):
+    # docs.otc.t-systems.com sporadically answers 5xx – retry before reporting
+    for i in range(attempts):
+        try:
+            return urllib.request.urlopen(urllib.request.Request(u, headers={'User-Agent': 'Mozilla/5.0'}), timeout=25).status, u
+        except Exception as e:
+            code = getattr(e, 'code', str(e)[:60])
+            if isinstance(code, int) and code < 500:
+                return code, u
+            time.sleep(2 * (i + 1))
+    return code, u
 
 
 with cf.ThreadPoolExecutor(16) as ex:

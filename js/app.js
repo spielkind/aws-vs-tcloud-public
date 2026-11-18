@@ -146,7 +146,12 @@ document.addEventListener('keydown', e => {
   // Escape to close sheet or clear search
   if (e.key === 'Escape') {
     const dd = document.getElementById('catDropdown');
-    if (dd && dd.classList.contains('open')) { setCatMenu(false); return; }
+    if (dd && dd.classList.contains('open')) {
+      e.preventDefault();
+      setCatMenu(false);
+      document.getElementById('catToggle').focus();
+      return;
+    }
     const bs = document.getElementById('bottomSheet');
     if (bs && bs.classList.contains('open')) { toggleSheet(); return; }
     document.getElementById('searchBox').value = '';
