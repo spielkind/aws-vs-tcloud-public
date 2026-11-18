@@ -12,7 +12,7 @@ Read `AGENTS.md` (repo root) first – data model, rules and learnings are defin
 python3 -m venv /tmp/tcpvenv && /tmp/tcpvenv/bin/pip install -q pypdf   # once, for PDF text
 /tmp/tcpvenv/bin/python tools/fetch_sources.py
 ```
-Produces `.sources/` (git-ignored): `release-notes.txt`, `terraform-releases.txt`, `terraform-resources.txt`, `roadmap-items.txt` (all bars with month ranges + tooltip-only items), `pdf/servicedescription-en.txt`, `pdf/leistungsbeschreibung-de.txt`, `pdf/managed-services-de.txt`. The script fails loudly if the site structure changed – fix the parser, don't skip it.
+Produces `.sources/` (git-ignored): `release-notes.txt`, `terraform-releases.txt`, `terraform-resources.txt`, `docs-repos.txt`, `products.txt`, `roadmap-items.txt` (all bars with month ranges + tooltip-only items), `pdf/servicedescription-en.txt`, `pdf/leistungsbeschreibung-de.txt`, `pdf/managed-services-de.txt`. The script fails loudly if the site structure changed – fix the parser, don't skip it.
 
 ## 2. Diff report
 ```bash
@@ -24,7 +24,11 @@ Work through every section:
 3. **Roadmap bars not mentioned** → add to the matching entry if it has an AWS counterpart or changes a migration statement (phrase: "laut Roadmap <Mon YYYY>–<Mon YYYY>" / "on the roadmap for …"); ignore pure maintenance items. Check the tooltip-only section manually (undated → "announced, no date").
 4. **Roadmap/date claims in data** → each must match `roadmap-items.txt`; remove claims for items no longer on the roadmap.
 5. **Terraform provider releases** (`[Feat]`/new resources since the last update) → extend `tfTcp`, raise `tfStatus`, update `tfNote` (mention provider version).
-6. **Provider resources not referenced** → mostly sub-resources (fine); look for main resources of services whose entry says `tfStatus: none/partial` or misses a service variant (e.g. `gpfs_*` = General Purpose File System, `private_nat_*`, `aom_*`).
+6. **Provider resources not referenced** (⚠ NEW PREFIX = probably a new service) → mostly sub-resources (fine); look for main resources of services whose entry says `tfStatus: none/partial` or misses a service variant (e.g. `gpfs_*` = General Purpose File System, `private_nat_*`, `aom_*`).
+
+7. **Docs repos / 8. product pages without entry** → new service? Decide: add/merge an entry, or record the reason in `tools/known_sources.json` (also for new Terraform prefixes that are legacy/compat).
+
+**New T Cloud Public services** surface in up to five places: SD chapter 3 (sect. 1), ★ release notes (sect. 2), roadmap incl. tooltip-only items (sect. 3), new Terraform prefix (sect. 6), docs repo / product page (sect. 7/8). Treat any hit as a candidate until it is mapped to an entry or documented in `known_sources.json`.
 
 Also update the `portfolio` list in `tools/validate.py` when services are added/retired.
 

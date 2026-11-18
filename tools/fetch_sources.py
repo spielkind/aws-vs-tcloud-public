@@ -6,6 +6,8 @@ Writes to ./.sources/ (git-ignored):
   release-notes.txt   date | title + description (all RSS items, newest first)
   terraform-releases.txt   opentelekomcloud provider releases (date | tag | changelog lines)
   terraform-resources.txt  all resource types of the provider (docs/resources)
+  docs-repos.txt      non-archived repos of github.com/opentelekomcloud-docs
+  products.txt        product page slugs from t-cloud-public.com/en/products-services/core-services
   pdf/*.pdf + *.txt   current service description (EN), Leistungsbeschreibung (DE), Managed Services PDF
                       (links taken from the live site; text extraction needs `pypdf`: pip install pypdf)
 Run from repo root: python3 tools/fetch_sources.py"""
@@ -96,8 +98,22 @@ open(f'{OUT}/terraform-resources.txt', 'w').write('\n'.join(resources) + '\n')
 print(f'terraform provider: latest {rels[0]["tag_name"]} ({rels[0]["published_at"][:10]}), {len(resources)} resources')
 
 
-# PDFs: hash-based URLs change with every revision, so discover them on the live pages
 SITE = 'https://www.t-cloud-public.com'
+# Docs repos (one per service) and product pages – used to detect new services
+repos, page = [], 1
+while True:
+    batch = gh_api(f'orgs/opentelekomcloud-docs/repos?per_page=100&page={page}')
+    repos += [r['name'] for r in batch if not r['archived']]
+    if len(batch) < 100:
+        break
+    page += 1
+open(f'{OUT}/docs-repos.txt', 'w').write('\n'.join(sorted(repos)) + '\n')
+products = sorted(set(re.findall(r'href="/en/products-services/core-services/([a-z0-9-]+)"', get(f'{SITE}/en/products-services/core-services'))))
+open(f'{OUT}/products.txt', 'w').write('\n'.join(products) + '\n')
+print(f'{len(repos)} docs repos, {len(products)} product pages')
+
+
+# PDFs: hash-based URLs change with every revision, so discover them on the live pages
 PDF_PAGES = {
     'servicedescription-en': (f'{SITE}/en', r'servicedescription\.pdf'),
     'leistungsbeschreibung-de': (f'{SITE}/de', r'leistungsbeschreibung-tdg\.pdf'),

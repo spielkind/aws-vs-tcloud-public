@@ -6,7 +6,10 @@ Sections:
   3. Roadmap bars whose title is not mentioned anywhere in the data (heuristic)
   4. Roadmap/date claims in the data (cross-check against .sources/roadmap-items.txt)
   5. Terraform provider releases since that date (new resources → tfTcp/tfStatus/tfNote)
-  6. Provider resources not referenced in any entry, grouped by service prefix
+  6. Provider resources not referenced in any entry, grouped by service prefix (NEW PREFIX = no entry uses it)
+  7. Docs repos (github.com/opentelekomcloud-docs) without entry
+  8. Product pages (t-cloud-public.com core services) without entry
+Sections 7/8 skip decisions recorded in tools/known_sources.json.
 Run from repo root: python3 tools/report.py [--since YYYY-MM-DD] > .sources/report.md"""
 import argparse, json, re, sys
 
@@ -16,7 +19,8 @@ ap.add_argument('--since', help='release notes after this date (default: service
 args = ap.parse_args()
 
 entries = [s for f in json.load(open('services/index.json')) for s in json.load(open('services/' + f))]
-names = ' | '.join(((s['tcp'] or '') + ' ' + ' '.join(s.get('aliases', []))).lower() for s in entries)
+# one string per entry: a service must match within a single entry's tcp/aliases
+names = [((s['tcp'] or '') + ' ' + ' '.join(s.get('aliases', []))).lower() for s in entries]
 full = ' '.join(json.dumps(s, ensure_ascii=False) for s in entries).lower()
 since = args.since or json.load(open('services/meta.json'))['updated']
 
@@ -44,13 +48,14 @@ skip = re.compile(r'flavors|images|instance types|high availability|license|lice
 for num, title in re.findall(r'^(3\.\d+\.\d+)\s+(.+?)\s+\d+$', toc, re.M):
     if skip.search(title):
         continue
-    if not mentioned(title, names):
+    if not any(mentioned(title, n) for n in names):
         print(f'- {num} {title}')
 
-print(f'\n## 2. Release notes after {since}')
+print(f'\n## 2. Release notes after {since} (★ = launch/beta/EOL – new service or status change?)')
 for date, title in re.findall(r'^## (\d{4}-\d{2}-\d{2}) \| (.+)$', open(f'{SRC}/release-notes.txt').read(), re.M):
     if date > since:
-        print(f'- {date} {title}')
+        launch = re.search(r'\bNEW\b|available|availability|decommission|\bGA\b|release of|launch|public beta|end of (life|sale)|EOL|EOS', title, re.I)
+        print(f'- {"★ " if launch else ""}{date} {title}')
 
 print('\n## 3. Roadmap bars not mentioned in the data (heuristic – decide per item)')
 for line in open(f'{SRC}/roadmap-items.txt'):
@@ -76,11 +81,25 @@ for date, tag, body in re.findall(r'^## (\S+) \| (\S+)\n(.*?)(?=^## |\Z)', rel, 
         feats = [l for l in body.splitlines() if re.search(r'feat|add|new|resource|deprecat', l, re.I) and not re.search(r'^- \[?fix', l, re.I)]
         print(f'- {date} {tag}' + ''.join(f'\n  {l}' for l in feats))
 
+known = json.load(open('tools/known_sources.json'))
 print('\n## 6. Provider resources not referenced in any entry (by prefix) – is a tfStatus/tfTcp too pessimistic?')
 used = set(re.findall(r'opentelekomcloud_(\w+)', ' '.join(s['tfTcp'] or '' for s in entries)))
 groups = {}
 for r in open(f'{SRC}/terraform-resources.txt').read().split():
     if r not in used:
         groups.setdefault(r.split('_')[0], []).append(r)
-for prefix, rs in sorted(groups.items()):
-    print(f'- {prefix}: ' + ', '.join(rs))
+used_prefixes = {r.split('_')[0] for r in used}
+for prefix, rs in sorted(groups.items(), key=lambda kv: (kv[0] in used_prefixes, kv[0])):
+    flag = '' if prefix in used_prefixes or prefix in known['terraform_prefixes'] else ' ⚠ NEW PREFIX – new service?'
+    print(f'- {prefix}{flag}: ' + ', '.join(rs))
+
+slugs = {s['docsTcp'].split('docs.otc.t-systems.com/')[1].split('/')[0] for s in entries if 'docs.otc.t-systems.com/' in (s['docsTcp'] or '')}
+print('\n## 7. Docs repos without entry – new service? (record decisions in tools/known_sources.json)')
+for r in open(f'{SRC}/docs-repos.txt').read().split():
+    if r not in slugs and r not in known['docs_repos']:
+        print(f'- {r} (https://github.com/opentelekomcloud-docs/{r})')
+
+print('\n## 8. Product pages without entry – new service? (record decisions in tools/known_sources.json)')
+for p in open(f'{SRC}/products.txt').read().split():
+    if p not in known['products'] and p not in slugs and not any(mentioned(p.replace('-', ' '), n) for n in names):
+        print(f'- {p} (https://www.t-cloud-public.com/en/products-services/core-services/{p})')

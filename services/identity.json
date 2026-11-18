@@ -36,7 +36,7 @@
     "category": "Identity",
     "effort": "medium",
     "equiv": "partial",
-    "tcp": "Identity and Access Mgmt (IAM)",
+    "tcp": "Identity and Access Management (IAM)",
     "tfAws": "aws_iam_user, aws_iam_role",
     "tfTcp": "opentelekomcloud_identity_user_v3, opentelekomcloud_identity_role_v3, opentelekomcloud_identity_agency_v3",
     "tfStatus": "full",
