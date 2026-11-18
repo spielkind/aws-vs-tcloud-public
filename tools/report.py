@@ -5,6 +5,8 @@ Sections:
   2. Release notes newer than services/meta.json "updated" (to review one by one)
   3. Roadmap bars whose title is not mentioned anywhere in the data (heuristic)
   4. Roadmap/date claims in the data (cross-check against .sources/roadmap-items.txt)
+  5. Terraform provider releases since that date (new resources → tfTcp/tfStatus/tfNote)
+  6. Provider resources not referenced in any entry, grouped by service prefix
 Run from repo root: python3 tools/report.py [--since YYYY-MM-DD] > .sources/report.md"""
 import argparse, json, re, sys
 
@@ -66,3 +68,19 @@ for s in entries:
             continue
         for m in re.finditer(r'[^.;]*\b(Roadmap|geplant|expected|erwartet)\b[^.;]*', v['de']):
             print(f'- {s["name"]} ({k}): {m.group(0).strip()[:200]}')
+
+print(f'\n## 5. Terraform provider (opentelekomcloud) releases after {since} – check [Feat]/new resources')
+rel = open(f'{SRC}/terraform-releases.txt').read()
+for date, tag, body in re.findall(r'^## (\S+) \| (\S+)\n(.*?)(?=^## |\Z)', rel, re.M | re.S):
+    if date > since:
+        feats = [l for l in body.splitlines() if re.search(r'feat|add|new|resource|deprecat', l, re.I) and not re.search(r'^- \[?fix', l, re.I)]
+        print(f'- {date} {tag}' + ''.join(f'\n  {l}' for l in feats))
+
+print('\n## 6. Provider resources not referenced in any entry (by prefix) – is a tfStatus/tfTcp too pessimistic?')
+used = set(re.findall(r'opentelekomcloud_(\w+)', ' '.join(s['tfTcp'] or '' for s in entries)))
+groups = {}
+for r in open(f'{SRC}/terraform-resources.txt').read().split():
+    if r not in used:
+        groups.setdefault(r.split('_')[0], []).append(r)
+for prefix, rs in sorted(groups.items()):
+    print(f'- {prefix}: ' + ', '.join(rs))

@@ -35,7 +35,7 @@
     "equiv": "partial",
     "tcp": "Scalable File Service (SFS)",
     "tfAws": "aws_efs_file_system",
-    "tfTcp": "opentelekomcloud_sfs_file_system_v2, opentelekomcloud_sfs_turbo_share_v1",
+    "tfTcp": "opentelekomcloud_sfs_turbo_share_v1, opentelekomcloud_gpfs_file_system_v3, opentelekomcloud_gpfs_access_rule_v3, opentelekomcloud_sfs_file_system_v2",
     "tfStatus": "full",
     "docsAws": "https://docs.aws.amazon.com/efs/",
     "docsTcp": "https://docs.otc.t-systems.com/scalable-file-service/index.html",
@@ -58,7 +58,10 @@
       "de": "SFS Turbo hat feste Größe (kein Auto-Scaling wie EFS). Keine EFS Access Points, keine Lifecycle-basierte Tiering (IA-Klasse), keine EFS Replication. SFS bietet 3 Typen: Capacity-Oriented (großes Volumen, hohe Latenz; EOL 31.12.2026), Turbo (HPC-Typen bis 1 PB, 1–5 ms Latenz), General Purpose (bis 4 PB). Nur NFSv3. SFS Turbo HPC ist für anspruchsvolle Workloads (HPC, AI) geeignet.",
       "en": "SFS Turbo has fixed size (no auto-scaling like EFS). No EFS Access Points, no lifecycle-based tiering (IA class), no EFS Replication. SFS offers 3 types: Capacity-Oriented (large volume, higher latency; EOL 31.12.2026), Turbo (HPC types up to 1 PB, 1–5 ms latency), General Purpose (up to 4 PB). NFSv3 only. SFS Turbo HPC is suited for demanding workloads (HPC, AI)."
     },
-    "tfNote": null,
+    "tfNote": {
+      "de": "SFS Turbo (inkl. HPC) per sfs_turbo_share_v1, General Purpose File System per gpfs_file_system_v3/gpfs_access_rule_v3 (seit Provider v1.37.11, 10/2026). sfs_file_system_v2 betrifft SFS Capacity-Oriented (EOL 31.12.2026) — nicht mehr für neue Setups verwenden.",
+      "en": "SFS Turbo (incl. HPC) via sfs_turbo_share_v1, General Purpose File System via gpfs_file_system_v3/gpfs_access_rule_v3 (since provider v1.37.11, 10/2026). sfs_file_system_v2 covers SFS Capacity-Oriented (EOL 31.12.2026) — do not use for new setups."
+    },
     "aliases": [
       "SFS Turbo"
     ]

@@ -6,7 +6,7 @@
     "equiv": "partial",
     "tcp": "Cloud Eye (CES) + AOM + LTS",
     "tfAws": "aws_cloudwatch_metric_alarm",
-    "tfTcp": "opentelekomcloud_ces_alarm_rule_v2, opentelekomcloud_lts_group_v2, opentelekomcloud_ces_dashboard_v2",
+    "tfTcp": "opentelekomcloud_ces_alarm_rule_v2, opentelekomcloud_ces_dashboard_v2, opentelekomcloud_lts_group_v2, opentelekomcloud_lts_stream_v2, opentelekomcloud_aom_alarm_action_rule_v2",
     "tfStatus": "full",
     "docsAws": "https://docs.aws.amazon.com/cloudwatch/",
     "docsTcp": "https://docs.otc.t-systems.com/cloud-eye/index.html",

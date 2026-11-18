@@ -4,10 +4,12 @@ Writes to ./.sources/ (git-ignored):
   roadmap-items.txt   category | product | type(new/release/EOL) | start→end month | title | description
                       + undated tooltip-only items
   release-notes.txt   date | title + description (all RSS items, newest first)
+  terraform-releases.txt   opentelekomcloud provider releases (date | tag | changelog lines)
+  terraform-resources.txt  all resource types of the provider (docs/resources)
   pdf/*.pdf + *.txt   current service description (EN), Leistungsbeschreibung (DE), Managed Services PDF
                       (links taken from the live site; text extraction needs `pypdf`: pip install pypdf)
 Run from repo root: python3 tools/fetch_sources.py"""
-import html, os, re, urllib.parse, urllib.request, xml.etree.ElementTree as ET
+import html, json, os, re, urllib.parse, urllib.request, xml.etree.ElementTree as ET
 from email.utils import parsedate_to_datetime
 
 OUT = '.sources'
@@ -73,6 +75,25 @@ print(f'{len(rss.findall(".//item"))} release notes, {len(rows)}/{len(release_id
       f'{len(tooltip_only)} tooltip-only items (updated {updated.group(1) if updated else "?"}) -> {OUT}/')
 if missing or not rows or not tips:
     raise SystemExit(f'Roadmap parsing incomplete: {len(missing)} bars not parsed, {len(tips)} tooltips – check HTML structure')
+
+
+# Terraform provider (GitHub API; set GITHUB_TOKEN to avoid rate limits)
+def gh_api(path):
+    hdr = {'User-Agent': 'Mozilla/5.0', 'Accept': 'application/vnd.github+json'}
+    if os.environ.get('GITHUB_TOKEN'):
+        hdr['Authorization'] = 'Bearer ' + os.environ['GITHUB_TOKEN']
+    return json.loads(urllib.request.urlopen(urllib.request.Request('https://api.github.com/' + path, headers=hdr), timeout=60).read())
+
+
+REPO = 'repos/opentelekomcloud/terraform-provider-opentelekomcloud'
+rels = gh_api(f'{REPO}/releases?per_page=100')
+with open(f'{OUT}/terraform-releases.txt', 'w') as f:
+    for r in rels:
+        lines = [re.sub(r'^\*\s*[0-9a-f]{40}\s*', '- ', l.strip()) for l in (r.get('body') or '').splitlines() if l.strip().startswith('*')]
+        f.write(f"## {r['published_at'][:10]} | {r['tag_name']}\n" + '\n'.join(lines) + '\n\n')
+resources = sorted(x['name'][:-3] for x in gh_api(f'{REPO}/contents/docs/resources') if x['name'].endswith('.md'))
+open(f'{OUT}/terraform-resources.txt', 'w').write('\n'.join(resources) + '\n')
+print(f'terraform provider: latest {rels[0]["tag_name"]} ({rels[0]["published_at"][:10]}), {len(resources)} resources')
 
 
 # PDFs: hash-based URLs change with every revision, so discover them on the live pages

@@ -146,7 +146,7 @@
     "equiv": "full",
     "tcp": "NAT Gateway (Public / Private)",
     "tfAws": "aws_nat_gateway",
-    "tfTcp": "opentelekomcloud_nat_gateway_v2, opentelekomcloud_nat_snat_rule_v2, opentelekomcloud_nat_dnat_rule_v2",
+    "tfTcp": "opentelekomcloud_nat_gateway_v2, opentelekomcloud_nat_snat_rule_v2, opentelekomcloud_nat_dnat_rule_v2, opentelekomcloud_private_nat_gateway_v3, opentelekomcloud_private_nat_snat_rule_v3, opentelekomcloud_private_nat_dnat_rule_v3, opentelekomcloud_private_nat_transit_ip_v3",
     "tfStatus": "full",
     "docsAws": "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html",
     "docsTcp": "https://docs.otc.t-systems.com/nat-gateway/index.html",
@@ -169,7 +169,10 @@
       "en": "**Rule configuration.** SNAT and DNAT rules are configured separately (not automatic like AWS). Max 200 DNAT rules per public NAT Gateway; SNAT rules unlimited (one per subnet). Elastic IPs must be created and assigned beforehand. **Private NAT.** Private NAT Gateway (VPC-to-VPC without internet) is a separate gateway type, available in EU-DE only (own Terraform resources private_nat_*_v3). **Cost model.** Hourly price per gateway size (Micro to Extra-Large, by max SNAT connections), no per-GB processing fee like AWS (hourly + per GB)."
     },
     "equivNote": null,
-    "tfNote": null,
+    "tfNote": {
+      "de": "Public NAT (nat_*_v2) und Private NAT (private_nat_*_v3) sind per Terraform verfügbar.",
+      "en": "Public NAT (nat_*_v2) and private NAT (private_nat_*_v3) are available via Terraform."
+    },
     "aliases": [
       "Private NAT Gateway"
     ]

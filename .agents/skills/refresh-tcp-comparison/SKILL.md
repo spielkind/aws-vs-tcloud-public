@@ -12,7 +12,7 @@ Read `AGENTS.md` (repo root) first – data model, rules and learnings are defin
 python3 -m venv /tmp/tcpvenv && /tmp/tcpvenv/bin/pip install -q pypdf   # once, for PDF text
 /tmp/tcpvenv/bin/python tools/fetch_sources.py
 ```
-Produces `.sources/` (git-ignored): `release-notes.txt`, `roadmap-items.txt` (all bars with month ranges + tooltip-only items), `pdf/servicedescription-en.txt`, `pdf/leistungsbeschreibung-de.txt`, `pdf/managed-services-de.txt`. The script fails loudly if the site structure changed – fix the parser, don't skip it.
+Produces `.sources/` (git-ignored): `release-notes.txt`, `terraform-releases.txt`, `terraform-resources.txt`, `roadmap-items.txt` (all bars with month ranges + tooltip-only items), `pdf/servicedescription-en.txt`, `pdf/leistungsbeschreibung-de.txt`, `pdf/managed-services-de.txt`. The script fails loudly if the site structure changed – fix the parser, don't skip it.
 
 ## 2. Diff report
 ```bash
@@ -23,6 +23,8 @@ Work through every section:
 2. **New release notes** → for each: does it change a statement (version, region, "missing" feature, EOL)? Is it a new service/feature with an AWS counterpart?
 3. **Roadmap bars not mentioned** → add to the matching entry if it has an AWS counterpart or changes a migration statement (phrase: "laut Roadmap <Mon YYYY>–<Mon YYYY>" / "on the roadmap for …"); ignore pure maintenance items. Check the tooltip-only section manually (undated → "announced, no date").
 4. **Roadmap/date claims in data** → each must match `roadmap-items.txt`; remove claims for items no longer on the roadmap.
+5. **Terraform provider releases** (`[Feat]`/new resources since the last update) → extend `tfTcp`, raise `tfStatus`, update `tfNote` (mention provider version).
+6. **Provider resources not referenced** → mostly sub-resources (fine); look for main resources of services whose entry says `tfStatus: none/partial` or misses a service variant (e.g. `gpfs_*` = General Purpose File System, `private_nat_*`, `aom_*`).
 
 Also update the `portfolio` list in `tools/validate.py` when services are added/retired.
 

@@ -108,12 +108,12 @@
     "equiv": "partial",
     "tcp": "Application Operations Mgmt (AOM)",
     "tfAws": "aws_ssm_parameter",
-    "tfTcp": null,
-    "tfStatus": "none",
+    "tfTcp": "opentelekomcloud_aom_alarm_action_rule_v2, opentelekomcloud_aom_alarm_silence_rule_v2, opentelekomcloud_aom_service_discovery_rule_v1",
+    "tfStatus": "partial",
     "docsAws": "https://docs.aws.amazon.com/systems-manager/",
     "docsTcp": "https://docs.otc.t-systems.com/application-operations-management/index.html",
     "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_parameter",
-    "tfDocsTcp": null,
+    "tfDocsTcp": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/aom_alarm_action_rule_v2",
     "desc": {
       "de": "Zentrale Plattform für operatives Management. Session Manager (Shell ohne SSH), Parameter Store, Patch Manager, Run Command, State Manager, Inventory, Automation, Maintenance Windows, OpsCenter.",
       "en": "Central platform for operational management. Session Manager (shell without SSH), Parameter Store, Patch Manager, Run Command, State Manager, Inventory, Automation, maintenance windows, OpsCenter."
@@ -134,7 +134,10 @@
       "de": "AOM fokussiert auf Monitoring/Logs/Alarme — deckt nur den CloudWatch-ähnlichen Teil von SSM ab. Kein Parameter Store (→ Vault; CSMS ab 04/2027 erwartet), kein Session Manager (→ SSH/VNC), kein Patch Manager (→ Ansible), kein Run Command (→ Ansible/Salt), kein Inventory (→ Config Service), kein State Manager, kein Automation, keine Maintenance Windows.",
       "en": "AOM focuses on monitoring/logs/alarms — covers only the CloudWatch-like part of SSM. No Parameter Store (→ Vault; CSMS expected from 04/2027), no Session Manager (→ SSH/VNC), no Patch Manager (→ Ansible), no Run Command (→ Ansible/Salt), no Inventory (→ Config Service), no State Manager, no Automation, no maintenance windows."
     },
-    "tfNote": null
+    "tfNote": {
+      "de": "Nur AOM-Alarm-Aktions-/Stummschaltungsregeln und Service-Discovery-Regeln per Terraform (seit Provider v1.37.12, 11/2026); für Run Command, Patch Manager, Parameter Store o.ä. gibt es keine Ressourcen.",
+      "en": "Only AOM alarm action/silence rules and service discovery rules via Terraform (since provider v1.37.12, 11/2026); there are no resources for run command, patch manager, parameter store etc."
+    }
   },
   {
     "name": "AWS CloudFormation",

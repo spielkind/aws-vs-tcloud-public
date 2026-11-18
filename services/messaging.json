@@ -6,7 +6,7 @@
     "equiv": "partial",
     "tcp": "DMS Kafka",
     "tfAws": "aws_kinesis_stream",
-    "tfTcp": "opentelekomcloud_dms_dedicated_instance_v2, opentelekomcloud_dms_topic_v2",
+    "tfTcp": "opentelekomcloud_dms_dedicated_instance_v2, opentelekomcloud_dms_topic_v2, opentelekomcloud_dms_smart_connect_v2, opentelekomcloud_dms_smart_connect_task_v2",
     "tfStatus": "full",
     "docsAws": "https://docs.aws.amazon.com/kinesis/",
     "docsTcp": "https://docs.otc.t-systems.com/distributed-message-service/index.html",
@@ -32,7 +32,10 @@
       "de": "DIS (direktes Kinesis-Pendant) ist EOL seit 01.07.2025. DMS Kafka deckt Streaming ab, ist aber Broker-basiert (nicht serverless wie Kinesis). Firehose nur teilweise: Smart Connect dumpt Kafka-Topics nach OBS (keine Transformation, keine weiteren Ziele). Flink-Analytics → DLI/MRS Flink. Kein Video Streams. Capacity Planning nötig (keine On-Demand-Shard-Skalierung).",
       "en": "DIS (direct Kinesis equivalent) is EOL since 01.07.2025. DMS Kafka covers streaming but is broker-based (not serverless like Kinesis). Firehose only partially: Smart Connect dumps Kafka topics to OBS (no transformation, no other targets). Flink analytics → DLI/MRS Flink. No Video Streams. Capacity planning required (no on-demand shard scaling)."
     },
-    "tfNote": null
+    "tfNote": {
+      "de": "Kafka-Instanz und Topics per Terraform; der Firehose-ähnliche Dump nach OBS ist als Smart-Connect-Task (destination_type OBS_SINK) per Terraform abbildbar.",
+      "en": "Kafka instance and topics via Terraform; the Firehose-like dump to OBS can be defined as a Smart Connect task (destination_type OBS_SINK) via Terraform."
+    }
   },
   {
     "name": "Amazon SQS",
@@ -193,7 +196,7 @@
     "equiv": "partial",
     "tcp": "DMS for Kafka",
     "tfAws": "aws_msk_cluster, aws_msk_configuration, aws_msk_serverless_cluster",
-    "tfTcp": "opentelekomcloud_dms_dedicated_instance_v2, opentelekomcloud_dms_topic_v2, opentelekomcloud_dms_user_v2, opentelekomcloud_dms_user_permission_v1, opentelekomcloud_dms_consumer_group_v2",
+    "tfTcp": "opentelekomcloud_dms_dedicated_instance_v2, opentelekomcloud_dms_topic_v2, opentelekomcloud_dms_user_v2, opentelekomcloud_dms_user_permission_v1, opentelekomcloud_dms_consumer_group_v2, opentelekomcloud_dms_smart_connect_v2, opentelekomcloud_dms_smart_connect_task_v2",
     "tfStatus": "partial",
     "docsAws": "https://docs.aws.amazon.com/msk/",
     "docsTcp": "https://docs.otc.t-systems.com/distributed-message-service/index.html",
@@ -220,8 +223,8 @@
       "en": "DMS Kafka provides managed Kafka instances with SASL/SSL. No MSK Serverless, no generic MSK Connect (only Smart Connect for Kafka replication/OBS dump), no tiered storage, fewer Kafka versions, no IAM-based authentication. Schema Registry must be self-operated."
     },
     "tfNote": {
-      "de": "DMS Kafka Instanzen, Topics, Benutzer, Berechtigungen und Consumer Groups sind per Terraform steuerbar.",
-      "en": "DMS Kafka instances, topics, users, permissions, and consumer groups are manageable through Terraform."
+      "de": "DMS-Kafka-Instanzen, Topics, Benutzer, Berechtigungen, Consumer Groups sowie Smart Connect (Instanz und Tasks, z.B. Kafka-Replikation oder Dump nach OBS) sind per Terraform steuerbar.",
+      "en": "DMS Kafka instances, topics, users, permissions, consumer groups and Smart Connect (instance and tasks, e.g. Kafka replication or dump to OBS) can be managed via Terraform."
     },
     "aliases": [
       "Distributed Message Service (DMS)"
