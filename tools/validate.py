@@ -20,6 +20,7 @@ for f in json.load(open('services/index.json')):
             v=s[k]
             if v is not None and not (isinstance(v,dict) and v.get('de') and v.get('en')): errs.append(f"{s['name']}: {k} lang")
         if s['tfTcp'] and not s['tfDocsTcp']: errs.append(f"{s['name']}: tfDocsTcp missing")
+        if 'TODO' in json.dumps(s, ensure_ascii=False): errs.append(f"{s['name']}: unfilled TODO (tools/new_entry.py skeleton)")
         for k in ('desc','tcpDesc','alt','migration','equivNote','tfNote','tcp'):
             v=s[k]; txt=' '.join(v.values()) if isinstance(v,dict) else (v or '')
             if re.search(r'\bOTC\b|Open Telekom Cloud',txt): errs.append(f"{s['name']}: OTC in {k}")

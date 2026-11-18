@@ -17,8 +17,8 @@
       "en": "Isolated network. Subnets, route tables, security groups, NACLs, VPN, Direct Connect, VPC Peering, VPC Flow Logs, IPv6 dual-stack, VPC Endpoints."
     },
     "tcpDesc": {
-      "de": "CIDR-Blöcke, Subnets (DHCP-basiert), Security Groups (stateful, bis 50 Regeln/Gruppe default), Firewalls (Subnet-ACLs, stateless, 5-Tupel Allow/Deny), VPN, Direct Connect, VPC Peering (nur intra-Region), Enterprise Router (ER) für Cross-VPC, VPC Flow Logs (nach LTS), IPv6 Dual-Stack (eingeschränkt).",
-      "en": "CIDR blocks, subnets (DHCP-based), security groups (stateful, up to 50 rules/group default), firewalls (subnet ACLs, stateless, 5-tuple allow/deny), VPN, Direct Connect, VPC Peering (intra-region only), Enterprise Router (ER) for cross-VPC, VPC Flow Logs (to LTS), IPv6 dual-stack (limited)."
+      "de": "CIDR-Blöcke, Subnets (DHCP-basiert), Security Groups (stateful, bis 50 Regeln/Gruppe default), Firewalls (Subnet-ACLs, stateless, 5-Tupel Allow/Deny), VPN, Direct Connect, VPC Peering (nur intra-Region), Enterprise Router (ER) für Cross-VPC, VPC Flow Logs (nach LTS), IPv6 Dual-Stack (eingeschränkt). VPC Traffic Mirroring (Spiegelung von Netzwerkverkehr an Analyse-Tools, AWS-Pendant: VPC Traffic Mirroring) ist laut Roadmap für Jan–Mai 2027 geplant.",
+      "en": "CIDR blocks, subnets (DHCP-based), security groups (stateful, up to 50 rules/group default), firewalls (subnet ACLs, stateless, 5-tuple allow/deny), VPN, Direct Connect, VPC Peering (intra-region only), Enterprise Router (ER) for cross-VPC, VPC Flow Logs (to LTS), IPv6 dual-stack (limited). VPC traffic mirroring (copying network traffic to analysis tools, AWS equivalent: VPC Traffic Mirroring) is on the roadmap for Jan–May 2027."
     },
     "alt": null,
     "migration": {
@@ -82,8 +82,8 @@
       "en": "Dedicated network connection between on-premises and AWS. Private/public VIF, LAG, Direct Connect Gateway."
     },
     "tcpDesc": {
-      "de": "Dedizierte Netzwerkverbindung zwischen On-Premises und T Cloud Public. Virtual Gateway, Virtual Interface, Hosted/Standard Connect.",
-      "en": "Dedicated network connection between on-premises and T Cloud Public. Virtual gateway, virtual interface, hosted/standard connect."
+      "de": "Dedizierte Netzwerkverbindung zwischen On-Premises und T Cloud Public. Virtual Gateway, Virtual Interface, Hosted/Standard Connect. Zugangsleitungen bestellbar als Telekom EthernetConnect (Layer 2), IntraSelect Cloud Connect (Layer 3) oder Equinix Cloud Exchange.",
+      "en": "Dedicated network connection between on-premises and T Cloud Public. Virtual gateway, virtual interface, hosted/standard connect. Access lines can be ordered as Telekom EthernetConnect (layer 2), IntraSelect Cloud Connect (layer 3) or Equinix Cloud Exchange."
     },
     "alt": {
       "de": "VPN (IPSec Site-to-Site)",
@@ -97,7 +97,12 @@
     "tfNote": {
       "de": "Direct Connect v2 ist per Terraform verfügbar. Die v3-Ressourcen für Virtual Gateway und Virtual Interface sind nur für SwissCloud vorgesehen; BGP-Konfiguration und physische Bereitstellung sind nicht per Terraform automatisierbar.",
       "en": "Direct Connect v2 is available through Terraform. The v3 virtual gateway and virtual interface resources are SwissCloud-only; BGP configuration and physical provisioning are not automatable through Terraform."
-    }
+    },
+    "aliases": [
+      "Equinix Cloud Exchange",
+      "EthernetConnect",
+      "IntraSelect"
+    ]
   },
   {
     "name": "AWS Transit Gateway",

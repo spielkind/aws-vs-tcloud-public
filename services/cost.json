@@ -52,8 +52,8 @@
       "en": "Cost and usage budgets with threshold notifications (e-mail/SNS), budget actions (e.g. apply IAM policies), reservation/Savings Plans budgets."
     },
     "tcpDesc": {
-      "de": "Benachrichtigungen bei Überschreiten definierter Ausgabeschwellen über MyWorkplace (veröffentlicht 10.02.2026, laut Leistungsbeschreibung Beta).",
-      "en": "Notifications when defined spending thresholds are exceeded via MyWorkplace (released 10.02.2026, beta per service description)."
+      "de": "Benachrichtigungen bei Überschreiten definierter Ausgabeschwellen über MyWorkplace (veröffentlicht 10.02.2026, laut Leistungsbeschreibung Beta). Zusätzlich kann das Financial Dashboard bei konfigurierbaren Kostenschwellen per E-Mail benachrichtigen (Leistungsbeschreibung §3.11.4).",
+      "en": "Notifications when defined spending thresholds are exceeded via MyWorkplace (released 10.02.2026, beta per service description). In addition, the Financial Dashboard can send e-mail notifications when configurable cost thresholds are reached (service description §3.11.4)."
     },
     "alt": null,
     "migration": {

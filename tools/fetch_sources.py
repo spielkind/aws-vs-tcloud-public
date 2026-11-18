@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
-"""Download T Cloud Public roadmap + release notes and convert them to greppable text.
-Writes to ./.sources/ (gitignored):
-  roadmap-items.txt   category | product | type(new/release/EOL) | start→end month | title | tooltip
+"""Download all T Cloud Public sources and convert them to greppable text.
+Writes to ./.sources/ (git-ignored):
+  roadmap-items.txt   category | product | type(new/release/EOL) | start→end month | title | description
+                      + undated tooltip-only items
   release-notes.txt   date | title + description (all RSS items, newest first)
+  pdf/*.pdf + *.txt   current service description (EN), Leistungsbeschreibung (DE), Managed Services PDF
+                      (links taken from the live site; text extraction needs `pypdf`: pip install pypdf)
 Run from repo root: python3 tools/fetch_sources.py"""
-import html, os, re, urllib.request, xml.etree.ElementTree as ET
+import html, os, re, urllib.parse, urllib.request, xml.etree.ElementTree as ET
 from email.utils import parsedate_to_datetime
 
 OUT = '.sources'
@@ -70,3 +73,32 @@ print(f'{len(rss.findall(".//item"))} release notes, {len(rows)}/{len(release_id
       f'{len(tooltip_only)} tooltip-only items (updated {updated.group(1) if updated else "?"}) -> {OUT}/')
 if missing or not rows or not tips:
     raise SystemExit(f'Roadmap parsing incomplete: {len(missing)} bars not parsed, {len(tips)} tooltips – check HTML structure')
+
+
+# PDFs: hash-based URLs change with every revision, so discover them on the live pages
+SITE = 'https://www.t-cloud-public.com'
+PDF_PAGES = {
+    'servicedescription-en': (f'{SITE}/en', r'servicedescription\.pdf'),
+    'leistungsbeschreibung-de': (f'{SITE}/de', r'leistungsbeschreibung-tdg\.pdf'),
+    'managed-services-de': (f'{SITE}/de/produkte-services/managed-services', r'managed-services[^"]*\.pdf'),
+}
+os.makedirs(f'{OUT}/pdf', exist_ok=True)
+try:
+    import pypdf
+except ImportError:
+    pypdf = None
+for name, (page_url, pattern) in PDF_PAGES.items():
+    links = [h for h in re.findall(r'href="([^"]+\.pdf)"', get(page_url)) if re.search(pattern, h)]
+    if not links:
+        raise SystemExit(f'No PDF matching {pattern} found on {page_url} – site structure changed?')
+    url = urllib.parse.urljoin(page_url, links[0])
+    data = urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'}), timeout=120).read()
+    open(f'{OUT}/pdf/{name}.pdf', 'wb').write(data)
+    note = 'text extraction skipped (pip install pypdf)'
+    if pypdf:
+        import io
+        txt = '\n'.join(pg.extract_text() or '' for pg in pypdf.PdfReader(io.BytesIO(data)).pages)
+        open(f'{OUT}/pdf/{name}.txt', 'w').write(f'# Source: {url}\n' + txt)
+        rev = re.search(r'(Last revised|Stand):\s*([\d.]+)', txt)
+        note = f'revision {rev.group(2) if rev else "?"}'
+    print(f'{name}: {url} ({note})')
