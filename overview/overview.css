@@ -1,0 +1,105 @@
+/* ===================================================
+   Overview page — uses tokens from ../css/vars.css
+   =================================================== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--font); background: #f6f7fb; color: #222; line-height: 1.45; }
+a { color: inherit; text-decoration: none; }
+
+:root {
+  --eq-full: var(--easy);
+  --eq-partial: var(--medium);
+  --eq-none: var(--hard);
+  --eq-tcpOnly: var(--magenta);
+}
+
+.ov-wrap { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; }
+
+/* Header */
+.ov-header { background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-bg-alt) 50%, #0f3460 100%); color: #fff; padding: .8rem 0; box-shadow: 0 4px 20px rgba(0,0,0,.25); }
+.ov-header-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.ov-header h1 { font-size: 1.35rem; letter-spacing: -.3px; }
+.ov-header h1 span { color: var(--magenta); }
+.ov-sub { font-size: .8rem; opacity: .75; }
+.ov-actions { display: flex; align-items: center; gap: .4rem; }
+.ov-btn, .ov-lang button { background: rgba(255,255,255,.1); color: rgba(255,255,255,.9); border: 1px solid rgba(255,255,255,.2); border-radius: 4px; padding: .25rem .6rem; font-size: .8rem; cursor: pointer; font-family: inherit; }
+.ov-btn:hover, .ov-lang button:hover { background: rgba(255,255,255,.2); }
+.ov-lang { display: inline-flex; }
+.ov-lang button { border-radius: 0; }
+.ov-lang button:first-child { border-radius: 4px 0 0 4px; }
+.ov-lang button:last-child { border-radius: 0 4px 4px 0; border-left: none; }
+.ov-lang button.active { background: var(--magenta); border-color: var(--magenta); color: #fff; }
+
+/* KPIs */
+.ov-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 1.6rem 0 .9rem; }
+.ov-kpi { background: #fff; border-radius: 12px; padding: 1rem 1.1rem; box-shadow: 0 2px 10px rgba(0,0,0,.05); border-top: 4px solid var(--c); }
+.ov-kpi-num { font-size: 2.2rem; font-weight: 800; color: var(--c); line-height: 1.1; }
+.ov-kpi-lbl { font-weight: 700; font-size: .95rem; }
+.ov-kpi-desc { font-size: .75rem; color: #777; }
+.eq-full { --c: var(--eq-full); --bg: var(--easy-bg); }
+.eq-partial { --c: var(--eq-partial); --bg: var(--medium-bg); }
+.eq-none { --c: var(--eq-none); --bg: var(--hard-bg); }
+.eq-tcpOnly { --c: var(--eq-tcpOnly); --bg: #fce4f0; }
+
+.ov-bar { display: flex; height: 10px; border-radius: 6px; overflow: hidden; gap: 2px; }
+.ov-bar span { background: var(--c); }
+.ov-hint { font-size: .8rem; color: #888; margin: .6rem 0 1.2rem; }
+
+/* Category tiles */
+.ov-grid { columns: 3 340px; column-gap: 1rem; }
+.ov-tile { break-inside: avoid; background: #fff; border-radius: 12px; padding: .9rem 1rem 1rem; margin-bottom: 1rem; box-shadow: 0 2px 10px rgba(0,0,0,.05); }
+.ov-tile header { display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem; }
+.ov-icon { font-size: 1.35rem; width: 2rem; height: 2rem; display: grid; place-items: center; background: #f1f2f8; border-radius: 8px; }
+.ov-tile h2 { font-size: 1rem; flex: 1; }
+.ov-dots { display: flex; gap: .2rem; }
+.ov-dot { min-width: 1.35rem; height: 1.35rem; padding: 0 .3rem; border-radius: 10px; background: var(--bg); color: var(--c); font-size: .7rem; font-weight: 700; display: grid; place-items: center; filter: saturate(1.2); }
+
+.ov-chips { display: flex; flex-wrap: wrap; gap: .35rem; }
+.ov-chip { display: inline-flex; align-items: center; gap: .3rem; font-size: .76rem; padding: .22rem .55rem; border-radius: 14px; background: #f7f7fa; border: 1px solid #e6e6ee; border-left: 4px solid var(--c); transition: transform .1s, box-shadow .1s; }
+.ov-chip:hover { transform: translateY(-1px); box-shadow: 0 3px 8px rgba(0,0,0,.08); }
+.ov-aws { color: #555; }
+.ov-arrow { color: #bbb; font-size: .7rem; }
+.ov-tcp { font-weight: 700; color: var(--c); filter: brightness(.8); }
+.ov-none { font-weight: 500; font-style: italic; }
+.ov-chip.eq-tcpOnly { background: #fdf0f6; }
+
+.ov-footer { font-size: .75rem; color: #999; text-align: center; padding: 1.2rem 1.5rem 2rem; }
+
+/* Dark mode */
+body.dark { background: var(--dark-bg); color: #e0e0e0; }
+body.dark .ov-kpi, body.dark .ov-tile { background: var(--dark-bg-alt); box-shadow: none; border: 1px solid var(--dark-border); }
+body.dark .ov-kpi { border-top: 4px solid var(--c); }
+body.dark .ov-kpi-desc, body.dark .ov-hint { color: #8a8aa8; }
+body.dark .ov-icon { background: #23234a; }
+body.dark .ov-chip { background: #1e2240; border-color: var(--dark-border); border-left-color: var(--c); }
+body.dark .ov-aws { color: #b8b8d0; }
+body.dark .ov-tcp { filter: brightness(1.25); }
+body.dark .ov-dot { background: rgba(255,255,255,.08); }
+
+/* Responsive */
+@media (max-width: 800px) {
+  .ov-kpis { grid-template-columns: repeat(2, 1fr); }
+  .ov-kpi-num { font-size: 1.7rem; }
+  .ov-grid { columns: 1; }
+}
+
+/* Print: one landscape page if possible */
+@media print {
+  @page { size: A4 landscape; margin: 10mm; }
+  body { background: #fff !important; color: #222 !important; font-size: 10px; }
+  body.dark .ov-kpi, body.dark .ov-tile, .ov-kpi, .ov-tile { background: #fff !important; border: 1px solid #ddd; box-shadow: none; }
+  .ov-actions, .ov-hint { display: none; }
+  .ov-header { background: #fff !important; color: #222; box-shadow: none; padding: 0 0 .5rem; }
+  .ov-wrap { max-width: none; padding: 0; }
+  .ov-kpis { margin: .5rem 0; gap: .5rem; }
+  .ov-kpi { padding: .4rem .6rem; }
+  .ov-kpi-num { font-size: 1.4rem; }
+  .ov-grid { columns: 4; column-gap: .5rem; }
+  .ov-tile { padding: .4rem .5rem; margin-bottom: .5rem; }
+  .ov-chip { font-size: 8px; padding: .1rem .35rem; }
+  body.dark .ov-chip, .ov-chip { background: #f7f7fa !important; border-color: #e6e6ee !important; border-left-color: var(--c) !important; }
+  body.dark .ov-aws { color: #555 !important; }
+  body.dark .ov-tcp { filter: brightness(.8) !important; }
+  body.dark .ov-icon { background: #f1f2f8 !important; }
+  body.dark .ov-kpi-desc { color: #777 !important; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}

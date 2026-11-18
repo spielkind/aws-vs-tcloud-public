@@ -41,6 +41,6 @@ After all agents finish: grep across files for services that appear in several e
 1. Update header PDF links in `js/i18n.js` (`leistungUrl`) if `fetch_sources.py` printed new URLs; update Oracle page source links/"Stand".
 2. Set `services/meta.json` → `"updated": "<today>"`.
 3. `python3 tools/validate.py && python3 tools/check_links.py` – both must print `OK`.
-4. UI smoke test: `python3 -m http.server 8765` → search, category dropdown, filters incl. "T Cloud Public only", DE/EN, dark mode, mobile sheet (390 px), CSV/PDF export, no console errors; toolbar on one line at ≥1280 px.
+4. UI smoke test: `python3 -m http.server 8765` → `/overview/` (KPIs, tiles, short labels, chip links), search, category dropdown, filters incl. "T Cloud Public only", DE/EN, dark mode, mobile sheet (390 px), CSV/PDF export, no console errors; toolbar on one line at ≥1280 px.
 5. Independent review: run a rubber-duck/code-review agent over the full diff; fix findings.
 6. Append new learnings to `AGENTS.md`, commit, push to `main`, verify the GitHub Pages build and https://spielkind.github.io/aws-vs-tcloud-public/.

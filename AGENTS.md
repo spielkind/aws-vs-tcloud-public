@@ -5,6 +5,7 @@ Static site (no build step) comparing AWS services with **T Cloud Public** (form
 ## Structure
 - `index.html`, `js/` (`state` → `filters` → `render` → `export` → `app`), `css/` – UI, no dependencies.
 - `services/index.json` – list of data files; `services/<category>.json` – entries; `services/meta.json` – data date shown as "Stand"/"Last updated".
+- `overview/` – one-page visual summary generated at runtime from `services/*.json` (no manual update needed); new categories need an icon in `overview/overview.js` `ICONS` (checked by `validate.py`); short labels come from `tcp` (base name ≤16 chars or abbreviation in parentheses).
 - `oracle-managed/` – standalone Oracle-optimized/Managed Service page (prices from service description PDFs).
 - `tools/fetch_sources.py` – downloads all sources into `.sources/` (git-ignored) as greppable text: `roadmap-items.txt` (every timeline bar with month range + description, plus undated tooltip-only items), `release-notes.txt` (full RSS history), `terraform-releases.txt` + `terraform-resources.txt` (opentelekomcloud provider), `docs-repos.txt` + `products.txt` (docs repos and product pages, to detect new services; set `GITHUB_TOKEN`, e.g. `$(gh auth token)`, to avoid API rate limits) and `pdf/*.txt` (current service description EN, Leistungsbeschreibung DE, Managed Services PDF – links discovered on the live site; needs `pypdf`). Fails loudly if the site structure changed.
 - `tools/report.py` – diff report after fetching: service-description services without entry, release notes since `meta.json`, roadmap items not mentioned in the data, all roadmap/date claims to cross-check, Terraform provider releases since `meta.json`, provider resources not referenced in any entry (new prefixes flagged), docs repos and product pages without entry. Decisions for intentionally unmapped items live in `tools/known_sources.json`.
@@ -34,7 +35,7 @@ Rules: every localized field has `de` **and** `en` with the same content · writ
 4. **Oracle page** (`oracle-managed/index.html`): flavors/prices (service description §3.2.9 + §6.3.9), Direct Connect prices (§6.5.5), Managed Services packages/limits/prices/backup/SLA (Managed Services PDF); update source links, "Stand" dates (subtitle, footer, sources, JS subtitle).
 5. **Header links**: `js/i18n.js` (`roadmapUrl`, `releaseUrl`, `leistungUrl` – current PDF URLs).
 6. **Bump** `services/meta.json` → `"updated": "YYYY-MM-DD"`.
-7. **Check**: `python3 tools/validate.py && python3 tools/check_links.py` (both must print `OK`); then `python3 -m http.server` and test search, filters (incl. category dropdown, "T Cloud Public only"), DE/EN, dark mode, mobile sheet, CSV/PDF export, no console errors.
+7. **Check**: `python3 tools/validate.py && python3 tools/check_links.py` (both must print `OK`); then `python3 -m http.server` and test the overview page (`/overview/`, labels readable, links open the right card), search, filters (incl. category dropdown, "T Cloud Public only"), DE/EN, dark mode, mobile sheet, CSV/PDF export, no console errors.
 8. **Publish**: commit and push to `main`; GitHub Pages deploys automatically (verify the latest Pages build and the live page).
 
 ## Learnings / pitfalls (from the 11/2026 refresh)

@@ -105,6 +105,13 @@ function updateHeaderLinks() {
   const fm = document.getElementById('formerly');
   if (fm) fm.textContent = t.formerly;
 
+  const ov = document.getElementById('linkOverview');
+  if (ov) {
+    ov.href = 'overview/?lang=' + state.lang;
+    ov.title = t.overview;
+    ov.querySelector('.h-btn-label').textContent = t.overview;
+  }
+
   // Data update date
   const gd = document.getElementById('genDate');
   if (gd) gd.textContent = state.updated ? t.updated + ' ' + fmtUpdated() : '';

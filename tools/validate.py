@@ -24,6 +24,9 @@ for f in json.load(open('services/index.json')):
         for k in ('desc','tcpDesc','alt','migration','equivNote','tfNote','tcp'):
             v=s[k]; txt=' '.join(v.values()) if isinstance(v,dict) else (v or '')
             if re.search(r'\bOTC\b|Open Telekom Cloud',txt): errs.append(f"{s['name']}: OTC in {k}")
+# every category needs an icon on the overview page
+icons=set(re.findall(r"'([^']+)':\s*'[^']+'", open('overview/overview.js').read().split('const ICONS')[1].split('};')[0]))
+for c in sorted({s['category'] for s in allS}-icons): errs.append(f'category without icon in overview/overview.js ICONS: {c}')
 names=[s['name'] for s in allS]
 dups={n for n in names if names.count(n)>1}
 if dups: errs.append(f'dups {dups}')

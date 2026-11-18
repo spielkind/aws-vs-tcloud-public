@@ -35,7 +35,8 @@ Replace every `TODO` (use `null` where not applicable):
 - Terraform: `tfAws`/`tfTcp` as comma-separated resource types, `tfStatus` = coverage on the T Cloud Public side, `tfDocs*` = registry URL of the main resource.
 - `docsTcp` = `https://docs.otc.t-systems.com/<slug>/index.html` (slug = docs repo name), `docsAws` = AWS docs URL.
 - New T Cloud Public service names → also add them to the `portfolio` list in `tools/validate.py`.
-- A new category → check the toolbar/category dropdown still fits (AGENTS.md learnings).
+- A new category → add an icon to `ICONS` in `overview/overview.js` and check the toolbar/category dropdown still fits (AGENTS.md learnings).
+- Check the entry's short label on `/overview/` (derived from `tcp`).
 
 ## 4. Validate and publish
 ```bash
