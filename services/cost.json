@@ -17,8 +17,8 @@
       "en": "Analysis of costs and usage with filters, groupings, forecasts, cost categories, rightsizing and Savings Plans recommendations; Cost and Usage Reports (CUR)."
     },
     "tcpDesc": {
-      "de": "Kosten-, Nutzungs- und Nachhaltigkeits-Dashboard (ehemals Enterprise Dashboard): Auswertung nach Services, Projekten/Enterprise Projects und Tags, Export der Rechnungsdaten.",
-      "en": "Cost, usage and sustainability dashboard (formerly Enterprise Dashboard): analysis by services, projects/enterprise projects and tags, export of invoice data."
+      "de": "Kosten-, Nutzungs- und Nachhaltigkeits-Dashboard (ehemals Enterprise Dashboard): Auswertung nach Services, Projekten und Tags, Details zu Reserved Packages, Export der Rechnungsdaten (CSV/API). Billing-View pro Enterprise Project laut Roadmap Apr 2027–Jan 2028.",
+      "en": "Cost, usage and sustainability dashboard (formerly Enterprise Dashboard): analysis by services, projects and tags, reserved package details, export of invoice data (CSV/API). Billing view per enterprise project on the roadmap Apr 2027–Jan 2028."
     },
     "alt": null,
     "migration": {
@@ -80,22 +80,57 @@
     "tfDocsAws": null,
     "tfDocsTcp": null,
     "desc": {
-      "de": "Flexible Rabatte gegen 1- oder 3-jährige Ausgabenverpflichtung ($/h) für EC2, Fargate, Lambda und SageMaker; Reserved Instances für einzelne Instanztypen.",
-      "en": "Flexible discounts in exchange for a 1- or 3-year spend commitment ($/h) for EC2, Fargate, Lambda and SageMaker; reserved instances for specific instance types."
+      "de": "Flexible Rabatte gegen 1- oder 3-jährige Ausgabenverpflichtung ($/h) für EC2, Fargate, Lambda und SageMaker; Database Savings Plans (seit 12/2025, 1 Jahr) für RDS, Aurora, DynamoDB u.a.; Reserved Instances für einzelne Instanztypen.",
+      "en": "Flexible discounts in exchange for a 1- or 3-year spend commitment ($/h) for EC2, Fargate, Lambda and SageMaker; Database Savings Plans (since 12/2025, 1 year) for RDS, Aurora, DynamoDB etc.; reserved instances for specific instance types."
     },
     "tcpDesc": {
-      "de": "Reserved-Modelle mit 12/24 Monaten Laufzeit pro Ressource (ECS, EVS u.a.). Savings Plans (Commitment für c4/m4/c9/m9) ab 01.12.2026 als Beta, Erweiterung laut Roadmap 2027.",
-      "en": "Reserved models with 12/24-month terms per resource (ECS, EVS etc.). Savings Plans (commitment for c4/m4/c9/m9) as beta from 01.12.2026, extension on the roadmap for 2027."
+      "de": "Reserved/Reserved Upfront mit 12/24/36 Monaten Laufzeit als monatliches Kontingent je Flavor-Typ (ECS, EVS u.a.). Savings Plans (Commitment für c4/m4 über 12/24 Monate, c9/m9 über 12/24/36 Monate) ab 01.12.2026 als Beta (Roadmap Dez 2026–Mär 2027), Erweiterung laut Roadmap Apr–Nov 2027.",
+      "en": "Reserved/Reserved Upfront with 12/24/36-month terms as a monthly contingent per flavor type (ECS, EVS etc.). Savings Plans (commitment for c4/m4 over 12/24 months, c9/m9 over 12/24/36 months) as beta from 01.12.2026 (roadmap Dec 2026–Mar 2027), extension on the roadmap Apr–Nov 2027."
     },
     "alt": null,
     "migration": {
-      "de": "**Laufzeiten.** 12/24 Monate statt 1/3 Jahre — Commitments neu kalkulieren. **Flexibilität.** Reserved-Modelle sind ressourcengebunden; Savings Plans decken zunächst nur ausgewählte Flavor-Familien ab.",
-      "en": "**Terms.** 12/24 months instead of 1/3 years — recalculate commitments. **Flexibility.** Reserved models are bound to resources; Savings Plans initially only cover selected flavor families."
+      "de": "**Laufzeiten.** 12/24/36 Monate statt 1/3 Jahre (36 Monate bei Savings Plans nur für c9/m9) — Commitments neu kalkulieren. **Flexibilität.** Reserved-Modelle sind an einen Flavor-Typ gebunden (Kontingent für eine oder mehrere Instanzen dieses Typs); Savings Plans decken zunächst nur ausgewählte Flavor-Familien ab.",
+      "en": "**Terms.** 12/24/36 months instead of 1/3 years (36 months for Savings Plans only for c9/m9) — recalculate commitments. **Flexibility.** Reserved models are bound to a flavor type (contingent for one or more instances of that type); Savings Plans initially only cover selected flavor families."
     },
     "equivNote": {
       "de": "Savings Plans in Beta und auf wenige Flavor-Familien beschränkt.",
       "en": "Savings Plans in beta and limited to few flavor families."
     },
     "tfNote": null
+  },
+  {
+    "name": "AWS Customer Carbon Footprint Tool",
+    "category": "Cost Management",
+    "effort": "easy",
+    "equiv": "partial",
+    "tcp": "Financial Dashboard (Sustainability Dashboard)",
+    "tfAws": null,
+    "tfTcp": null,
+    "tfStatus": "none",
+    "docsAws": "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/what-is-ccft.html",
+    "docsTcp": "https://docs.otc.t-systems.com/financial-dashboard/index.html",
+    "tfDocsAws": null,
+    "tfDocsTcp": null,
+    "desc": {
+      "de": "Geschätzte CO₂-Emissionen der AWS-Nutzung je Service und Region, Verlauf und Prognosen, Export für Nachhaltigkeitsberichte.",
+      "en": "Estimated carbon emissions of AWS usage per service and region, history and forecasts, export for sustainability reporting."
+    },
+    "tcpDesc": {
+      "de": "Sustainability Dashboard im Financial Dashboard (seit 18.02.2026): Transparenz auf Service-Ebene über geschätzten Energieverbrauch und daraus resultierende CO₂-Emissionen der Cloud-Nutzung.",
+      "en": "Sustainability Dashboard in the Financial Dashboard (since 18.02.2026): service-level transparency on estimated energy consumption and resulting CO₂ emissions of cloud usage."
+    },
+    "alt": null,
+    "migration": {
+      "de": "**Methodik.** Berechnungsmethoden (Scope 1–3, Marktbasiert/Standortbasiert) unterscheiden sich — Werte nicht direkt mit AWS-Reports vergleichen, Baseline nach der Migration neu setzen. **Reporting.** ESG-Reports auf den Export bzw. die Werte des Sustainability Dashboards umstellen.",
+      "en": "**Methodology.** Calculation methods (scope 1–3, market-based/location-based) differ — do not compare values directly with AWS reports, set a new baseline after migration. **Reporting.** Switch ESG reports to the Sustainability Dashboard values/export."
+    },
+    "equivNote": {
+      "de": "Energie- und CO₂-Schätzung pro Service vorhanden; Umfang von Prognosen und Exportformaten vorab prüfen.",
+      "en": "Energy and CO₂ estimates per service available; check scope of forecasts and export formats upfront."
+    },
+    "tfNote": null,
+    "aliases": [
+      "Sustainability Dashboard"
+    ]
   }
 ]

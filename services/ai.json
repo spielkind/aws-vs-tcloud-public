@@ -17,16 +17,16 @@
       "en": "End-to-end ML platform: notebooks/Studio, training (distributed jobs, spot), hyperparameter tuning, feature store, model registry, pipelines (MLOps), real-time/serverless/batch inference, JumpStart foundation models."
     },
     "tcpDesc": {
-      "de": "KI-Entwicklungsplattform: Notebooks (JupyterLab), Datenverwaltung/-labeling, Training-Jobs auf GPU-Flavors, Modellverwaltung, Inferenz als Real-Time-Service oder Batch. Nur EU-DE; neue Ressourcen (L4-GPU, c9/m9) laut Roadmap.",
-      "en": "AI development platform: notebooks (JupyterLab), data management/labeling, training jobs on GPU flavors, model management, inference as real-time service or batch. EU-DE only; new resources (L4 GPU, c9/m9) on the roadmap."
+      "de": "KI-Entwicklungsplattform: Notebooks (JupyterLab), Datenverwaltung/-labeling, Training-Jobs auf GPU-Flavors, Modellverwaltung, Inferenz als Real-Time-Service oder Batch. Nur EU-DE; neue Ressourcen laut Roadmap (L4-GPU Nov 2026–Jan 2027, c9/m9 Jan–Mär 2027). ExeML für codefreies Training (Bildklassifikation, Objekterkennung).",
+      "en": "AI development platform: notebooks (JupyterLab), data management/labeling, training jobs on GPU flavors, model management, inference as real-time service or batch. EU-DE only; new resources on the roadmap (L4 GPU Nov 2026–Jan 2027, c9/m9 Jan–Mar 2027). ExeML for code-free training (image classification, object detection)."
     },
     "alt": {
       "de": "Kubeflow/MLflow auf CCE, GPU-ECS (H100/A100) self-managed",
       "en": "Kubeflow/MLflow on CCE, GPU ECS (H100/A100) self-managed"
     },
     "migration": {
-      "de": "**Container-basiert.** Trainings- und Inferenz-Code in eigenen Images (SWR) paketieren; SageMaker-SDK-Aufrufe durch ModelArts-SDK/API ersetzen. **Fehlend.** Feature Store, Autopilot, JumpStart/Bedrock-ähnliche Foundation-Model-Kataloge, Clarify und SageMaker Pipelines haben kein 1:1-Pendant. **Daten.** S3 → OBS als Trainingsdatenquelle. **Alternative.** Für volle Kontrolle Kubeflow/MLflow auf CCE mit GPU-Node-Pools.",
-      "en": "**Container-based.** Package training and inference code in own images (SWR); replace SageMaker SDK calls with ModelArts SDK/API. **Missing.** Feature Store, Autopilot, JumpStart/Bedrock-like foundation model catalogs, Clarify and SageMaker Pipelines have no 1:1 equivalent. **Data.** S3 → OBS as training data source. **Alternative.** For full control Kubeflow/MLflow on CCE with GPU node pools."
+      "de": "**Container-basiert.** Trainings- und Inferenz-Code in eigenen Images (SWR) paketieren; SageMaker-SDK-Aufrufe durch ModelArts-SDK/API ersetzen. **Fehlend.** Feature Store, JumpStart/Bedrock-ähnliche Foundation-Model-Kataloge, Clarify und SageMaker Pipelines haben kein 1:1-Pendant; Autopilot nur teilweise über ExeML (nur Bildklassifikation/Objekterkennung). **Daten.** S3 → OBS als Trainingsdatenquelle. **Alternative.** Für volle Kontrolle Kubeflow/MLflow auf CCE mit GPU-Node-Pools.",
+      "en": "**Container-based.** Package training and inference code in own images (SWR); replace SageMaker SDK calls with ModelArts SDK/API. **Missing.** Feature Store, JumpStart/Bedrock-like foundation model catalogs, Clarify and SageMaker Pipelines have no 1:1 equivalent; Autopilot only partially via ExeML (image classification/object detection only). **Data.** S3 → OBS as training data source. **Alternative.** For full control Kubeflow/MLflow on CCE with GPU node pools."
     },
     "equivNote": {
       "de": "Kernfunktionen (Notebook, Training, Inferenz) vorhanden; MLOps-Bausteine und Foundation-Model-Katalog fehlen.",
@@ -55,21 +55,56 @@
       "en": "ML-based extraction of text, forms (key-value), tables, signatures and ID data from documents; queries, Analyze Expense/ID/Lending, asynchronous processing of large PDFs."
     },
     "tcpDesc": {
-      "de": "API-basierte Texterkennung: allgemeiner Text, Tabellen, Webbilder, Ausweise/Pässe, Fahrzeugscheine u.a. — Ergebnis als strukturiertes JSON. Nur EU-DE (Teilumfang).",
-      "en": "API-based text recognition: general text, tables, web images, ID cards/passports, vehicle documents etc. — results as structured JSON. EU-DE only (partial scope)."
+      "de": "API-basierte Texterkennung: General Text, General Table und Smart Document Recognizer (seit 07/2025: Layout-Analyse, Key-Value-Paare, Tabellen in Formularen/Belegen) — Ergebnis als strukturiertes JSON. PDFs seitenweise. Nur EU-DE.",
+      "en": "API-based text recognition: General Text, General Table and Smart Document Recognizer (since 07/2025: layout analysis, key-value pairs, tables in forms/receipts) — results as structured JSON. PDFs page by page. EU-DE only."
     },
     "alt": {
       "de": "Tesseract/PaddleOCR auf ECS/CCE",
       "en": "Tesseract/PaddleOCR on ECS/CCE"
     },
     "migration": {
-      "de": "**API-Wechsel.** Textract-Aufrufe (DetectDocumentText/AnalyzeDocument) auf OCR-REST-APIs umstellen; Antwortformat (Blocks vs. JSON-Felder) unterscheidet sich. **Fehlend.** Queries, Analyze Expense/Lending, Signatur-Erkennung und asynchrone Multi-Page-PDF-Jobs prüfen — ggf. Seiten selbst splitten. **Sprachen.** Unterstützte Sprachen und Dokumenttypen vorab mit Testdaten validieren.",
-      "en": "**API change.** Switch Textract calls (DetectDocumentText/AnalyzeDocument) to OCR REST APIs; response format (blocks vs. JSON fields) differs. **Missing.** Check queries, Analyze Expense/Lending, signature detection and asynchronous multi-page PDF jobs — split pages yourself if needed. **Languages.** Validate supported languages and document types with test data upfront."
+      "de": "**API-Wechsel.** Textract-Aufrufe (DetectDocumentText/AnalyzeDocument) auf OCR-REST-APIs umstellen; Antwortformat (Blocks vs. JSON-Felder) unterscheidet sich. **Fehlend.** Queries, Analyze ID/Expense/Lending, Signatur-Erkennung und asynchrone Multi-Page-PDF-Jobs prüfen — ggf. Seiten selbst splitten. **Sprachen.** Unterstützte Sprachen und Dokumenttypen vorab mit Testdaten validieren.",
+      "en": "**API change.** Switch Textract calls (DetectDocumentText/AnalyzeDocument) to OCR REST APIs; response format (blocks vs. JSON fields) differs. **Missing.** Check queries, Analyze ID/Expense/Lending, signature detection and asynchronous multi-page PDF jobs — split pages yourself if needed. **Languages.** Validate supported languages and document types with test data upfront."
     },
     "equivNote": {
-      "de": "Grundlegende Text-/Tabellen-/Ausweiserkennung; keine Queries, kein Expense/Lending.",
-      "en": "Basic text/table/ID recognition; no queries, no expense/lending."
+      "de": "Text-, Tabellen- und Key-Value-Erkennung (Smart Document Recognizer); keine Ausweis-, Expense-/Lending-APIs, keine Queries.",
+      "en": "Text, table and key-value recognition (Smart Document Recognizer); no ID, expense/lending APIs, no queries."
     },
     "tfNote": null
+  },
+  {
+    "name": "Amazon Kendra",
+    "category": "AI/ML",
+    "effort": "hard",
+    "equiv": "none",
+    "tcp": "KooSearch (Roadmap, ohne Termin)",
+    "tfAws": "aws_kendra_index",
+    "tfTcp": null,
+    "tfStatus": "none",
+    "docsAws": "https://docs.aws.amazon.com/kendra/",
+    "docsTcp": null,
+    "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kendra_index",
+    "tfDocsTcp": null,
+    "desc": {
+      "de": "ML-gestützte Enterprise-Suche über Dokumente und Datenquellen (S3, SharePoint, Confluence u.a.) mit natürlichsprachlichen Fragen, semantischem Ranking, Zugriffsfilterung und Retriever für RAG-Anwendungen.",
+      "en": "ML-powered enterprise search across documents and data sources (S3, SharePoint, Confluence etc.) with natural-language questions, semantic ranking, access filtering and a retriever for RAG applications."
+    },
+    "tcpDesc": {
+      "de": "Aktuell kein Managed-Enterprise-Search-Dienst. Die Roadmap nennt „KooSearch Support“ (KI-Suchmaschine mit mehreren KI-Modellen und über 50 Sprachen) im Umfeld von ModelArts, jedoch ohne Termin; weder Leistungsbeschreibung noch Release Notes oder Doku führen den Dienst bisher.",
+      "en": "Currently no managed enterprise search service. The roadmap lists \"KooSearch support\" (AI search engine with multiple AI models and more than 50 languages) in the ModelArts context, but without a date; neither the service description nor release notes or docs list the service yet."
+    },
+    "alt": {
+      "de": "Cloud Search Service (OpenSearch) mit eigenem Ranking/RAG, self-managed Suchlösungen auf CCE",
+      "en": "Cloud Search Service (OpenSearch) with own ranking/RAG, self-managed search solutions on CCE"
+    },
+    "migration": {
+      "de": "**Kein Pendant verfügbar.** Enterprise-Suche mit Konnektoren und semantischem Ranking muss selbst aufgebaut werden: Indexierung in CSS (OpenSearch), Konnektoren/Crawler selbst betreiben, Zugriffsfilter in der Anwendung umsetzen. **RAG.** Kendra-Retriever → eigene Retrieval-Pipeline (CSS + Embedding-Modell auf ModelArts oder CCE). **Roadmap beobachten.** KooSearch ist angekündigt, aber ohne Termin — nicht als Migrationsziel einplanen.",
+      "en": "**No equivalent available.** Enterprise search with connectors and semantic ranking must be built yourself: indexing in CSS (OpenSearch), run connectors/crawlers yourself, implement access filtering in the application. **RAG.** Kendra retriever → own retrieval pipeline (CSS + embedding model on ModelArts or CCE). **Watch the roadmap.** KooSearch is announced, but without a date — do not plan it as a migration target."
+    },
+    "equivNote": null,
+    "tfNote": null,
+    "aliases": [
+      "KooSearch"
+    ]
   }
 ]

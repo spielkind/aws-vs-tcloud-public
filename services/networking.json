@@ -17,13 +17,13 @@
       "en": "Isolated network. Subnets, route tables, security groups, NACLs, VPN, Direct Connect, VPC Peering, VPC Flow Logs, IPv6 dual-stack, VPC Endpoints."
     },
     "tcpDesc": {
-      "de": "CIDR-Blöcke, Subnets (DHCP-basiert), Security Groups (stateful, bis 20 Regeln/Gruppe default), Firewalls (Subnet-ACLs, stateless, 5-Tupel Allow/Deny), VPN, Direct Connect, VPC Peering (nur intra-Region), Enterprise Router (ER) für Cross-VPC, VPC Flow Logs (nach LTS), IPv6 Dual-Stack (eingeschränkt).",
-      "en": "CIDR blocks, subnets (DHCP-based), security groups (stateful, up to 20 rules/group default), firewalls (subnet ACLs, stateless, 5-tuple allow/deny), VPN, Direct Connect, VPC Peering (intra-region only), Enterprise Router (ER) for cross-VPC, VPC Flow Logs (to LTS), IPv6 dual-stack (limited)."
+      "de": "CIDR-Blöcke, Subnets (DHCP-basiert), Security Groups (stateful, bis 50 Regeln/Gruppe default), Firewalls (Subnet-ACLs, stateless, 5-Tupel Allow/Deny), VPN, Direct Connect, VPC Peering (nur intra-Region), Enterprise Router (ER) für Cross-VPC, VPC Flow Logs (nach LTS), IPv6 Dual-Stack (eingeschränkt).",
+      "en": "CIDR blocks, subnets (DHCP-based), security groups (stateful, up to 50 rules/group default), firewalls (subnet ACLs, stateless, 5-tuple allow/deny), VPN, Direct Connect, VPC Peering (intra-region only), Enterprise Router (ER) for cross-VPC, VPC Flow Logs (to LTS), IPv6 dual-stack (limited)."
     },
     "alt": null,
     "migration": {
-      "de": "**Security Groups.** Max 20 Regeln/Gruppe (erweiterbar), max 400 pro Projekt. CIDR-Bereiche können nach VPC-Erstellung nicht geändert werden. **Network ACLs.** AWS NACLs → T Cloud Public 'Firewalls' (Subnet-Level, stateless, 5-Tupel, Allow/Deny) — funktional identisch. **Peering & Routing.** VPC Peering nur intra-Region — für Cross-Region Enterprise Router (ER) nutzen. NAT Gateway ist ein separater Service. **Flow Logs.** Gehen nach LTS mit weniger Feldern als AWS, kein S3-Export. **Fehlend.** IPv6 Dual-Stack nur eingeschränkt verfügbar. Kein VPC Lattice.",
-      "en": "**Security groups.** Max 20 rules/group (expandable), max 400 per project. CIDR ranges cannot be changed after VPC creation. **Network ACLs.** AWS NACLs → T Cloud Public 'Firewalls' (subnet-level, stateless, 5-tuple, allow/deny) — functionally identical. **Peering & routing.** VPC Peering intra-region only — use Enterprise Router (ER) for cross-region. NAT Gateway is a separate service. **Flow Logs.** Go to LTS with fewer fields than AWS, no S3 export. **Missing.** IPv6 dual-stack limited availability. No VPC Lattice."
+      "de": "**Security Groups.** Standardmäßig max. 50 Regeln/Gruppe und 100 Security Groups pro Account (Quota erhöhbar). Der primäre CIDR-Block ist nach VPC-Erstellung in der Konsole nicht änderbar; bis zu 5 sekundäre IPv4-CIDR-Blöcke können ergänzt werden. **Network ACLs.** AWS NACLs → T Cloud Public 'Firewalls' (Subnet-Level, stateless, 5-Tupel, Allow/Deny) — funktional identisch. **Peering & Routing.** VPC Peering nur intra-Region — Enterprise Router (ER) ist ebenfalls regional; für Cross-Region Cloud Connect (Beta, ER-zu-ER) oder VPN/Direct Connect nutzen. NAT Gateway ist ein separater Service. **Flow Logs.** Gehen nach LTS mit weniger Feldern als AWS, kein S3-Export. **Fehlend.** IPv6 Dual-Stack nur eingeschränkt verfügbar. Kein VPC Lattice.",
+      "en": "**Security groups.** By default max 50 rules/group and 100 security groups per account (quota can be raised). The primary CIDR block cannot be changed in the console after VPC creation; up to 5 secondary IPv4 CIDR blocks can be added. **Network ACLs.** AWS NACLs → T Cloud Public 'Firewalls' (subnet-level, stateless, 5-tuple, allow/deny) — functionally identical. **Peering & routing.** VPC Peering intra-region only — Enterprise Router (ER) is regional too; for cross-region use Cloud Connect (beta, ER-to-ER) or VPN/Direct Connect. NAT Gateway is a separate service. **Flow Logs.** Go to LTS with fewer fields than AWS, no S3 export. **Missing.** IPv6 dual-stack limited availability. No VPC Lattice."
     },
     "equivNote": null,
     "tfNote": null,
@@ -50,16 +50,16 @@
       "en": "Traffic distribution. ALB (L7, HTTP/HTTPS, path/host-based routing), NLB (L4, TCP/UDP/TLS, ultra-low latency), GLB (Gateway, transparent inspection). Health checks, sticky sessions, WAF integration."
     },
     "tcpDesc": {
-      "de": "Dedicated ELB (exklusive Ressourcen, bis 20 Mio. Connections/AZ) und Shared ELB (Cluster, günstiger). L4 (TCP/UDP) + L7 (HTTP/HTTPS). Dedicated unterstützt: QUIC, HTTP/2, TLS 1.3, SNI, Path/Host-based Routing (L7 Policies), Weighted Backend Groups, IP-Backend (Cross-VPC). WebSocket nur bei Dedicated. EU-NL nur Dedicated.",
-      "en": "Dedicated ELB (exclusive resources, up to 20M connections/AZ) and Shared ELB (cluster, cheaper). L4 (TCP/UDP) + L7 (HTTP/HTTPS). Dedicated supports: QUIC, HTTP/2, TLS 1.3, SNI, path/host-based routing (L7 policies), weighted backend groups, IP backend (cross-VPC). WebSocket only with Dedicated. EU-NL Dedicated only."
+      "de": "Dedicated ELB (exklusive Ressourcen, bis 20 Mio. Connections/AZ) und Shared ELB (Cluster, günstiger). L4 (TCP/UDP) + L7 (HTTP/HTTPS). Dedicated unterstützt: QUIC, HTTP/2, TLS 1.3, SNI, Path/Host-based Routing (L7 Policies), Weighted Backend Groups, IP-Backend (Cross-VPC). WebSocket bei Dedicated und Shared. EU-NL nur Dedicated.",
+      "en": "Dedicated ELB (exclusive resources, up to 20M connections/AZ) and Shared ELB (cluster, cheaper). L4 (TCP/UDP) + L7 (HTTP/HTTPS). Dedicated supports: QUIC, HTTP/2, TLS 1.3, SNI, path/host-based routing (L7 policies), weighted backend groups, IP backend (cross-VPC). WebSocket with both Dedicated and Shared. EU-NL Dedicated only."
     },
     "alt": {
       "de": "Nginx, HAProxy",
       "en": "Nginx, HAProxy"
     },
     "migration": {
-      "de": "**ELB-Typen.** T Cloud Public bietet Shared (Classic), Dedicated und Dedicated (WAF). Für Produktion Dedicated verwenden. **Layer-7-Migration.** ALB-Features (Path-/Host-based Routing) → Dedicated ELB mit L7-Policies. NLB (TCP/UDP) → Dedicated ELB TCP Listener. **Verhaltensunterschiede.** Sticky Sessions sind Cookie-basiert mit anderer Konfiguration. WebSocket-Support nur bei Dedicated ELB. Cross-Zone Load Balancing ist Standard und nicht abschaltbar. Target Group Health Checks haben andere Parameter. **Fehlend.** Gateway Load Balancer existiert nicht.",
-      "en": "**ELB types.** T Cloud Public offers Shared (Classic), Dedicated, and Dedicated (WAF). Use Dedicated for production. **Layer 7 migration.** ALB features (path/host-based routing) → Dedicated ELB with L7 policies. NLB (TCP/UDP) → Dedicated ELB TCP Listener. **Behavioral differences.** Sticky Sessions are cookie-based with different configuration. WebSocket support only with Dedicated ELB. Cross-zone load balancing is default and cannot be disabled. Target group health checks have different parameters. **Missing.** Gateway Load Balancer does not exist."
+      "de": "**ELB-Typen.** T Cloud Public bietet Shared (früher „Enhanced“) und Dedicated Load Balancer (EU-NL nur Dedicated). Für Produktion Dedicated verwenden. **Layer-7-Migration.** ALB-Features (Path-/Host-based Routing) → Dedicated ELB mit L7-Policies. NLB (TCP/UDP) → Dedicated ELB TCP Listener. **Verhaltensunterschiede.** Sticky Sessions sind Cookie-basiert mit anderer Konfiguration. Cross-Zone Load Balancing ist Standard und nicht abschaltbar. Target Group Health Checks haben andere Parameter. **Fehlend.** Gateway Load Balancer existiert nicht.",
+      "en": "**ELB types.** T Cloud Public offers Shared (formerly \"enhanced\") and Dedicated load balancers (EU-NL: Dedicated only). Use Dedicated for production. **Layer 7 migration.** ALB features (path/host-based routing) → Dedicated ELB with L7 policies. NLB (TCP/UDP) → Dedicated ELB TCP Listener. **Behavioral differences.** Sticky Sessions are cookie-based with different configuration. Cross-zone load balancing is default and cannot be disabled. Target group health checks have different parameters. **Missing.** Gateway Load Balancer does not exist."
     },
     "equivNote": null,
     "tfNote": null
@@ -125,12 +125,12 @@
       "en": "VPC Peering (for few VPCs)"
     },
     "migration": {
-      "de": "**Kernfunktionen.** Enterprise Router (ER) deckt VPC/VPN/DC-Attachments, Route Tables mit Propagation (auto + manuell) und Associations sowie Cross-Account Sharing ab. **Ressourcen-Mapping.** TGW Attachments → ER Connections (VPC, VPN, Virtual Gateway, CFW). TGW Route Tables → ER Route Tables (mit Propagation und Association). ER unterstützt auch Flow Logs. **Fehlend.** Kein Transit Gateway Peering über Regionen, kein TGW Multicast, kein Network Manager, kein TGW Connect (GRE).",
-      "en": "**Core features.** Enterprise Router (ER) covers VPC/VPN/DC attachments, route tables with propagation (auto + manual) and associations, plus cross-account sharing. **Resource mapping.** TGW Attachments → ER Connections (VPC, VPN, Virtual Gateway, CFW). TGW Route Tables → ER Route Tables (with propagation and association). ER also supports flow logs. **Missing.** No Transit Gateway Peering across regions, no TGW Multicast, no Network Manager, no TGW Connect (GRE)."
+      "de": "**Kernfunktionen.** Enterprise Router (ER) deckt VPC/VPN/DC-Attachments, Route Tables mit Propagation (auto + manuell) und Associations sowie Cross-Account Sharing ab. **Ressourcen-Mapping.** TGW Attachments → ER Connections (VPC, VPN, Virtual Gateway, CFW). TGW Route Tables → ER Route Tables (mit Propagation und Association). ER unterstützt auch Flow Logs. **Fehlend.** Kein natives Transit Gateway Peering über Regionen (ER-zu-ER nur über Cloud Connect, Beta), kein TGW Multicast, kein Network Manager, kein TGW Connect (GRE).",
+      "en": "**Core features.** Enterprise Router (ER) covers VPC/VPN/DC attachments, route tables with propagation (auto + manual) and associations, plus cross-account sharing. **Resource mapping.** TGW Attachments → ER Connections (VPC, VPN, Virtual Gateway, CFW). TGW Route Tables → ER Route Tables (with propagation and association). ER also supports flow logs. **Missing.** No native Transit Gateway Peering across regions (ER-to-ER only via Cloud Connect, beta), no TGW Multicast, no Network Manager, no TGW Connect (GRE)."
     },
     "equivNote": {
-      "de": "Enterprise Router deckt VPC-Attachments, Route Tables mit Propagation/Association, Cross-Account Sharing und Flow Logs ab. Fehlend: Multicast, Cross-Region Peering, Network Manager, TGW Connect (GRE).",
-      "en": "Enterprise Router covers VPC attachments, route tables with propagation/association, cross-account sharing, and flow logs. Missing: multicast, cross-region peering, Network Manager, TGW Connect (GRE)."
+      "de": "Enterprise Router deckt VPC-Attachments, Route Tables mit Propagation/Association, Cross-Account Sharing und Flow Logs ab. Fehlend: Multicast, Cross-Region Peering (nur über Cloud Connect, Beta), Network Manager, TGW Connect (GRE).",
+      "en": "Enterprise Router covers VPC attachments, route tables with propagation/association, cross-account sharing, and flow logs. Missing: multicast, cross-region peering (only via Cloud Connect, beta), Network Manager, TGW Connect (GRE)."
     },
     "tfNote": null
   },
@@ -160,8 +160,8 @@
       "en": "iptables NAT on ECS instance"
     },
     "migration": {
-      "de": "**Regel-Konfiguration.** SNAT- und DNAT-Regeln werden separat konfiguriert (nicht automatisch wie bei AWS). Max 200 SNAT/DNAT-Regeln pro NAT Gateway. Elastic IPs müssen vorher erstellt und zugewiesen werden. **Private NAT.** Private NAT Gateway (VPC-zu-VPC ohne Internet) ist ein separater Service. **Kostenmodell.** Abrechnung nach Verbindungen + Traffic, nicht pauschal pro Stunde wie AWS.",
-      "en": "**Rule configuration.** SNAT and DNAT rules are configured separately (not automatic like AWS). Max 200 SNAT/DNAT rules per NAT Gateway. Elastic IPs must be created and assigned beforehand. **Private NAT.** Private NAT Gateway (VPC-to-VPC without internet) is a separate service. **Cost model.** Billed by connections + traffic, not flat hourly rate like AWS."
+      "de": "**Regel-Konfiguration.** SNAT- und DNAT-Regeln werden separat konfiguriert (nicht automatisch wie bei AWS). Max. 200 DNAT-Regeln pro öffentlichem NAT Gateway; SNAT-Regeln unbegrenzt (eine pro Subnet). Elastic IPs müssen vorher erstellt und zugewiesen werden. **Private NAT.** Private NAT Gateway (VPC-zu-VPC ohne Internet) ist ein eigener Gateway-Typ, nur in EU-DE verfügbar (eigene Terraform-Ressourcen private_nat_*_v3). **Kostenmodell.** Stundenpreis je Gateway-Größe (Micro bis Extra-Large, nach max. SNAT-Verbindungen), keine Gebühr pro verarbeitetem GB wie bei AWS (Stunde + pro GB).",
+      "en": "**Rule configuration.** SNAT and DNAT rules are configured separately (not automatic like AWS). Max 200 DNAT rules per public NAT Gateway; SNAT rules unlimited (one per subnet). Elastic IPs must be created and assigned beforehand. **Private NAT.** Private NAT Gateway (VPC-to-VPC without internet) is a separate gateway type, available in EU-DE only (own Terraform resources private_nat_*_v3). **Cost model.** Hourly price per gateway size (Micro to Extra-Large, by max SNAT connections), no per-GB processing fee like AWS (hourly + per GB)."
     },
     "equivNote": null,
     "tfNote": null,
@@ -187,8 +187,8 @@
       "en": "Managed IPSec VPN. Two tunnels per connection, BGP/static routing, Accelerated VPN (Global Accelerator), VPN CloudHub."
     },
     "tcpDesc": {
-      "de": "Enterprise VPN: Managed IPsec-VPN-Gateway (Site-to-Site) mit Active-Active/Active-Standby-Gateways, IKEv1/IKEv2, BGP- und statischem Routing, Policy-based Routing, Anbindung an VPC oder Enterprise Router. Neue Version seit 06.11.2026 in EU-DE und EU-NL. ⚠️ Classic VPN ist in EU-DE seit 31.01.2026 EOL (in EU-NL noch verfügbar).",
-      "en": "Enterprise VPN: managed IPsec VPN gateway (site-to-site) with active-active/active-standby gateways, IKEv1/IKEv2, BGP and static routing, policy-based routing, attachment to VPC or Enterprise Router. New version since 06.11.2026 in EU-DE and EU-NL. ⚠️ Classic VPN is EOL in EU-DE since 31.01.2026 (still available in EU-NL)."
+      "de": "Enterprise VPN: Managed IPsec-VPN-Gateway (Site-to-Site) mit Active-Active/Active-Standby-Gateways, IKEv1/IKEv2, BGP- und statischem Routing, Policy-based Routing, Anbindung an VPC oder Enterprise Router. Neue Version seit 06.11.2026 in EU-DE und EU-NL. ⚠️ Classic VPN ist in EU-DE seit 31.01.2026 EOL (in EU-NL bestehende Verbindungen weiter nutzbar; Neuanlage von Classic-VPN-Verbindungen seit 27.10.2025 deaktiviert).",
+      "en": "Enterprise VPN: managed IPsec VPN gateway (site-to-site) with active-active/active-standby gateways, IKEv1/IKEv2, BGP and static routing, policy-based routing, attachment to VPC or Enterprise Router. New version since 06.11.2026 in EU-DE and EU-NL. ⚠️ Classic VPN is EOL in EU-DE since 31.01.2026 (existing connections in EU-NL keep working; creating new Classic VPN connections disabled since 27.10.2025)."
     },
     "alt": {
       "de": "strongSwan/Libreswan auf ECS, WireGuard",
@@ -223,20 +223,20 @@
       "en": "Private access to AWS services and own services via VPC endpoints. Interface endpoints (ENI-based), gateway endpoints (S3, DynamoDB). PrivateLink service for own service exposure."
     },
     "tcpDesc": {
-      "de": "Privater Zugriff auf T Cloud Public-Services über VPC Endpoints. Interface Endpoints für OBS, DNS und weitere T Cloud Public-Services. Eigene Services über VPC Endpoint Services exponieren.",
-      "en": "Private access to T Cloud Public services via VPC endpoints. Interface endpoints for OBS, DNS and other T Cloud Public services. Expose own services via VPC Endpoint Services."
+      "de": "Privater Zugriff auf T Cloud Public-Services über VPC Endpoints. Gateway Endpoint für OBS, Interface Endpoints für DNS und API Gateway (nur EU-DE). Eigene Services über VPC Endpoint Services exponieren.",
+      "en": "Private access to T Cloud Public services via VPC endpoints. Gateway endpoint for OBS, interface endpoints for DNS and API Gateway (EU-DE only). Expose own services via VPC Endpoint Services."
     },
     "alt": {
       "de": "VPC Peering + Security Groups, Proxy auf ECS (Nginx/HAProxy), NAT Gateway für T Cloud Public-Service-Zugriff",
       "en": "VPC Peering + security groups, proxy on ECS (Nginx/HAProxy), NAT Gateway for T Cloud Public service access"
     },
     "migration": {
-      "de": "**Endpoint-Typen.** VPCEP unterstützt Gateway Endpoints (OBS) und Interface Endpoints, aber deutlich weniger T Cloud Public-Services haben Endpoint-Support als AWS. **Kein Policy-Modell.** Endpoint Policies gibt es nicht — Zugriffskontrolle nur über Security Groups. **Eigene Services.** PrivateLink für eigene Services → VPCEP Service erstellen (Whitelist-basiert). Cross-Account Endpoint Sharing ist eingeschränkt. **DNS-Abweichung.** DNS-Integration funktioniert anders — kein privates DNS wie bei AWS Interface Endpoints.",
-      "en": "**Endpoint types.** VPCEP supports Gateway Endpoints (OBS) and Interface Endpoints, but significantly fewer T Cloud Public services support endpoints than AWS. **No policy model.** Endpoint Policies don't exist — access control only via Security Groups. **Own services.** PrivateLink for own services → create VPCEP Service (whitelist-based). Cross-account endpoint sharing is limited. **DNS difference.** DNS integration works differently — no private DNS like AWS Interface Endpoints."
+      "de": "**Endpoint-Typen.** VPCEP unterstützt Gateway Endpoints (OBS) und Interface Endpoints, aber deutlich weniger T Cloud Public-Services haben Endpoint-Support als AWS. **Eingeschränktes Policy-Modell.** Endpoint Policies (Allow/Deny auf OBS-Aktionen/-Objekte) nur für OBS Gateway Endpoints; ansonsten Zugriffskontrolle über Whitelists und Security Groups. **Eigene Services.** PrivateLink für eigene Services → VPCEP Service erstellen (Whitelist-basiert). Cross-Account Endpoint Sharing ist eingeschränkt. **DNS-Abweichung.** Interface Endpoints können optional einen privaten Domainnamen (Private Zone im DNS-Service) erhalten; Service-Namen werden aber nicht wie bei AWS Private DNS transparent auf den Endpoint umgebogen.",
+      "en": "**Endpoint types.** VPCEP supports Gateway Endpoints (OBS) and Interface Endpoints, but significantly fewer T Cloud Public services support endpoints than AWS. **Limited policy model.** Endpoint policies (allow/deny on OBS actions/objects) only for OBS gateway endpoints; otherwise access control via whitelists and security groups. **Own services.** PrivateLink for own services → create VPCEP Service (whitelist-based). Cross-account endpoint sharing is limited. **DNS difference.** Interface endpoints can optionally get a private domain name (private zone in the DNS service); service names are not transparently redirected to the endpoint like AWS private DNS."
     },
     "equivNote": {
-      "de": "VPCEP bietet Interface und Gateway Endpoints für ausgewählte T Cloud Public-Services (OBS, DNS u.a.) und eigene Endpoint Services. Deutlich weniger Service-Integrationen als AWS (~20 vs. 100+), keine Endpoint Policies, kein PrivateLink Marketplace.",
-      "en": "VPCEP provides interface and gateway endpoints for selected T Cloud Public services (OBS, DNS etc.) and own endpoint services. Significantly fewer service integrations than AWS (~20 vs. 100+), no endpoint policies, no PrivateLink marketplace."
+      "de": "VPCEP bietet Interface und Gateway Endpoints für ausgewählte T Cloud Public-Services (OBS, DNS, API Gateway) und eigene Endpoint Services. Deutlich weniger Service-Integrationen als AWS (3 Cloud-Services vs. 100+), Endpoint Policies nur für OBS Gateway Endpoints, kein PrivateLink Marketplace.",
+      "en": "VPCEP provides interface and gateway endpoints for selected T Cloud Public services (OBS, DNS, API Gateway) and own endpoint services. Significantly fewer service integrations than AWS (3 cloud services vs. 100+), endpoint policies only for OBS gateway endpoints, no PrivateLink marketplace."
     },
     "tfNote": null
   },
@@ -322,8 +322,8 @@
       "en": "Global WAN with central policy: connects VPCs, transit gateways and on-premises sites across AWS regions with segmentation and automatic routing."
     },
     "tcpDesc": {
-      "de": "Cloud Connect verbindet Enterprise Router regionsübergreifend (Central Network, Global Connection Bandwidth, Policies). Status: Public Beta seit 21.04.2026 (kostenfrei); globale Verfügbarkeit laut Roadmap Q2 2027.",
-      "en": "Cloud Connect connects Enterprise Routers across regions (central network, global connection bandwidth, policies). Status: public beta since 21.04.2026 (free of charge); global availability on the roadmap for Q2 2027."
+      "de": "Cloud Connect verbindet Enterprise Router regionsübergreifend (Central Network, Global Connection Bandwidth, Policies). Status: Public Beta seit 21.04.2026 (kostenfrei); globale Verfügbarkeit laut Roadmap Apr. 2027 – Jan. 2028.",
+      "en": "Cloud Connect connects Enterprise Routers across regions (central network, global connection bandwidth, policies). Status: public beta since 21.04.2026 (free of charge); global availability on the roadmap for Apr 2027 – Jan 2028."
     },
     "alt": null,
     "migration": {

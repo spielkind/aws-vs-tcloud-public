@@ -17,20 +17,20 @@
       "en": "Unified monitoring & observability. Metrics (custom/AWS), logs (log groups, Insights SQL), alarms (composite, anomaly detection), dashboards, Synthetics (canaries), Container Insights, ServiceLens, Application Signals, Contributor Insights, Internet Monitor."
     },
     "tcpDesc": {
-      "de": "Drei separate Services ersetzen CloudWatch: (1) Cloud Eye (CES) — Metriken, Alarme, Dashboards, Custom Metrics, Event-Alarme. Bis zu 24 Monate Metriken-Retention. (2) AOM — Application-Monitoring, Host-Monitoring, Container-Monitoring (CCE), Auto-Discovery, Alarm-Korrelation. (3) LTS (Log Tank Service) — Log-Sammlung, Strukturierte Suche, Log-Transfer nach OBS, Alarm-Regeln auf Logs, bis 30 Tage Retention (erweiterbar). Alle drei haben eigene Dashboards und Alarm-Mechanismen.",
-      "en": "Three separate services replace CloudWatch: (1) Cloud Eye (CES) — metrics, alarms, dashboards, custom metrics, event alarms. Up to 24 months metrics retention. (2) AOM — application monitoring, host monitoring, container monitoring (CCE), auto-discovery, alarm correlation. (3) LTS (Log Tank Service) — log collection, structured search, log transfer to OBS, alarm rules on logs, up to 30 days retention (extendable). All three have their own dashboards and alarm mechanisms."
+      "de": "Drei separate Services ersetzen CloudWatch: (1) Cloud Eye (CES) — Metriken, Alarme, Dashboards, Custom Metrics, Event-Alarme. Metriken-Retention bis 155 Tage (1h-Aggregation; Rohdaten 2 Tage). (2) AOM — Application-Monitoring, Host-Monitoring, Container Insights (CCE), Prometheus-Monitoring (AOM 2.0), Auto-Discovery, Alarm-Korrelation. (3) LTS (Log Tank Service) — Log-Sammlung, Strukturierte Suche und SQL-Analyse, Log-Transfer nach OBS, Alarm-Regeln auf Logs, Retention 1–365 Tage (Standard 30). Alle drei haben eigene Dashboards und Alarm-Mechanismen.",
+      "en": "Three separate services replace CloudWatch: (1) Cloud Eye (CES) — metrics, alarms, dashboards, custom metrics, event alarms. Metrics retention up to 155 days (1h rollup; raw data 2 days). (2) AOM — application monitoring, host monitoring, Container Insights (CCE), Prometheus monitoring (AOM 2.0), auto-discovery, alarm correlation. (3) LTS (Log Tank Service) — log collection, structured search and SQL analysis, log transfer to OBS, alarm rules on logs, retention 1–365 days (default 30). All three have their own dashboards and alarm mechanisms."
     },
     "alt": {
       "de": "Prometheus + Grafana, ELK",
       "en": "Prometheus + Grafana, ELK"
     },
     "migration": {
-      "de": "**Dashboards.** CloudWatch Dashboards → Cloud Eye Dashboards (weniger Widget-Typen verfügbar). **Custom Metrics.** Cloud Eye Custom Metrics nutzen eine andere API als CloudWatch — Instrumentierung anpassen. **Log-Queries.** Log Insights (SQL-ähnlich) → LTS Suchfunktion (eingeschränkter, kein SQL). **Metric Math.** Cloud Eye unterstützt einfache Formeln, aber weniger mächtig als CloudWatch Metric Math. **Synthetics.** CloudWatch Canaries haben kein T Cloud Public-Pendant — extern lösen (Checkly, Uptime Robot). **Nicht verfügbar.** Composite Alarms, Cross-Account Metrics, Anomaly Detection, Container Insights, ServiceLens, Contributor Insights.",
-      "en": "**Dashboards.** CloudWatch Dashboards → Cloud Eye Dashboards (fewer widget types available). **Custom Metrics.** Cloud Eye Custom Metrics use a different API than CloudWatch — adjust instrumentation. **Log Queries.** Log Insights (SQL-like) → LTS search function (more limited, no SQL). **Metric Math.** Cloud Eye supports simple formulas but less powerful than CloudWatch Metric Math. **Synthetics.** CloudWatch Canaries have no T Cloud Public equivalent — solve externally (Checkly, Uptime Robot). **Not Available.** Composite Alarms, cross-account metrics, Anomaly Detection, Container Insights, ServiceLens, Contributor Insights."
+      "de": "**Container Insights.** → AOM 2.0 Container Insights für CCE. **Dashboards.** CloudWatch Dashboards → Cloud Eye Dashboards (weniger Widget-Typen verfügbar); neue LTS-Dashboards & Visualisierung laut Roadmap Jan–Jun 2027. **Custom Metrics.** Cloud Eye Custom Metrics nutzen eine andere API als CloudWatch — Instrumentierung anpassen. **Log-Queries.** Logs Insights → LTS Suche bzw. SQL-Analyse auf strukturierten Logs (andere Syntax, Queries anpassen). **Metric Math.** Cloud Eye unterstützt einfache Formeln, aber weniger mächtig als CloudWatch Metric Math. **Synthetics.** CloudWatch Canaries haben kein T Cloud Public-Pendant — extern lösen (Checkly, Uptime Robot). **Nicht verfügbar.** Composite Alarms, Cross-Account Metrics, Anomaly Detection, ServiceLens, Contributor Insights.",
+      "en": "**Container Insights.** → AOM 2.0 container insights for CCE. **Dashboards.** CloudWatch Dashboards → Cloud Eye Dashboards (fewer widget types available); new LTS dashboards & visualization per roadmap Jan–Jun 2027. **Custom Metrics.** Cloud Eye Custom Metrics use a different API than CloudWatch — adjust instrumentation. **Log Queries.** Logs Insights → LTS search or SQL analysis on structured logs (different syntax, adapt queries). **Metric Math.** Cloud Eye supports simple formulas but less powerful than CloudWatch Metric Math. **Synthetics.** CloudWatch Canaries have no T Cloud Public equivalent — solve externally (Checkly, Uptime Robot). **Not Available.** Composite Alarms, cross-account metrics, Anomaly Detection, ServiceLens, Contributor Insights."
     },
     "equivNote": {
-      "de": "Basis-Metriken und Alarme gut abgedeckt. Kein CloudWatch Synthetics, Anomaly Detection, Container Insights, ServiceLens oder Contributor Insights.",
-      "en": "Basic metrics and alarms well covered. No CloudWatch Synthetics, Anomaly Detection, Container Insights, ServiceLens or Contributor Insights."
+      "de": "Basis-Metriken und Alarme gut abgedeckt. Container Insights über AOM 2.0. Kein CloudWatch Synthetics, Anomaly Detection, ServiceLens oder Contributor Insights.",
+      "en": "Basic metrics and alarms well covered. Container insights via AOM 2.0. No CloudWatch Synthetics, Anomaly Detection, ServiceLens or Contributor Insights."
     },
     "tfNote": null,
     "aliases": [
@@ -53,8 +53,8 @@
     "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/xray_sampling_rule",
     "tfDocsTcp": null,
     "desc": {
-      "de": "Distributed Tracing und Application Performance Analyse. Service Map, Trace Analytics, Annotations, Sampling Rules, Integration mit Lambda, ECS, EC2, API Gateway.",
-      "en": "Distributed tracing and application performance analysis. Service map, trace analytics, annotations, sampling rules, integration with Lambda, ECS, EC2, API Gateway."
+      "de": "Distributed Tracing und Application Performance Analyse. Service Map, Trace Analytics, Annotations, Sampling Rules, Integration mit Lambda, ECS, EC2, API Gateway. X-Ray SDKs/Daemon seit 25.02.2026 im Maintenance Mode — AWS empfiehlt OpenTelemetry-Instrumentierung.",
+      "en": "Distributed tracing and application performance analysis. Service map, trace analytics, annotations, sampling rules, integration with Lambda, ECS, EC2, API Gateway. X-Ray SDKs/daemon in maintenance mode since 25.02.2026 — AWS recommends OpenTelemetry instrumentation."
     },
     "tcpDesc": {
       "de": "APM bietet echtes Distributed Tracing (Trace-ID-Propagation über Services), Application Topology, URL Tracing, intelligentes Sampling, Agent Management und Alarm Management. Eigenständiger Service, nicht nur Teil von AOM.",
@@ -65,13 +65,52 @@
       "en": "Jaeger on CCE (CNCF distributed tracing), Grafana Tempo on CCE, OpenTelemetry Collector + Jaeger/Zipkin backend on CCE"
     },
     "migration": {
-      "de": "**Instrumentierung.** X-Ray SDK → APM Java Agent verwenden (Auto-Instrumentierung für JVM, Datenbanken, Middleware). Nur Java-basiert — kein Multi-Language SDK wie X-Ray. **Service Map.** X-Ray Service Map → APM Application Topology (single-component + global). **Sampling.** Sampling Rules werden anders konfiguriert — CPU-basiert und automatisch statt regelbasiert. **URL Tracing.** APM ermöglicht Monitoring einzelner API-Endpunkte (error/slow/normal). **Terraform.** Kein Terraform-Support für APM — Konfiguration nur über Console/API. **Service-Integration.** FunctionGraph/APIG-Integration prüfen — nicht alle Services sind automatisch instrumentiert. **Nicht verfügbar.** X-Ray Insights (automatische Anomalie-Erkennung), X-Ray Groups → APM Applications/Environments nutzen.",
-      "en": "**Instrumentation.** X-Ray SDK → use APM Java Agent (auto-instrumentation for JVM, databases, middleware). Java-only — no multi-language SDK like X-Ray. **Service Map.** X-Ray Service Map → APM Application Topology (single-component + global). **Sampling.** Sampling rules configured differently — CPU-based and automatic instead of rule-based. **URL Tracing.** APM enables monitoring individual API endpoints (error/slow/normal). **Terraform.** No Terraform support for APM — configuration only via Console/API. **Service Integration.** Check FunctionGraph/APIG integration — not all services are automatically instrumented. **Not Available.** X-Ray Insights (automatic anomaly detection). X-Ray Groups → use APM Applications/Environments."
+      "de": "**Instrumentierung.** X-Ray SDK → APM Java Agent verwenden (Auto-Instrumentierung für JVM, Datenbanken, Middleware). Nur Java-basiert — kein Multi-Language SDK wie X-Ray. **Service Map.** X-Ray Service Map → APM Application Topology (single-component + global). **Sampling.** Sampling wird im Java Agent konfiguriert — Standard ist intelligentes, CPU-lastabhängiges Sampling; alternativ Full-, Prozent- oder Fixed-Quantity-Sampling sowie Schwellwerte pro URL/Methode. **URL Tracing.** APM ermöglicht Monitoring einzelner API-Endpunkte (error/slow/normal). **Terraform.** Kein Terraform-Support für APM — Konfiguration nur über Console/API. **Service-Integration.** FunctionGraph/APIG-Integration prüfen — nicht alle Services sind automatisch instrumentiert. **Nicht verfügbar.** X-Ray Insights (automatische Anomalie-Erkennung), X-Ray Groups → APM Applications/Environments nutzen.",
+      "en": "**Instrumentation.** X-Ray SDK → use APM Java Agent (auto-instrumentation for JVM, databases, middleware). Java-only — no multi-language SDK like X-Ray. **Service Map.** X-Ray Service Map → APM Application Topology (single-component + global). **Sampling.** Sampling is configured in the Java agent — default is intelligent, CPU-load-dependent sampling; alternatively full, percentage or fixed-quantity sampling plus thresholds per URL/method. **URL Tracing.** APM enables monitoring individual API endpoints (error/slow/normal). **Terraform.** No Terraform support for APM — configuration only via Console/API. **Service Integration.** Check FunctionGraph/APIG integration — not all services are automatically instrumented. **Not Available.** X-Ray Insights (automatic anomaly detection). X-Ray Groups → use APM Applications/Environments."
     },
     "equivNote": {
-      "de": "APM bietet echtes Distributed Tracing mit Trace-ID-Propagation, Service Topology, URL Tracing und intelligentem Sampling. Hauptunterschiede zu X-Ray: Java-Agent-basiert (kein Multi-Language SDK wie X-Ray), kein Terraform-Support, keine Anomaly Detection (X-Ray Insights), Sampling ist CPU-basiert statt regelbasiert. Für polyglotte Tracing-Stacks: Jaeger oder Grafana Tempo auf CCE als Ergänzung.",
-      "en": "APM provides real distributed tracing with trace ID propagation, service topology, URL tracing, and intelligent sampling. Key differences from X-Ray: Java agent-based (no multi-language SDK like X-Ray), no Terraform support, no anomaly detection (X-Ray Insights), sampling is CPU-based rather than rule-based. For polyglot tracing stacks: Jaeger or Grafana Tempo on CCE as supplement."
+      "de": "APM bietet echtes Distributed Tracing mit Trace-ID-Propagation, Service Topology, URL Tracing und intelligentem Sampling. Hauptunterschiede zu X-Ray: Java-Agent-basiert (kein Multi-Language SDK wie X-Ray), kein Terraform-Support, keine Anomaly Detection (X-Ray Insights), Sampling standardmäßig CPU-lastabhängig (alternativ Prozent/Fixed-Quantity) statt X-Ray Sampling Rules. Für polyglotte Tracing-Stacks: Jaeger oder Grafana Tempo auf CCE als Ergänzung.",
+      "en": "APM provides real distributed tracing with trace ID propagation, service topology, URL tracing, and intelligent sampling. Key differences from X-Ray: Java agent-based (no multi-language SDK like X-Ray), no Terraform support, no anomaly detection (X-Ray Insights), sampling CPU-load-dependent by default (alternatively percentage/fixed-quantity) instead of X-Ray sampling rules. For polyglot tracing stacks: Jaeger or Grafana Tempo on CCE as supplement."
     },
     "tfNote": null
+  },
+  {
+    "name": "AWS Health",
+    "category": "Monitoring",
+    "effort": "medium",
+    "equiv": "partial",
+    "tcp": "Status Dashboard (+ ECS Operational Events, Roadmap)",
+    "tfAws": null,
+    "tfTcp": null,
+    "tfStatus": "none",
+    "docsAws": "https://docs.aws.amazon.com/health/latest/ug/what-is-aws-health.html",
+    "docsTcp": "https://docs.otc.t-systems.com/status-dashboard/index.html",
+    "tfDocsAws": null,
+    "tfDocsTcp": null,
+    "desc": {
+      "de": "Personalisierte Sicht auf AWS-Service-Störungen, geplante Wartungen und Account-spezifische Events (z.B. EC2-Retirements). Health API, EventBridge-Integration für automatisierte Reaktionen, Organizational View.",
+      "en": "Personalized view of AWS service issues, scheduled maintenance and account-specific events (e.g. EC2 retirements). Health API, EventBridge integration for automated responses, organizational view."
+    },
+    "tcpDesc": {
+      "de": "Öffentliches Status Dashboard (status.otc-service.com, modernisiert seit 27.05.2025) mit Echtzeit-Status je Service und Region sowie API für Komponenten, Verfügbarkeit und Events. Tenant-spezifische „Operational Events“ für ECS-Instanzen und CCE-Worker-Nodes (zentrale Verwaltung und Benachrichtigung) sind laut Roadmap für Nov 2026–Mai 2027 geplant.",
+      "en": "Public Status Dashboard (status.otc-service.com, modernized since 27.05.2025) with real-time status per service and region and an API for components, availability and events. Tenant-specific \"operational events\" for ECS instances and CCE worker nodes (central management and notifications) are on the roadmap for Nov 2026–May 2027."
+    },
+    "alt": null,
+    "migration": {
+      "de": "**Öffentlich statt personalisiert.** Das Status Dashboard zeigt den allgemeinen Plattformstatus, keine Account-/Ressourcen-spezifischen Events. **Automatisierung.** Health-Events via EventBridge → Polling der Status-Dashboard-API (Events) und Weiterleitung z.B. per FunctionGraph an SMN. **Geplante Wartungen.** Wartungsankündigungen kommen über Status Dashboard und Release Notes/E-Mail. **Roadmap.** Operational Events für ECS/CCE (Nov 2026–Mai 2027) schließen die Lücke für ressourcenbezogene Ereignisse teilweise.",
+      "en": "**Public instead of personalized.** The Status Dashboard shows the general platform status, no account/resource-specific events. **Automation.** Health events via EventBridge → poll the Status Dashboard API (events) and forward e.g. via FunctionGraph to SMN. **Scheduled maintenance.** Maintenance announcements come via Status Dashboard and release notes/e-mail. **Roadmap.** Operational events for ECS/CCE (Nov 2026–May 2027) partially close the gap for resource-specific events."
+    },
+    "equivNote": {
+      "de": "Nur öffentlicher Service-Status mit API; keine Account-spezifischen Events, keine Organizational View. Ressourcenbezogene Operational Events erst laut Roadmap (ECS/CCE).",
+      "en": "Public service status with API only; no account-specific events, no organizational view. Resource-related operational events only per roadmap (ECS/CCE)."
+    },
+    "tfNote": {
+      "de": "Kein Terraform-Bezug (weder AWS Health noch Status Dashboard sind Ressourcen).",
+      "en": "No Terraform relevance (neither AWS Health nor the Status Dashboard are resources)."
+    },
+    "aliases": [
+      "Status Dashboard",
+      "Operational events"
+    ]
   }
 ]
