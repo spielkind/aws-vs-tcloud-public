@@ -112,5 +112,75 @@
       "Status Dashboard",
       "Operational events"
     ]
+  },
+  {
+    "name": "Amazon Managed Service for Prometheus",
+    "category": "Monitoring",
+    "effort": "medium",
+    "equiv": "partial",
+    "tcp": "AOM 2.0 (Prometheus)",
+    "tfAws": "aws_prometheus_workspace",
+    "tfTcp": null,
+    "tfStatus": "none",
+    "docsAws": "https://docs.aws.amazon.com/prometheus/",
+    "docsTcp": "https://docs.otc.t-systems.com/application-operations-management-2/index.html",
+    "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/prometheus_workspace",
+    "tfDocsTcp": null,
+    "desc": {
+      "de": "Serverloser, Prometheus-kompatibler Metrik-Speicher: Remote Write, PromQL-Abfragen, Alertmanager-Regeln, Integration mit EKS und Managed Grafana.",
+      "en": "Serverless Prometheus-compatible metrics store: remote write, PromQL queries, alertmanager rules, integration with EKS and Managed Grafana."
+    },
+    "tcpDesc": {
+      "de": "AOM 2.0 stellt Prometheus-Instanzen (u.a. für Cloud-Services und CCE) bereit; selbst betriebene Kubernetes-Cluster schreiben per Prometheus Remote Write in AOM. Auswertung über AOM bzw. Open-Source-Grafana.",
+      "en": "AOM 2.0 provides Prometheus instances (incl. for cloud services and CCE); self-managed Kubernetes clusters write to AOM via Prometheus remote write. Analysis via AOM or open-source Grafana."
+    },
+    "alt": {
+      "de": "Prometheus/Thanos/VictoriaMetrics self-managed auf CCE",
+      "en": "Prometheus/Thanos/VictoriaMetrics self-managed on CCE"
+    },
+    "migration": {
+      "de": "**Remote Write.** Bestehende Prometheus-Agents bzw. das CCE-Monitoring per Remote Write an eine AOM-Prometheus-Instanz anbinden. **Abfragen & Alerts.** PromQL-Dashboards und Alertmanager-Regeln übernehmen und in AOM bzw. Grafana testen. **Grenzen.** Kontingente je Instanz (z.B. nur eine Instanz für Cloud-Services pro Enterprise Project) vorab prüfen.",
+      "en": "**Remote write.** Connect existing Prometheus agents or CCE monitoring to an AOM Prometheus instance via remote write. **Queries & alerts.** Carry over PromQL dashboards and alertmanager rules and test them in AOM or Grafana. **Limits.** Check quotas per instance upfront (e.g. only one instance for cloud services per enterprise project)."
+    },
+    "equivNote": {
+      "de": "Prometheus-kompatible Instanzen mit Remote Write in AOM; Funktionsumfang und Limits weichen von AMP ab.",
+      "en": "Prometheus-compatible instances with remote write in AOM; scope and limits differ from AMP."
+    },
+    "tfNote": {
+      "de": "Keine Terraform-Ressource für AOM-Prometheus-Instanzen (nur AOM-Alarm- und Service-Discovery-Regeln).",
+      "en": "No Terraform resource for AOM Prometheus instances (only AOM alarm and service discovery rules)."
+    }
+  },
+  {
+    "name": "Amazon Managed Grafana",
+    "category": "Monitoring",
+    "effort": "easy",
+    "equiv": "none",
+    "tcp": "Kein Equivalent",
+    "tfAws": "aws_grafana_workspace",
+    "tfTcp": null,
+    "tfStatus": "none",
+    "docsAws": "https://docs.aws.amazon.com/grafana/",
+    "docsTcp": null,
+    "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/grafana_workspace",
+    "tfDocsTcp": null,
+    "desc": {
+      "de": "Managed Grafana-Workspaces mit SSO, Datenquellen (CloudWatch, Prometheus, OpenSearch u.a.), Alerting und Plugins.",
+      "en": "Managed Grafana workspaces with SSO, data sources (CloudWatch, Prometheus, OpenSearch etc.), alerting and plugins."
+    },
+    "tcpDesc": {
+      "de": "Kein Managed-Grafana-Dienst. Weder Leistungsbeschreibung (Stand 09.10.2026) noch Roadmap (Stand 12.11.2026) führen einen entsprechenden Dienst. AOM arbeitet mit selbst betriebenem Open-Source-Grafana zusammen; die Managed Services von T-Systems enthalten ab Paket „Standard“ ein Grafana-Dashboard für Plattformdaten.",
+      "en": "No managed Grafana service. Neither the service description (as of 09.10.2026) nor the roadmap (as of 12.11.2026) lists a corresponding service. AOM works with self-hosted open-source Grafana; the T-Systems Managed Services include a Grafana dashboard for platform data from package \"Standard\"."
+    },
+    "alt": {
+      "de": "Grafana self-managed auf CCE/ECS (Helm), Grafana Cloud",
+      "en": "Self-managed Grafana on CCE/ECS (Helm), Grafana Cloud"
+    },
+    "migration": {
+      "de": "**Self-hosted Grafana.** Grafana per Helm auf CCE betreiben (Persistenz auf EVS, Login per SAML/OIDC). **Datenquellen.** CloudWatch → Cloud-Eye/AOM-Prometheus-Datenquelle; Dashboards als JSON exportieren und importieren. **Betrieb.** Updates, Backups und HA liegen beim Kunden.",
+      "en": "**Self-hosted Grafana.** Run Grafana via Helm on CCE (persistence on EVS, login via SAML/OIDC). **Data sources.** CloudWatch → Cloud Eye/AOM Prometheus data source; export and import dashboards as JSON. **Operations.** Updates, backups and HA are the customer's responsibility."
+    },
+    "equivNote": null,
+    "tfNote": null
   }
 ]

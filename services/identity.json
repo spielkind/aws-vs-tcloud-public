@@ -65,5 +65,72 @@
     "aliases": [
       "OpenStack projects"
     ]
+  },
+  {
+    "name": "AWS IAM Identity Center",
+    "category": "Identity",
+    "effort": "medium",
+    "equiv": "partial",
+    "tcp": "IAM (Identity Provider / SAML-SSO)",
+    "tfAws": "aws_ssoadmin_permission_set",
+    "tfTcp": "opentelekomcloud_identity_provider_v3, opentelekomcloud_identity_mapping_v3, opentelekomcloud_identity_protocol_v3",
+    "tfStatus": "partial",
+    "docsAws": "https://docs.aws.amazon.com/singlesignon/",
+    "docsTcp": "https://docs.otc.t-systems.com/identity-access-management/index.html",
+    "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssoadmin_permission_set",
+    "tfDocsTcp": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/identity_provider_v3",
+    "desc": {
+      "de": "Zentrales Single Sign-on für AWS-Accounts und Anwendungen: Anbindung externer Identity Provider (Entra ID, Okta, SCIM), Permission Sets über mehrere Accounts, Zugangsportal.",
+      "en": "Central single sign-on for AWS accounts and applications: external identity providers (Entra ID, Okta, SCIM), permission sets across accounts, access portal."
+    },
+    "tcpDesc": {
+      "de": "Föderation in IAM: Identity Provider per SAML anlegen, Identitätskonvertierungsregeln (Mapping auf IAM-Benutzergruppen) und SSO-Login als „virtuelle Benutzer“. Kein zentrales Portal über mehrere Tenants, keine Permission Sets.",
+      "en": "Federation in IAM: create identity providers via SAML, identity conversion rules (mapping to IAM user groups) and SSO login as \"virtual users\". No central portal across tenants, no permission sets."
+    },
+    "alt": null,
+    "migration": {
+      "de": "**IdP-Anbindung.** Den bestehenden IdP (z.B. Entra ID) als SAML-Identity-Provider in IAM registrieren und Gruppen-Claims über Konvertierungsregeln auf IAM-Gruppen mappen. **Permission Sets.** Je Permission Set eine IAM-Gruppe mit passenden Policies/Enterprise-Project-Rechten anlegen. **Multi-Account.** Zentrales Account-Portal gibt es nicht — pro Tenant föderieren. **SCIM.** Automatisches Provisioning fehlt; virtuelle Benutzer entstehen beim Login.",
+      "en": "**IdP connection.** Register the existing IdP (e.g. Entra ID) as SAML identity provider in IAM and map group claims to IAM groups via conversion rules. **Permission sets.** Create one IAM group per permission set with matching policies/enterprise project permissions. **Multi-account.** There is no central account portal — federate per tenant. **SCIM.** Automatic provisioning is missing; virtual users are created at login."
+    },
+    "equivNote": {
+      "de": "SAML-Föderation vorhanden; kein Multi-Account-Portal, keine Permission Sets, kein SCIM-Provisioning.",
+      "en": "SAML federation available; no multi-account portal, no permission sets, no SCIM provisioning."
+    },
+    "tfNote": {
+      "de": "Identity Provider, Mapping und Protokoll per Terraform (identity_provider_v3, identity_mapping_v3, identity_protocol_v3).",
+      "en": "Identity provider, mapping and protocol via Terraform (identity_provider_v3, identity_mapping_v3, identity_protocol_v3)."
+    }
+  },
+  {
+    "name": "AWS Directory Service",
+    "category": "Identity",
+    "effort": "hard",
+    "equiv": "none",
+    "tcp": "Kein Equivalent",
+    "tfAws": "aws_directory_service_directory",
+    "tfTcp": null,
+    "tfStatus": "none",
+    "docsAws": "https://docs.aws.amazon.com/directoryservice/latest/admin-guide/what_is.html",
+    "docsTcp": null,
+    "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/directory_service_directory",
+    "tfDocsTcp": null,
+    "desc": {
+      "de": "Managed Microsoft Active Directory (AWS Managed Microsoft AD), AD Connector und Simple AD für Domain-Join von EC2, RDS SQL Server, WorkSpaces und FSx.",
+      "en": "Managed Microsoft Active Directory (AWS Managed Microsoft AD), AD Connector and Simple AD for domain join of EC2, RDS SQL Server, WorkSpaces and FSx."
+    },
+    "tcpDesc": {
+      "de": "Kein Managed Active Directory. Weder Leistungsbeschreibung (Stand 09.10.2026) noch Roadmap (Stand 12.11.2026) führen einen entsprechenden Dienst. RDS for SQL Server kann in ein bestehendes Active Directory integriert werden.",
+      "en": "No managed Active Directory. Neither the service description (as of 09.10.2026) nor the roadmap (as of 12.11.2026) lists a corresponding service. RDS for SQL Server can be integrated into an existing Active Directory."
+    },
+    "alt": {
+      "de": "AD-Domain-Controller auf ECS (Windows Server), Anbindung an On-Prem-AD per VPN/Direct Connect",
+      "en": "AD domain controllers on ECS (Windows Server), connection to on-prem AD via VPN/Direct Connect"
+    },
+    "migration": {
+      "de": "**Self-managed AD.** Mindestens zwei Domain Controller auf ECS in verschiedenen AZs betreiben (Backup über CBR) oder das On-Prem-AD per VPN/Direct Connect erweitern. **DNS.** Bedingte Weiterleitungen zwischen T Cloud Public DNS (Private Zones) und AD-DNS einrichten. **Abhängige Dienste.** Domain-Join von ECS manuell bzw. per Automatisierung; RDS SQL Server unterstützt die AD-Integration.",
+      "en": "**Self-managed AD.** Run at least two domain controllers on ECS in different AZs (backup via CBR) or extend the on-prem AD via VPN/Direct Connect. **DNS.** Set up conditional forwarders between T Cloud Public DNS (private zones) and AD DNS. **Dependent services.** Domain join of ECS manually or via automation; RDS SQL Server supports AD integration."
+    },
+    "equivNote": null,
+    "tfNote": null
   }
 ]

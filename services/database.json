@@ -329,5 +329,37 @@
     "migration": null,
     "equivNote": null,
     "tfNote": null
+  },
+  {
+    "name": "Amazon Neptune",
+    "category": "Database",
+    "effort": "hard",
+    "equiv": "none",
+    "tcp": "Kein Equivalent",
+    "tfAws": "aws_neptune_cluster",
+    "tfTcp": null,
+    "tfStatus": "none",
+    "docsAws": "https://docs.aws.amazon.com/neptune/",
+    "docsTcp": null,
+    "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/neptune_cluster",
+    "tfDocsTcp": null,
+    "desc": {
+      "de": "Managed Graph-Datenbank (Property Graph mit Gremlin/openCypher, RDF mit SPARQL), Read Replicas, Neptune Analytics und Serverless.",
+      "en": "Managed graph database (property graph with Gremlin/openCypher, RDF with SPARQL), read replicas, Neptune Analytics and serverless."
+    },
+    "tcpDesc": {
+      "de": "Keine Managed-Graph-Datenbank. Weder Leistungsbeschreibung (Stand 09.10.2026) noch Roadmap (Stand 12.11.2026) führen einen entsprechenden Dienst.",
+      "en": "No managed graph database. Neither the service description (as of 09.10.2026) nor the roadmap (as of 12.11.2026) lists a corresponding service."
+    },
+    "alt": {
+      "de": "Neo4j, JanusGraph oder Apache AGE (PostgreSQL) self-managed",
+      "en": "Neo4j, JanusGraph or Apache AGE (PostgreSQL) self-managed"
+    },
+    "migration": {
+      "de": "**Self-managed Graph-DB.** Neo4j (Cypher) oder JanusGraph (Gremlin) auf ECS/CCE betreiben; für openCypher ggf. Apache AGE auf RDS PostgreSQL prüfen (Extension-Verfügbarkeit klären). **Daten.** Export per Neptune-Export (CSV/JSON) und Bulk-Import in die Ziel-DB. **Betrieb.** Backup, HA und Skalierung liegen beim Kunden.",
+      "en": "**Self-managed graph DB.** Run Neo4j (Cypher) or JanusGraph (Gremlin) on ECS/CCE; for openCypher possibly check Apache AGE on RDS PostgreSQL (clarify extension availability). **Data.** Export via Neptune export (CSV/JSON) and bulk import into the target DB. **Operations.** Backup, HA and scaling are the customer's responsibility."
+    },
+    "equivNote": null,
+    "tfNote": null
   }
 ]

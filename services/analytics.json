@@ -179,5 +179,37 @@
       "de": "DLI und DataArts Studio haben keine Terraform-Ressourcen im T Cloud Public Provider; nur MRS (Cluster, Jobs).",
       "en": "DLI and DataArts Studio have no Terraform resources in the T Cloud Public provider; only MRS (clusters, jobs)."
     }
+  },
+  {
+    "name": "Amazon QuickSight",
+    "category": "Analytics",
+    "effort": "medium",
+    "equiv": "none",
+    "tcp": "Kein Equivalent",
+    "tfAws": "aws_quicksight_data_source",
+    "tfTcp": null,
+    "tfStatus": "none",
+    "docsAws": "https://docs.aws.amazon.com/quicksight/",
+    "docsTcp": null,
+    "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/quicksight_data_source",
+    "tfDocsTcp": null,
+    "desc": {
+      "de": "Serverloser BI-Dienst: Dashboards, interaktive Analysen, SPICE-In-Memory-Engine, Embedded Analytics und natürlichsprachliche Abfragen.",
+      "en": "Serverless BI service: dashboards, interactive analysis, SPICE in-memory engine, embedded analytics and natural-language queries."
+    },
+    "tcpDesc": {
+      "de": "Kein Managed-BI-Dienst. Weder Leistungsbeschreibung (Stand 09.10.2026) noch Roadmap (Stand 12.11.2026) führen einen entsprechenden Dienst. Datenquellen wie DWS, DLI, RDS und CSS lassen sich an BI-Werkzeuge anbinden.",
+      "en": "No managed BI service. Neither the service description (as of 09.10.2026) nor the roadmap (as of 12.11.2026) lists a corresponding service. Data sources like DWS, DLI, RDS and CSS can be connected to BI tools."
+    },
+    "alt": {
+      "de": "Apache Superset/Metabase auf CCE, Power BI oder Tableau mit DWS/RDS als Datenquelle",
+      "en": "Apache Superset/Metabase on CCE, Power BI or Tableau with DWS/RDS as data source"
+    },
+    "migration": {
+      "de": "**BI-Werkzeug wählen.** Self-hosted (Superset, Metabase) auf CCE oder SaaS/Desktop-BI mit Verbindung zu DWS/RDS (über VPN/Direct Connect bzw. öffentliche Endpunkte). **Dashboards.** QuickSight-Analysen müssen neu gebaut werden; Datasets/SQL-Definitionen als Grundlage übernehmen. **SPICE.** In-Memory-Caching über das BI-Werkzeug oder DWS-Materialisierungen abbilden.",
+      "en": "**Choose a BI tool.** Self-hosted (Superset, Metabase) on CCE or SaaS/desktop BI connected to DWS/RDS (via VPN/Direct Connect or public endpoints). **Dashboards.** QuickSight analyses must be rebuilt; reuse dataset/SQL definitions. **SPICE.** Map in-memory caching to the BI tool or DWS materializations."
+    },
+    "equivNote": null,
+    "tfNote": null
   }
 ]

@@ -273,5 +273,69 @@
     },
     "equivNote": null,
     "tfNote": null
+  },
+  {
+    "name": "AWS Storage Gateway",
+    "category": "Storage",
+    "effort": "hard",
+    "equiv": "none",
+    "tcp": "Kein Equivalent",
+    "tfAws": "aws_storagegateway_gateway",
+    "tfTcp": null,
+    "tfStatus": "none",
+    "docsAws": "https://docs.aws.amazon.com/storagegateway/",
+    "docsTcp": null,
+    "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/storagegateway_gateway",
+    "tfDocsTcp": null,
+    "desc": {
+      "de": "Hybrid-Speicher-Gateway (S3 File Gateway, Volume Gateway, Tape Gateway) für lokalen Zugriff mit Cache auf Cloud-Speicher, z.B. für Backups und Dateifreigaben.",
+      "en": "Hybrid storage gateway (S3 File Gateway, Volume Gateway, Tape Gateway) for local cached access to cloud storage, e.g. for backups and file shares."
+    },
+    "tcpDesc": {
+      "de": "Kein Storage-Gateway-Dienst. Weder Leistungsbeschreibung (Stand 09.10.2026) noch Roadmap (Stand 12.11.2026) führen einen entsprechenden Dienst.",
+      "en": "No storage gateway service. Neither the service description (as of 09.10.2026) nor the roadmap (as of 12.11.2026) lists a corresponding service."
+    },
+    "alt": {
+      "de": "S3-kompatible Gateways/Backup-Software mit OBS-Ziel (z.B. Veeam), rclone mount",
+      "en": "S3-compatible gateways/backup software targeting OBS (e.g. Veeam), rclone mount"
+    },
+    "migration": {
+      "de": "**Datei-Gateway.** Durch Backup-/Gateway-Software mit S3-Ziel (OBS-Endpoint) oder rclone mount ersetzen. **Tape Gateway.** Virtuelle Tapes → Backup-Software mit Objektspeicher-Ziel (OBS Cold). **Netz.** Direct Connect oder VPN für die Anbindung an OBS einplanen.",
+      "en": "**File gateway.** Replace with backup/gateway software with an S3 target (OBS endpoint) or rclone mount. **Tape gateway.** Virtual tapes → backup software with object storage target (OBS Cold). **Network.** Plan Direct Connect or VPN for the connection to OBS."
+    },
+    "equivNote": null,
+    "tfNote": null
+  },
+  {
+    "name": "AWS Transfer Family",
+    "category": "Storage",
+    "effort": "medium",
+    "equiv": "none",
+    "tcp": "Kein Equivalent",
+    "tfAws": "aws_transfer_server",
+    "tfTcp": null,
+    "tfStatus": "none",
+    "docsAws": "https://docs.aws.amazon.com/transfer/",
+    "docsTcp": null,
+    "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/transfer_server",
+    "tfDocsTcp": null,
+    "desc": {
+      "de": "Managed SFTP-, FTPS-, FTP- und AS2-Server mit S3 oder EFS als Speicher, eigener Benutzerverwaltung und Workflows.",
+      "en": "Managed SFTP, FTPS, FTP and AS2 servers with S3 or EFS as storage, own user management and workflows."
+    },
+    "tcpDesc": {
+      "de": "Kein Managed-SFTP-/FTP-Dienst. Weder Leistungsbeschreibung (Stand 09.10.2026) noch Roadmap (Stand 12.11.2026) führen einen entsprechenden Dienst.",
+      "en": "No managed SFTP/FTP service. Neither the service description (as of 09.10.2026) nor the roadmap (as of 12.11.2026) lists a corresponding service."
+    },
+    "alt": {
+      "de": "SFTP-Server (OpenSSH, SFTPGo) auf ECS/CCE mit OBS- oder SFS-Backend",
+      "en": "SFTP server (OpenSSH, SFTPGo) on ECS/CCE with OBS or SFS backend"
+    },
+    "migration": {
+      "de": "**Self-hosted.** SFTPGo oder OpenSSH auf ECS/CCE betreiben, Speicher auf SFS oder OBS (S3-Backend), Zugriff über ELB mit EIP. **Benutzer.** Benutzer/Keys migrieren; Host-Keys übernehmen, damit Partner keine neuen Fingerprints bestätigen müssen. **AS2.** Für AS2 eine B2B-/EDI-Lösung einsetzen.",
+      "en": "**Self-hosted.** Run SFTPGo or OpenSSH on ECS/CCE, storage on SFS or OBS (S3 backend), access via ELB with EIP. **Users.** Migrate users/keys; keep host keys so partners do not need to confirm new fingerprints. **AS2.** Use a B2B/EDI solution for AS2."
+    },
+    "equivNote": null,
+    "tfNote": null
   }
 ]

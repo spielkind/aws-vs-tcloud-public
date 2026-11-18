@@ -106,5 +106,37 @@
     "aliases": [
       "KooSearch"
     ]
+  },
+  {
+    "name": "Amazon Bedrock",
+    "category": "AI/ML",
+    "effort": "hard",
+    "equiv": "none",
+    "tcp": "Kein Equivalent",
+    "tfAws": "aws_bedrock_guardrail, aws_bedrockagent_agent, aws_bedrockagent_knowledge_base",
+    "tfTcp": null,
+    "tfStatus": "none",
+    "docsAws": "https://docs.aws.amazon.com/bedrock/",
+    "docsTcp": null,
+    "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/bedrockagent_agent",
+    "tfDocsTcp": null,
+    "desc": {
+      "de": "Managed Generative AI: Zugriff auf Foundation Models verschiedener Anbieter per API, Agents, Knowledge Bases (RAG), Guardrails, Fine-Tuning und Provisioned Throughput.",
+      "en": "Managed generative AI: API access to foundation models from several providers, agents, knowledge bases (RAG), guardrails, fine-tuning and provisioned throughput."
+    },
+    "tcpDesc": {
+      "de": "Kein Managed-LLM-/Foundation-Model-Dienst. Weder Leistungsbeschreibung (Stand 09.10.2026) noch Roadmap (Stand 12.11.2026) führen einen entsprechenden Dienst. Grundlage für Self-Hosting sind GPU-Flavors (u.a. H100, L4; H200 laut Roadmap Dez 2026–Mär 2027) und ModelArts für Inferenz-Services.",
+      "en": "No managed LLM/foundation model service. Neither the service description (as of 09.10.2026) nor the roadmap (as of 12.11.2026) lists a corresponding service. Self-hosting is possible on GPU flavors (incl. H100, L4; H200 on the roadmap for Dec 2026–Mar 2027) and with ModelArts for inference services."
+    },
+    "alt": {
+      "de": "Open-Weight-Modelle (z.B. Llama, Mistral) mit vLLM/TGI auf GPU-ECS oder CCE, ModelArts-Inferenz, externe LLM-APIs",
+      "en": "Open-weight models (e.g. Llama, Mistral) with vLLM/TGI on GPU ECS or CCE, ModelArts inference, external LLM APIs"
+    },
+    "migration": {
+      "de": "**Kein Managed GenAI.** Bedrock-Aufrufe (InvokeModel/Converse) durch eine selbst betriebene, OpenAI-kompatible Inferenz-API ersetzen (vLLM/TGI auf GPU-ECS oder CCE). **Modelle.** Proprietäre Bedrock-Modelle sind nicht verfügbar — Open-Weight-Modelle evaluieren und Qualität mit eigenen Testsets vergleichen. **RAG & Agents.** Knowledge Bases → eigene Pipeline (Embeddings + Vektorsuche, z.B. CSS/OpenSearch); Agents → Frameworks wie LangChain/LlamaIndex. **Guardrails.** Inhaltsfilter selbst implementieren. **Kapazität.** GPU-Bedarf und Kosten (Reserved) vorab planen.",
+      "en": "**No managed GenAI.** Replace Bedrock calls (InvokeModel/Converse) with a self-operated, OpenAI-compatible inference API (vLLM/TGI on GPU ECS or CCE). **Models.** Proprietary Bedrock models are not available — evaluate open-weight models and compare quality with your own test sets. **RAG & agents.** Knowledge bases → own pipeline (embeddings + vector search, e.g. CSS/OpenSearch); agents → frameworks like LangChain/LlamaIndex. **Guardrails.** Implement content filters yourself. **Capacity.** Plan GPU demand and cost (reserved) upfront."
+    },
+    "equivNote": null,
+    "tfNote": null
   }
 ]

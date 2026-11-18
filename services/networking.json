@@ -372,5 +372,37 @@
     "migration": null,
     "equivNote": null,
     "tfNote": null
+  },
+  {
+    "name": "AWS Global Accelerator",
+    "category": "Networking",
+    "effort": "medium",
+    "equiv": "none",
+    "tcp": "Kein Equivalent",
+    "tfAws": "aws_globalaccelerator_accelerator",
+    "tfTcp": null,
+    "tfStatus": "none",
+    "docsAws": "https://docs.aws.amazon.com/global-accelerator/",
+    "docsTcp": null,
+    "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/globalaccelerator_accelerator",
+    "tfDocsTcp": null,
+    "desc": {
+      "de": "Statische Anycast-IPs und Routing über das globale AWS-Backbone zu regionalen Endpunkten mit Health Checks und schnellem Failover.",
+      "en": "Static anycast IPs and routing over the global AWS backbone to regional endpoints with health checks and fast failover."
+    },
+    "tcpDesc": {
+      "de": "Kein Anycast-/Global-Accelerator-Dienst. Weder Leistungsbeschreibung (Stand 09.10.2026) noch Roadmap (Stand 12.11.2026) führen einen entsprechenden Dienst. Ein CDN ist laut Roadmap angekündigt, aber ohne Termin.",
+      "en": "No anycast/global accelerator service. Neither the service description (as of 09.10.2026) nor the roadmap (as of 12.11.2026) lists a corresponding service. A CDN is announced on the roadmap, but without a date."
+    },
+    "alt": {
+      "de": "ELB je Region + DNS-basiertes Failover, externe Anycast-/CDN-Anbieter",
+      "en": "ELB per region + DNS-based failover, external anycast/CDN providers"
+    },
+    "migration": {
+      "de": "**Regional statt global.** T Cloud Public hat zwei Regionen (EU-DE, EU-NL); Lastverteilung über ELB je Region und DNS. **Failover.** DNS-Failover mit Health Checks extern umsetzen (T Cloud Public DNS hat keine Health Checks). **Anycast.** Für weltweite Nutzer externe Anbieter (CDN/Anycast) vorschalten.",
+      "en": "**Regional instead of global.** T Cloud Public has two regions (EU-DE, EU-NL); load balancing via ELB per region and DNS. **Failover.** Implement DNS failover with health checks externally (T Cloud Public DNS has no health checks). **Anycast.** Put external providers (CDN/anycast) in front for worldwide users."
+    },
+    "equivNote": null,
+    "tfNote": null
   }
 ]

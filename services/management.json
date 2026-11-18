@@ -419,5 +419,69 @@
       "en": "Package-based operation by T-Systems; scope differs from AMS."
     },
     "tfNote": null
+  },
+  {
+    "name": "AWS Application Migration Service",
+    "category": "Management",
+    "effort": "hard",
+    "equiv": "none",
+    "tcp": "Kein Equivalent",
+    "tfAws": null,
+    "tfTcp": null,
+    "tfStatus": "none",
+    "docsAws": "https://docs.aws.amazon.com/mgn/",
+    "docsTcp": null,
+    "tfDocsAws": null,
+    "tfDocsTcp": null,
+    "desc": {
+      "de": "Rehost-Migration (Lift & Shift) von physischen, virtuellen und Cloud-Servern nach AWS durch kontinuierliche Block-Replikation, Testläufe und Cutover.",
+      "en": "Rehost migration (lift & shift) of physical, virtual and cloud servers to AWS via continuous block replication, test launches and cutover."
+    },
+    "tcpDesc": {
+      "de": "Kein eigener Server-Migrationsdienst. Weder Leistungsbeschreibung (Stand 09.10.2026) noch Roadmap (Stand 12.11.2026) führen einen entsprechenden Dienst. Migrationen laufen über Image-Import (IMS), Migrationspartner im Marketplace (laut Leistungsbeschreibung) oder Consulting & Migration von T-Systems.",
+      "en": "No own server migration service. Neither the service description (as of 09.10.2026) nor the roadmap (as of 12.11.2026) lists a corresponding service. Migrations use image import (IMS), migration partners in the marketplace (per service description) or T-Systems consulting & migration."
+    },
+    "alt": {
+      "de": "IMS-Image-Import (VMDK/VHD/RAW/QCOW2), Partner-Tools (z.B. Veeam, Zerto), rsync/robocopy",
+      "en": "IMS image import (VMDK/VHD/RAW/QCOW2), partner tools (e.g. Veeam, Zerto), rsync/robocopy"
+    },
+    "migration": {
+      "de": "**Image-basiert.** Server als Image exportieren (z.B. AWS VM Export), nach OBS hochladen und per IMS importieren; Treiber (virtio, cloud-init) vorab prüfen. **Kontinuierliche Replikation.** Für minimale Downtime Partner-Tools mit Block-Replikation einsetzen. **Datenbanken.** Separat per DRS migrieren. **Planung.** Wellenplanung und Tests ohne Testlauf-Automatik von MGN vorsehen.",
+      "en": "**Image-based.** Export servers as images (e.g. AWS VM export), upload to OBS and import via IMS; check drivers (virtio, cloud-init) first. **Continuous replication.** Use partner tools with block replication for minimal downtime. **Databases.** Migrate separately via DRS. **Planning.** Plan waves and tests without MGN's test-launch automation."
+    },
+    "equivNote": null,
+    "tfNote": null
+  },
+  {
+    "name": "AWS DataSync",
+    "category": "Management",
+    "effort": "medium",
+    "equiv": "none",
+    "tcp": "Kein Equivalent",
+    "tfAws": "aws_datasync_task",
+    "tfTcp": null,
+    "tfStatus": "none",
+    "docsAws": "https://docs.aws.amazon.com/datasync/",
+    "docsTcp": "https://docs.otc.t-systems.com/object-storage-service/index.html",
+    "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/datasync_task",
+    "tfDocsTcp": null,
+    "desc": {
+      "de": "Managed Datenübertragung zwischen On-Premises-Speichern (NFS, SMB, HDFS, Objektspeicher) und AWS-Speicherdiensten mit Scheduling, Verifikation und Bandbreitensteuerung; für Offline-Transfers zusätzlich die Snow Family.",
+      "en": "Managed data transfer between on-premises storage (NFS, SMB, HDFS, object storage) and AWS storage services with scheduling, verification and bandwidth control; Snow Family for offline transfers."
+    },
+    "tcpDesc": {
+      "de": "Kein Managed-Datentransferdienst. Weder Leistungsbeschreibung (Stand 09.10.2026) noch Roadmap (Stand 12.11.2026) führen einen entsprechenden Dienst. Für OBS steht das Kommandozeilen-Tool obsutil (GA seit 12.03.2026) zur Verfügung; OBS ist S3-kompatibel, sodass S3-Tools nutzbar sind.",
+      "en": "No managed data transfer service. Neither the service description (as of 09.10.2026) nor the roadmap (as of 12.11.2026) lists a corresponding service. For OBS the command-line tool obsutil is available (GA since 12.03.2026); OBS is S3-compatible, so S3 tools can be used."
+    },
+    "alt": {
+      "de": "obsutil, rclone, rsync, robocopy, S3-kompatible Tools",
+      "en": "obsutil, rclone, rsync, robocopy, S3-compatible tools"
+    },
+    "migration": {
+      "de": "**Objektdaten.** S3 → OBS mit rclone oder obsutil (parallel, mit Prüfsummen); große Bestände in Wellen und mit Bandbreitenlimit übertragen. **Dateidaten.** NFS/SMB → SFS mit rsync/robocopy von einem ECS-Transferhost. **Offline.** Snowball-Szenarien haben kein Pendant — für sehr große Datenmengen Direct Connect mit ausreichender Bandbreite einplanen.",
+      "en": "**Object data.** S3 → OBS with rclone or obsutil (parallel, with checksums); transfer large volumes in waves and with bandwidth limits. **File data.** NFS/SMB → SFS with rsync/robocopy from an ECS transfer host. **Offline.** Snowball scenarios have no equivalent — plan Direct Connect with sufficient bandwidth for very large volumes."
+    },
+    "equivNote": null,
+    "tfNote": null
   }
 ]

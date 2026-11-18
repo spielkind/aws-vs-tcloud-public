@@ -194,5 +194,43 @@
       "en": "IMS corresponds to AMIs; there is no equivalent for EC2 Image Builder (pipelines, components, tests)."
     },
     "tfNote": null
+  },
+  {
+    "name": "AWS Batch",
+    "category": "Compute",
+    "effort": "medium",
+    "equiv": "partial",
+    "tcp": "CCE (Volcano)",
+    "tfAws": "aws_batch_compute_environment, aws_batch_job_queue",
+    "tfTcp": "opentelekomcloud_cce_cluster_v3, opentelekomcloud_cce_addon_v3",
+    "tfStatus": "partial",
+    "docsAws": "https://docs.aws.amazon.com/batch/",
+    "docsTcp": "https://docs.otc.t-systems.com/cloud-container-engine/index.html",
+    "tfDocsAws": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/batch_compute_environment",
+    "tfDocsTcp": "https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/cce_addon_v3",
+    "desc": {
+      "de": "Managed Batch-Verarbeitung: Job-Queues, Job-Definitionen, Prioritäten, Array- und Multi-Node-Jobs auf EC2, Spot oder Fargate mit automatischer Skalierung.",
+      "en": "Managed batch processing: job queues, job definitions, priorities, array and multi-node jobs on EC2, spot or Fargate with automatic scaling."
+    },
+    "tcpDesc": {
+      "de": "Kein eigener Batch-Dienst; CCE bietet mit dem Volcano-Scheduler Batch-/HPC-Scheduling (u.a. Gang-Scheduling und Queues) für Jobs wie Spark, TensorFlow oder MPI auf Kubernetes.",
+      "en": "No dedicated batch service; CCE provides batch/HPC scheduling with the Volcano scheduler (incl. gang scheduling and queues) for jobs like Spark, TensorFlow or MPI on Kubernetes."
+    },
+    "alt": {
+      "de": "Kubernetes Jobs/CronJobs, Argo Workflows, MRS für Spark-Batch",
+      "en": "Kubernetes jobs/cronjobs, Argo Workflows, MRS for Spark batch"
+    },
+    "migration": {
+      "de": "**Container-Jobs.** Job-Definitionen in Kubernetes-Jobs bzw. Volcano-Jobs übersetzen; Images nach SWR. **Queues & Prioritäten.** Job-Queues → Volcano-Queues mit Gewichtung. **Skalierung.** Node-Pools mit Autoscaler statt Compute Environments; keine Spot-Kapazität. **Orchestrierung.** Abhängigkeiten zwischen Jobs mit Argo Workflows o.ä. abbilden.",
+      "en": "**Container jobs.** Translate job definitions into Kubernetes jobs or Volcano jobs; images to SWR. **Queues & priorities.** Job queues → Volcano queues with weights. **Scaling.** Node pools with autoscaler instead of compute environments; no spot capacity. **Orchestration.** Model job dependencies with Argo Workflows or similar."
+    },
+    "equivNote": {
+      "de": "Batch-Scheduling über Kubernetes/Volcano statt eigenem Dienst — mehr Betriebsaufwand, keine Spot-Kapazität.",
+      "en": "Batch scheduling via Kubernetes/Volcano instead of a dedicated service — more operational effort, no spot capacity."
+    },
+    "tfNote": {
+      "de": "CCE-Cluster und Add-ons (z.B. Volcano) per Terraform; Jobs selbst über Kubernetes-Manifeste.",
+      "en": "CCE clusters and add-ons (e.g. Volcano) via Terraform; jobs themselves via Kubernetes manifests."
+    }
   }
 ]
