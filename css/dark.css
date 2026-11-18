@@ -7,6 +7,7 @@ body.dark { background: var(--dark-bg); color: #e0e0e0; }
 body.dark .toolbar { background: var(--dark-bg-alt); border-bottom-color: #2a2a4e; }
 body.dark .search-box { background: var(--dark-bg); border-color: var(--dark-border); color: #e0e0e0; }
 body.dark .search-box::placeholder { color: #666; }
+body.dark .cat-menu { background: var(--dark-bg-alt); border-color: var(--dark-border); }
 
 /* Pills */
 body.dark .pill { background: var(--dark-bg); border-color: var(--dark-border); color: #aaa; }

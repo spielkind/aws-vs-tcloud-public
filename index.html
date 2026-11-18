@@ -36,7 +36,8 @@
 
 <div class="toolbar"><div class="container"><div class="toolbar-inner">
 <div class="search-wrap"><input type="text" class="search-box" id="searchBox" placeholder="Service suchen..."><button class="search-clear" id="searchClear" onclick="document.getElementById('searchBox').value='';this.hidden=true;render()">✕</button></div>
-<div class="pill-group" id="catPills"></div>
+<div id="resetPill"></div>
+<div class="cat-dropdown" id="catDropdown"><button class="pill cat-toggle" id="catToggle" aria-haspopup="true" aria-expanded="false"></button><div class="cat-menu" id="catPills"></div></div>
 <span class="pill-sep">|</span>
 <div class="equiv-group" id="equivPills"></div>
 <span class="pill-sep">|</span>

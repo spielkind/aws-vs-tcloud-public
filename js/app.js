@@ -86,6 +86,21 @@ document.getElementById('searchBox').addEventListener('input', function() {
 });
 document.getElementById('searchClear').hidden = true;
 
+// Category dropdown (desktop toolbar)
+function setCatMenu(open) {
+  const dd = document.getElementById('catDropdown');
+  dd.classList.toggle('open', open);
+  document.getElementById('catToggle').setAttribute('aria-expanded', open);
+}
+document.getElementById('catToggle').addEventListener('click', e => {
+  e.stopPropagation();
+  setCatMenu(!document.getElementById('catDropdown').classList.contains('open'));
+});
+document.addEventListener('click', e => {
+  // composedPath: the clicked pill may already be detached by a re-render
+  if (!e.composedPath().some(n => n.id === 'catDropdown')) setCatMenu(false);
+});
+
 // Sort buttons (desktop toolbar)
 document.querySelectorAll('.sort-btn').forEach(b => {
   b.addEventListener('click', () => {
@@ -130,6 +145,8 @@ document.addEventListener('keydown', e => {
   }
   // Escape to close sheet or clear search
   if (e.key === 'Escape') {
+    const dd = document.getElementById('catDropdown');
+    if (dd && dd.classList.contains('open')) { setCatMenu(false); return; }
     const bs = document.getElementById('bottomSheet');
     if (bs && bs.classList.contains('open')) { toggleSheet(); return; }
     document.getElementById('searchBox').value = '';

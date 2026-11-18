@@ -1,8 +1,6 @@
 /* ===================================================
    Filter Pills
    =================================================== */
-.pill-group { display: flex; flex-wrap: nowrap; gap: .3rem; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: 2px; }
-.pill-group::-webkit-scrollbar { display: none; }
 
 .pill {
   padding: .25rem .6rem;
@@ -22,7 +20,11 @@
 .pill-reset { background: #fee; color: var(--hard); border-color: #fcc; font-weight: 600; }
 .pill-sep { color: #ccc; font-size: .7rem; display: flex; align-items: center; margin: 0 .2rem; }
 
-/* Scope pills */
+/* Category dropdown */
+.cat-dropdown { position: relative; flex-shrink: 0; }
+.cat-menu { display: none; position: absolute; top: calc(100% + 6px); left: 0; z-index: 120; grid-template-columns: repeat(2, minmax(max-content, 1fr)); gap: .3rem; padding: .6rem; background: #fff; border: 1px solid #e0e0e0; border-radius: var(--radius); box-shadow: 0 6px 20px rgba(0,0,0,.12); }
+.cat-dropdown.open .cat-menu { display: grid; }
+.cat-menu .pill { text-align: left; }
 
 /* Equiv pills */
 .equiv-group { display: flex; gap: .3rem; flex-shrink: 0; }

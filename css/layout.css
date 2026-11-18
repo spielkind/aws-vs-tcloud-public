@@ -59,10 +59,10 @@ body {
   z-index: 100;
 }
 
-.toolbar-inner { display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; }
+.toolbar-inner { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
 
 /* Search */
-.search-wrap { position: relative; flex: 1; min-width: 200px; max-width: 400px; }
+.search-wrap { position: relative; flex: 1 1 220px; min-width: 180px; max-width: 280px; }
 .search-box { width: 100%; padding: .45rem 2rem .45rem 2rem; border: 2px solid #e0e0e0; border-radius: var(--radius); font-size: .85rem; background: #fff; }
 .search-box:focus { outline: none; border-color: var(--magenta); }
 .search-wrap::before { content: "🔍"; position: absolute; left: .6rem; top: 50%; transform: translateY(-50%); font-size: .75rem; }
@@ -127,3 +127,11 @@ body {
 @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(10px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
 
 @media (max-width: 1000px) { .stats-bar { flex-wrap: wrap; } .stat-pill { min-width: 120px; } }
+
+/* Compact toolbar on narrower desktops */
+@media (max-width: 1499px) {
+  .toolbar-inner { gap: .45rem; }
+  .toolbar-inner .pill-sep { display: none; }
+  .search-wrap { flex-basis: 170px; min-width: 150px; max-width: 190px; }
+  #sortLabel { display: none; }
+}

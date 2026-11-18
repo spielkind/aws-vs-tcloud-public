@@ -130,6 +130,9 @@ function buildUI() {
   // Search placeholder
   document.getElementById('searchBox').placeholder = t.search;
   document.getElementById('sortLabel').textContent = t.sort;
+  document.querySelectorAll('.toolbar .sort-btn').forEach(b => {
+    b.textContent = { name: t.sortAZ, category: t.cat, effort: t.sortEff }[b.dataset.sort];
+  });
 
   // Toggle button
   const bt = document.getElementById('btnToggle');
@@ -138,15 +141,20 @@ function buildUI() {
   if (btl) btl.textContent = toggleText;
   else if (bt) bt.textContent = state.allOpen ? t.closeAll : t.openAll;
 
-  // Category pills
-  const cp = document.getElementById('catPills');
-  const resetBtn = hasActiveFilters()
+  // Reset pill
+  document.getElementById('resetPill').innerHTML = hasActiveFilters()
     ? `<button class="pill pill-reset" onclick="resetFilters();buildUI();render()">${t.reset}</button>`
     : '';
-  cp.innerHTML = resetBtn + state.categories.map(c =>
+
+  // Category dropdown
+  const ct = document.getElementById('catToggle');
+  ct.textContent = t.cat + (f.categories.length ? ` (${f.categories.length})` : '') + ' ▾';
+  ct.classList.toggle('active', f.categories.length > 0);
+  const cp = document.getElementById('catPills');
+  cp.innerHTML = state.categories.map(c =>
     `<button class="pill${f.categories.includes(c) ? ' active' : ''}" data-cat="${c}">${c}</button>`
   ).join('');
-  cp.querySelectorAll('.pill:not(.pill-reset)').forEach(b => {
+  cp.querySelectorAll('.pill').forEach(b => {
     b.addEventListener('click', () => {
       b.blur();
       toggleArrayItem(f.categories, b.dataset.cat);
