@@ -198,8 +198,8 @@
       "en": "Serverless BI service: dashboards, interactive analysis, SPICE in-memory engine, embedded analytics and natural-language queries."
     },
     "tcpDesc": {
-      "de": "Kein Managed-BI-Dienst. Weder Leistungsbeschreibung (Stand 09.10.2026) noch Roadmap (Stand 12.11.2026) führen einen entsprechenden Dienst. Datenquellen wie DWS, DLI, RDS und CSS lassen sich an BI-Werkzeuge anbinden.",
-      "en": "No managed BI service. Neither the service description (as of 09.10.2026) nor the roadmap (as of 12.11.2026) lists a corresponding service. Data sources like DWS, DLI, RDS and CSS can be connected to BI tools."
+      "de": "Kein Managed-BI-Dienst. Weder Leistungsbeschreibung (Stand 18.11.2026) noch Roadmap (Stand 12.11.2026) führen einen entsprechenden Dienst. Datenquellen wie DWS, DLI, RDS und CSS lassen sich an BI-Werkzeuge anbinden.",
+      "en": "No managed BI service. Neither the service description (as of 18.11.2026) nor the roadmap (as of 12.11.2026) lists a corresponding service. Data sources like DWS, DLI, RDS and CSS can be connected to BI tools."
     },
     "alt": {
       "de": "Apache Superset/Metabase auf CCE, Power BI oder Tableau mit DWS/RDS als Datenquelle",

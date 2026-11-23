@@ -125,8 +125,8 @@
       "en": "Managed generative AI: API access to foundation models from several providers, agents, knowledge bases (RAG), guardrails, fine-tuning and provisioned throughput."
     },
     "tcpDesc": {
-      "de": "Kein Managed-LLM-/Foundation-Model-Dienst. Weder Leistungsbeschreibung (Stand 09.10.2026) noch Roadmap (Stand 12.11.2026) führen einen entsprechenden Dienst. Grundlage für Self-Hosting sind GPU-Flavors (u.a. H100, L4; H200 laut Roadmap Dez 2026–Mär 2027) und ModelArts für Inferenz-Services.",
-      "en": "No managed LLM/foundation model service. Neither the service description (as of 09.10.2026) nor the roadmap (as of 12.11.2026) lists a corresponding service. Self-hosting is possible on GPU flavors (incl. H100, L4; H200 on the roadmap for Dec 2026–Mar 2027) and with ModelArts for inference services."
+      "de": "Kein Managed-LLM-/Foundation-Model-Dienst. Weder Leistungsbeschreibung (Stand 18.11.2026) noch Roadmap (Stand 12.11.2026) führen einen entsprechenden Dienst. Grundlage für Self-Hosting sind GPU-Flavors (u.a. H100, L4; H200 laut Leistungsbeschreibung ab 01.01.2027) und ModelArts für Inferenz-Services.",
+      "en": "No managed LLM/foundation model service. Neither the service description (as of 18.11.2026) nor the roadmap (as of 12.11.2026) lists a corresponding service. Self-hosting is possible on GPU flavors (incl. H100, L4; H200 expected from 01.01.2027 per service description) and with ModelArts for inference services."
     },
     "alt": {
       "de": "Open-Weight-Modelle (z.B. Llama, Mistral) mit vLLM/TGI auf GPU-ECS oder CCE, ModelArts-Inferenz, externe LLM-APIs",

@@ -292,8 +292,8 @@
       "en": "Hybrid storage gateway (S3 File Gateway, Volume Gateway, Tape Gateway) for local cached access to cloud storage, e.g. for backups and file shares."
     },
     "tcpDesc": {
-      "de": "Kein Storage-Gateway-Dienst. Weder Leistungsbeschreibung (Stand 09.10.2026) noch Roadmap (Stand 12.11.2026) führen einen entsprechenden Dienst.",
-      "en": "No storage gateway service. Neither the service description (as of 09.10.2026) nor the roadmap (as of 12.11.2026) lists a corresponding service."
+      "de": "Kein Storage-Gateway-Dienst. Weder Leistungsbeschreibung (Stand 18.11.2026) noch Roadmap (Stand 12.11.2026) führen einen entsprechenden Dienst.",
+      "en": "No storage gateway service. Neither the service description (as of 18.11.2026) nor the roadmap (as of 12.11.2026) lists a corresponding service."
     },
     "alt": {
       "de": "S3-kompatible Gateways/Backup-Software mit OBS-Ziel (z.B. Veeam), rclone mount",
@@ -324,8 +324,8 @@
       "en": "Managed SFTP, FTPS, FTP and AS2 servers with S3 or EFS as storage, own user management and workflows."
     },
     "tcpDesc": {
-      "de": "Kein Managed-SFTP-/FTP-Dienst. Weder Leistungsbeschreibung (Stand 09.10.2026) noch Roadmap (Stand 12.11.2026) führen einen entsprechenden Dienst.",
-      "en": "No managed SFTP/FTP service. Neither the service description (as of 09.10.2026) nor the roadmap (as of 12.11.2026) lists a corresponding service."
+      "de": "Kein Managed-SFTP-/FTP-Dienst. Weder Leistungsbeschreibung (Stand 18.11.2026) noch Roadmap (Stand 12.11.2026) führen einen entsprechenden Dienst.",
+      "en": "No managed SFTP/FTP service. Neither the service description (as of 18.11.2026) nor the roadmap (as of 12.11.2026) lists a corresponding service."
     },
     "alt": {
       "de": "SFTP-Server (OpenSSH, SFTPGo) auf ECS/CCE mit OBS- oder SFS-Backend",

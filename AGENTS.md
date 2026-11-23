@@ -10,6 +10,7 @@ Static site (no build step) comparing AWS services with **T Cloud Public** (form
 - `tools/fetch_sources.py` – downloads all sources into `.sources/` (git-ignored) as greppable text: `roadmap-items.txt` (every timeline bar with month range + description, plus undated tooltip-only items), `release-notes.txt` (full RSS history), `terraform-releases.txt` + `terraform-resources.txt` (opentelekomcloud provider), `docs-repos.txt` + `products.txt` (docs repos and product pages, to detect new services; set `GITHUB_TOKEN`, e.g. `$(gh auth token)`, to avoid API rate limits) and `pdf/*.txt` (current service description EN, Leistungsbeschreibung DE, Managed Services PDF – links discovered on the live site; needs `pypdf`). Fails loudly if the site structure changed.
 - `tools/report.py` – diff report after fetching: service-description services without entry, release notes since `meta.json`, roadmap items not mentioned in the data, all roadmap/date claims to cross-check, Terraform provider releases since `meta.json`, provider resources not referenced in any entry (new prefixes flagged), docs repos and product pages without entry. Decisions for intentionally unmapped items live in `tools/known_sources.json`.
 - `tools/new_entry.py` – scaffolds a schema-complete entry (TODO placeholders) in the right category file.
+- `tools/ui_smoke.js` – headless UI smoke test (main page, filters, exports, mobile/dark, overview, Oracle page); see skill for setup.
 - `tools/validate.py`, `tools/check_links.py` – data checks (schema, languages, branding, TODOs, portfolio coverage; URLs, Terraform resources, docs slugs).
 - `.agents/skills/refresh-tcp-comparison` (full refresh incl. parallel review brief) and `.agents/skills/add-aws-service` (add one service) – agent skills wrapping this workflow.
 
@@ -35,7 +36,7 @@ Rules: every localized field has `de` **and** `en` with the same content · writ
 4. **Oracle page** (`oracle-managed/index.html`): flavors/prices (service description §3.2.9 + §6.3.9), Direct Connect prices (§6.5.5), Managed Services packages/limits/prices/backup/SLA (Managed Services PDF); update source links, "Stand" dates (subtitle, footer, sources, JS subtitle).
 5. **Header links**: `js/i18n.js` (`roadmapUrl`, `releaseUrl`, `leistungUrl` – current PDF URLs).
 6. **Bump** `services/meta.json` → `"updated": "YYYY-MM-DD"`.
-7. **Check**: `python3 tools/validate.py && python3 tools/check_links.py` (both must print `OK`); then `python3 -m http.server` and test the overview page (`/overview/`, labels readable, links open the right card), search, filters (incl. category dropdown, "T Cloud Public only"), DE/EN, dark mode, mobile sheet, CSV/PDF export, no console errors.
+7. **Check**: `python3 tools/validate.py && python3 tools/check_links.py` (both must print `OK`); then `python3 -m http.server 8765` and `NODE_PATH=.sources/node/node_modules node tools/ui_smoke.js` (setup: `npm i --no-save --prefix .sources/node playwright-core`), plus test the overview page (`/overview/`, labels readable, links open the right card), search, filters (incl. category dropdown, "T Cloud Public only"), DE/EN, dark mode, mobile sheet, CSV/PDF export, no console errors.
 8. **Publish**: commit and push to `main`; GitHub Pages deploys automatically (verify the latest Pages build and the live page).
 
 ## Learnings / pitfalls (from the 11/2026 refresh)
@@ -52,4 +53,6 @@ Rules: every localized field has `de` **and** `en` with the same content · writ
 - **New roadmap/release items → AWS mapping.** Each new T Cloud Public service/feature should either extend an existing entry or create a new AWS entry (e.g. Status Dashboard → AWS Health, SFS Turbo HPC → FSx for Lustre, SMB roadmap → FSx for Windows).
 - **Parallel agents.** Split the review per `services/*.json` file (one owner per file), give them the source text files, and tell them to clone docs repos **outside** the repo. Finish with an independent review (rubber duck) of the whole diff.
 - **UI.** More categories make the toolbar wrap – categories live in a dropdown; check the toolbar at 1280/1440/1600 px after adding categories.
+- **Keep tooling state out of /tmp.** macOS purges `/tmp` (a venv lost its pip, test scripts vanished between sessions) – use `.sources/venv` and `.sources/node` (git-ignored) and keep test scripts in `tools/`.
+- **PDF revisions change quietly.** The 18.11.2026 revision moved physical c9/m9 from 01.10.2026 to 30.06.2027, added H200 (from 01.01.2027) and RDS proxy prices – diff the PDF text on every refresh, not just the TOC.
 - **Hosting.** The repo was renamed from `otc-vs-aws`; the old Pages URL returns 404 (GitHub only redirects repo URLs).

@@ -391,8 +391,8 @@
       "en": "Static anycast IPs and routing over the global AWS backbone to regional endpoints with health checks and fast failover."
     },
     "tcpDesc": {
-      "de": "Kein Anycast-/Global-Accelerator-Dienst. Weder Leistungsbeschreibung (Stand 09.10.2026) noch Roadmap (Stand 12.11.2026) führen einen entsprechenden Dienst. Ein CDN ist laut Roadmap angekündigt, aber ohne Termin.",
-      "en": "No anycast/global accelerator service. Neither the service description (as of 09.10.2026) nor the roadmap (as of 12.11.2026) lists a corresponding service. A CDN is announced on the roadmap, but without a date."
+      "de": "Kein Anycast-/Global-Accelerator-Dienst. Weder Leistungsbeschreibung (Stand 18.11.2026) noch Roadmap (Stand 12.11.2026) führen einen entsprechenden Dienst. Ein CDN ist laut Roadmap angekündigt, aber ohne Termin.",
+      "en": "No anycast/global accelerator service. Neither the service description (as of 18.11.2026) nor the roadmap (as of 12.11.2026) lists a corresponding service. A CDN is announced on the roadmap, but without a date."
     },
     "alt": {
       "de": "ELB je Region + DNS-basiertes Failover, externe Anycast-/CDN-Anbieter",

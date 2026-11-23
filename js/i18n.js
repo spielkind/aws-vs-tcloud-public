@@ -19,7 +19,7 @@ const T = {
     roadmapLabel: '🗺️ Roadmap',
     releaseUrl: 'https://www.t-cloud-public.com/de/support/release-notes',
     releaseLabel: '📰 Release Notes',
-    leistungUrl: 'https://www.t-cloud-public.com/_Resources/Persistent/c/b/e/c/cbec58160a505e352108e37dc376dae1f0b53070/t-cloud-public-leistungsbeschreibung-tdg.pdf',
+    leistungUrl: 'https://www.t-cloud-public.com/_Resources/Persistent/f/8/b/0/f8b0c9b250662e3a5d28134d9e990007bbabd9fa/t-cloud-public-leistungsbeschreibung-tdg.pdf',
     leistungLabel: '📋 Leistungsbeschreibung'
   },
   en: {
@@ -38,7 +38,7 @@ const T = {
     roadmapLabel: '🗺️ Roadmap',
     releaseUrl: 'https://www.t-cloud-public.com/en/support/release-notes',
     releaseLabel: '📰 Release Notes',
-    leistungUrl: 'https://www.t-cloud-public.com/_Resources/Persistent/5/b/4/9/5b49ccec9ceef6d52f461deff50098200b81665f/t-cloud-public-servicedescription.pdf',
+    leistungUrl: 'https://www.t-cloud-public.com/_Resources/Persistent/0/c/0/a/0c0af34c935193d93fa3f783514ecac6c50a206d/t-cloud-public-servicedescription.pdf',
     leistungLabel: '📋 Service Description'
   }
 };

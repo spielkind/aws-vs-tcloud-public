@@ -438,8 +438,8 @@
       "en": "Rehost migration (lift & shift) of physical, virtual and cloud servers to AWS via continuous block replication, test launches and cutover."
     },
     "tcpDesc": {
-      "de": "Kein eigener Server-Migrationsdienst. Weder Leistungsbeschreibung (Stand 09.10.2026) noch Roadmap (Stand 12.11.2026) führen einen entsprechenden Dienst. Migrationen laufen über Image-Import (IMS), Migrationspartner im Marketplace (laut Leistungsbeschreibung) oder Consulting & Migration von T-Systems.",
-      "en": "No own server migration service. Neither the service description (as of 09.10.2026) nor the roadmap (as of 12.11.2026) lists a corresponding service. Migrations use image import (IMS), migration partners in the marketplace (per service description) or T-Systems consulting & migration."
+      "de": "Kein eigener Server-Migrationsdienst. Weder Leistungsbeschreibung (Stand 18.11.2026) noch Roadmap (Stand 12.11.2026) führen einen entsprechenden Dienst. Migrationen laufen über Image-Import (IMS), Migrationspartner im Marketplace (laut Leistungsbeschreibung) oder Consulting & Migration von T-Systems.",
+      "en": "No own server migration service. Neither the service description (as of 18.11.2026) nor the roadmap (as of 12.11.2026) lists a corresponding service. Migrations use image import (IMS), migration partners in the marketplace (per service description) or T-Systems consulting & migration."
     },
     "alt": {
       "de": "IMS-Image-Import (VMDK/VHD/RAW/QCOW2), Partner-Tools (z.B. Veeam, Zerto), rsync/robocopy",
@@ -470,8 +470,8 @@
       "en": "Managed data transfer between on-premises storage (NFS, SMB, HDFS, object storage) and AWS storage services with scheduling, verification and bandwidth control; Snow Family for offline transfers."
     },
     "tcpDesc": {
-      "de": "Kein Managed-Datentransferdienst. Weder Leistungsbeschreibung (Stand 09.10.2026) noch Roadmap (Stand 12.11.2026) führen einen entsprechenden Dienst. Für OBS steht das Kommandozeilen-Tool obsutil (GA seit 12.03.2026) zur Verfügung; OBS ist S3-kompatibel, sodass S3-Tools nutzbar sind.",
-      "en": "No managed data transfer service. Neither the service description (as of 09.10.2026) nor the roadmap (as of 12.11.2026) lists a corresponding service. For OBS the command-line tool obsutil is available (GA since 12.03.2026); OBS is S3-compatible, so S3 tools can be used."
+      "de": "Kein Managed-Datentransferdienst. Weder Leistungsbeschreibung (Stand 18.11.2026) noch Roadmap (Stand 12.11.2026) führen einen entsprechenden Dienst. Für OBS steht das Kommandozeilen-Tool obsutil (GA seit 12.03.2026) zur Verfügung; OBS ist S3-kompatibel, sodass S3-Tools nutzbar sind.",
+      "en": "No managed data transfer service. Neither the service description (as of 18.11.2026) nor the roadmap (as of 12.11.2026) lists a corresponding service. For OBS the command-line tool obsutil is available (GA since 12.03.2026); OBS is S3-compatible, so S3 tools can be used."
     },
     "alt": {
       "de": "obsutil, rclone, rsync, robocopy, S3-kompatible Tools",

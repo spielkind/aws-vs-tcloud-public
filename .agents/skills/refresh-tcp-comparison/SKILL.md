@@ -9,10 +9,12 @@ Read `AGENTS.md` (repo root) first – data model, rules and learnings are defin
 
 ## 1. Collect sources
 ```bash
-python3 -m venv /tmp/tcpvenv && /tmp/tcpvenv/bin/pip install -q pypdf   # once, for PDF text
-/tmp/tcpvenv/bin/python tools/fetch_sources.py
+python3 -m venv .sources/venv && .sources/venv/bin/python -m pip install -q pypdf   # once (git-ignored; /tmp gets purged by macOS)
+GITHUB_TOKEN=$(gh auth token) .sources/venv/bin/python tools/fetch_sources.py
 ```
-Produces `.sources/` (git-ignored): `release-notes.txt`, `terraform-releases.txt`, `terraform-resources.txt`, `docs-repos.txt`, `products.txt`, `roadmap-items.txt` (all bars with month ranges + tooltip-only items), `pdf/servicedescription-en.txt`, `pdf/leistungsbeschreibung-de.txt`, `pdf/managed-services-de.txt`. The script fails loudly if the site structure changed – fix the parser, don't skip it.
+Produces `.sources/` (git-ignored): `release-notes.txt`, `terraform-releases.txt`, `terraform-resources.txt`, `docs-repos.txt`, `products.txt`, `roadmap-items.txt` (all bars with month ranges + tooltip-only items), `pdf/servicedescription-en.txt`, `pdf/leistungsbeschreibung-de.txt`, `pdf/managed-services-de.txt`. The script fails loudly if the site structure changed – fix the parser, don't skip it. It must print a `revision` per PDF; "text extraction skipped" means pypdf is missing.
+
+If the PDFs have a new revision, diff old vs. new text (keep a copy of `.sources/pdf/*.txt` before fetching; ignore page-number shifts and price tables) and check status markers (`expected to be available from`, `no longer available`, `end-of-life`, beta chapter 3.12).
 
 ## 2. Diff report
 ```bash
@@ -33,7 +35,7 @@ Work through every section:
 Also update the `portfolio` list in `tools/validate.py` when services are added/retired.
 
 ## 3. Verify all statements (parallel)
-Spawn one general-purpose agent per group of `services/*.json` files (one owner per file, e.g. compute+serverless+container · database+storage · networking+dns-cdn · security+identity · management+monitoring · analytics+ai+messaging+contact-center+cost). Give each agent the brief in [review-brief.md](review-brief.md) plus its file list. Then check the Oracle page yourself (AGENTS.md workflow step 4) against `.sources/pdf/*`.
+If the last full verification is recent (days) and the report/diff shows few changes, verify only the affected entries and say so; otherwise spawn one general-purpose agent per group of `services/*.json` files (one owner per file, e.g. compute+serverless+container · database+storage · networking+dns-cdn · security+identity · management+monitoring · analytics+ai+messaging+contact-center+cost). Give each agent the brief in [review-brief.md](review-brief.md) plus its file list. Then check the Oracle page yourself (AGENTS.md workflow step 4) against `.sources/pdf/*`.
 
 After all agents finish: grep across files for services that appear in several entries (DMS, CSMS, SecMaster, GeminiDB, SFS, …) and make statements/dates consistent.
 
@@ -41,6 +43,6 @@ After all agents finish: grep across files for services that appear in several e
 1. Update header PDF links in `js/i18n.js` (`leistungUrl`) if `fetch_sources.py` printed new URLs; update Oracle page source links/"Stand".
 2. Set `services/meta.json` → `"updated": "<today>"`.
 3. `python3 tools/validate.py && python3 tools/check_links.py` – both must print `OK`.
-4. UI smoke test: `python3 -m http.server 8765` → `/overview/` (KPIs, tiles, short labels, chip links), search, category dropdown, filters incl. "T Cloud Public only", DE/EN, dark mode, mobile sheet (390 px), CSV/PDF export, no console errors; toolbar on one line at ≥1280 px.
+4. UI smoke test: `python3 -m http.server 8765 &`, then `npm i --no-save --prefix .sources/node playwright-core` (once) and `NODE_PATH=.sources/node/node_modules node tools/ui_smoke.js` (must print `OK`; uses local Google Chrome). Additionally eyeball `/overview/` (short labels) after data changes.
 5. Independent review: run a rubber-duck/code-review agent over the full diff; fix findings.
 6. Append new learnings to `AGENTS.md`, commit, push to `main`, verify the GitHub Pages build and https://spielkind.github.io/aws-vs-tcloud-public/.

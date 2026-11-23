@@ -131,8 +131,8 @@
       "en": "Serverless Prometheus-compatible metrics store: remote write, PromQL queries, alertmanager rules, integration with EKS and Managed Grafana."
     },
     "tcpDesc": {
-      "de": "AOM 2.0 stellt Prometheus-Instanzen (u.a. für Cloud-Services und CCE) bereit; selbst betriebene Kubernetes-Cluster schreiben per Prometheus Remote Write in AOM. Auswertung über AOM bzw. Open-Source-Grafana.",
-      "en": "AOM 2.0 provides Prometheus instances (incl. for cloud services and CCE); self-managed Kubernetes clusters write to AOM via Prometheus remote write. Analysis via AOM or open-source Grafana."
+      "de": "AOM 2.0 stellt Prometheus-Instanzen (u.a. für Cloud-Services und CCE) bereit; selbst betriebene Kubernetes-Cluster schreiben per Prometheus Remote Write in AOM. Auswertung über AOM bzw. Open-Source-Grafana. AOM 2.0 ist seit 09.11.2026 in EU-DE verfügbar; EU-NL ist auf der Roadmap angekündigt (ohne Termin).",
+      "en": "AOM 2.0 provides Prometheus instances (incl. for cloud services and CCE); self-managed Kubernetes clusters write to AOM via Prometheus remote write. Analysis via AOM or open-source Grafana. AOM 2.0 is available in EU-DE since 09.11.2026; EU-NL is announced on the roadmap (no date)."
     },
     "alt": {
       "de": "Prometheus/Thanos/VictoriaMetrics self-managed auf CCE",
@@ -169,8 +169,8 @@
       "en": "Managed Grafana workspaces with SSO, data sources (CloudWatch, Prometheus, OpenSearch etc.), alerting and plugins."
     },
     "tcpDesc": {
-      "de": "Kein Managed-Grafana-Dienst. Weder Leistungsbeschreibung (Stand 09.10.2026) noch Roadmap (Stand 12.11.2026) führen einen entsprechenden Dienst. AOM arbeitet mit selbst betriebenem Open-Source-Grafana zusammen; die Managed Services von T-Systems enthalten ab Paket „Standard“ ein Grafana-Dashboard für Plattformdaten.",
-      "en": "No managed Grafana service. Neither the service description (as of 09.10.2026) nor the roadmap (as of 12.11.2026) lists a corresponding service. AOM works with self-hosted open-source Grafana; the T-Systems Managed Services include a Grafana dashboard for platform data from package \"Standard\"."
+      "de": "Kein Managed-Grafana-Dienst. Weder Leistungsbeschreibung (Stand 18.11.2026) noch Roadmap (Stand 12.11.2026) führen einen entsprechenden Dienst. AOM arbeitet mit selbst betriebenem Open-Source-Grafana zusammen; die Managed Services von T-Systems enthalten ab Paket „Standard“ ein Grafana-Dashboard für Plattformdaten.",
+      "en": "No managed Grafana service. Neither the service description (as of 18.11.2026) nor the roadmap (as of 12.11.2026) lists a corresponding service. AOM works with self-hosted open-source Grafana; the T-Systems Managed Services include a Grafana dashboard for platform data from package \"Standard\"."
     },
     "alt": {
       "de": "Grafana self-managed auf CCE/ECS (Helm), Grafana Cloud",
